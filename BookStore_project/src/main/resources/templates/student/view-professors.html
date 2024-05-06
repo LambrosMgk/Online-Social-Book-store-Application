@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Professors with Diploma thesis subjects</title>
+</head>
+
+<body>
+    <div class="container">
+
+        <h2>Professors with Diploma thesis subjects</h2>
+
+        <br> <br>
+        <hr>
+        <br> <br>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Professor name</th>
+                    <th>Professor specialty</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Iterate over the list of items from Java code -->
+                <tr th:each="item : ${items}">
+                	<td th:text="${item.professorid}" hidden/>
+                    <td th:text="${item.fullname}"/>
+                    <td th:text="${item.specialty}"/>
+                    <td>
+                        <!-- "Details" button for each item -->
+                        <a th:href="@{/student/professor-details(professorid=${item.professorid})}" class="btn btn-primary btn-sm">Details</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br> <br>
+        <hr>
+        <br> <br>
+        <!-- "Back" button -->
+        <a th:href="@{/student/dashboard}" class="btn btn-secondary btn-sm mt-2">Back</a>
+
+        <br> <br>
+    </div>
+</body>
+
+</html>

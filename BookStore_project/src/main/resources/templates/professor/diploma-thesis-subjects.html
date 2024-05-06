@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Diploma Thesis Subjects</title>
+</head>
+
+<body>
+    <div class="container">
+
+        <h2>Diploma Thesis Subjects</h2>
+
+        <br> <br>
+        <hr>
+        <br> <br>
+
+        <table class="table">
+            <thead>
+                <tr>
+                	<th>ID</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Iterate over the list of items from Java code -->
+                <tr th:each="item : ${items}">
+                	<td th:text="${item.subjectid}"/>
+                    <td th:text="${item.subjectname}"/>
+                    <td th:text="${item.description}"/>
+                    <td>
+              
+           
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br> <br>
+        <hr>
+        <br> <br>
+
+        <!-- New Diploma Subject form -->
+        <form th:action="@{/professor/new-diploma-thesis-subjects}" method="post" th:object="${newDiplomaSubject}">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" class="form-control" id="title" th:field="*{subjectname}"required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <input type="text" class="form-control" id="description" th:field="*{description}"required>
+            </div>
+            <button type="submit" class="btn btn-success btn-sm">Add Diploma Subject</button>
+        </form>
+
+        <!-- "Back" button -->
+        <a th:href="@{/professor/dashboard}" class="btn btn-secondary btn-sm mt-2">Back</a>
+
+        <br> <br>
+    </div>
+</body>
+
+</html>

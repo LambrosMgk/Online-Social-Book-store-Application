@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Thesis score</title>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Set Project Score</h2>
+        <br>
+		<form action="#" th:action="@{/professor/thesis-edit-save}" th:object="${thesis}" method="post">
+				<input type="hidden" th:field="*{thesisid}" />
+            <div class="form-group">
+                <label for="implementation">Implementation Grade</label>
+                <input type="text" th:field="*{implmentationgrade}" class="form-control" id="FullName" placeholder="Enter Implmentation Grade"required>
+            </div>
+            <div class="form-group">
+                <label for="Report Grade">Report Grade</label>
+                <input type="text" th:field="*{reportgrade}" class="form-control" id="report grade" placeholder="Enter Report Grade"required>
+            </div>
+            <div class="form-group">
+                <label for="Presentation Grade">Presentation Grade</label>
+                <input type="text" th:field="*{presentationgrade}" class="form-control" id="presentationgrade" placeholder="Enter Presentation Grade"required>
+            </div>
+            
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a href="/professor/assigned-diploma-thesis-projects" class="btn btn-secondary">Back</a>
+            </div>
+        </form>
+        <br><br>
+   	 <span th:utext="${successMessage}"></span>
+   	 <p>Final Grade ID: <span th:text="${ResultGrade}"></span></p>
+    </div>
+</body>
+
+</html>

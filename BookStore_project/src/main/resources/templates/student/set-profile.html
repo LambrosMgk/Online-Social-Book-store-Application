@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Set Profile</title>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Set Profile</h2>
+        <br>
+		<form action="#" th:action="@{/student/save-profile}" th:object="${student}" method="post">
+            <div class="form-group">
+                <label for="FullName">Full Name</label>
+                <input type="text" th:field="*{fullname}" class="form-control" id="FullName" placeholder="Enter your full name"required>
+            </div>
+            <div class="form-group">
+                <label for="yearOfStudies">Year of Studies</label>
+                <input type="number" th:field="*{yearofstudies}" class="form-control" id="yearOfStudies" placeholder="Enter your year of studies" required>
+            </div>
+            <div class="form-group">
+                <label for="averageGrade">Current Average Grade</label>
+                <input type="number" th:field="*{currentavggrade}" class="form-control" id="averageGrade"
+                    placeholder="Enter your current average grade"required>
+            </div>
+            <div class="form-group">
+                <label for="remainingCourses">Number of Remaining Courses</label>
+                <input type="number" th:field="*{remainingcoursesforgraduation}" class="form-control" id="remainingCourses"
+                    placeholder="Enter the number of remaining courses"required>
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a href="/student/dashboard" class="btn btn-secondary">Back</a>
+            </div>
+        </form>
+        <span th:utext="${successMessage}"></span>
+    </div>
+</body>
+
+</html>
