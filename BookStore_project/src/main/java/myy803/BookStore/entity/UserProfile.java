@@ -9,8 +9,6 @@ public class UserProfile {
 	private String user_name;
 	private String full_name;
 	private int age;
-	//private Role role;
-
 	private List<BookAuthor> favouriteBookAuthors;
 	private List<BookCategory> favouriteBookCategories;
 	private List<Book> bookOffers;
