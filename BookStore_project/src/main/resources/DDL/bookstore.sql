@@ -18,8 +18,8 @@ CREATE TABLE `users` (
 
 CREATE TABLE `userprofile` (
     userid int NOT NULL AUTO_INCREMENT,
-    user_fullname varchar(255) DEFAULT NULL,
-    user_name varchar(255) DEFAULT NULL, 
+    userfullname varchar(255) DEFAULT NULL,
+    username varchar(255) DEFAULT NULL, 
     age int NOT NULL,
     phonenumber int, 
     PRIMARY KEY (userid)

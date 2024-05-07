@@ -3,15 +3,25 @@ package myy803.BookStore.entity;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
+@Entity
+@Table(name="bookauthor")
 public class BookAuthor {
-
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name= "idauthor")
 	private int idauthor;
+	
+	@Column(name= "name")
 	private String name;
+	
+	@ManyToMany(targetEntity=Book.class, mappedBy="idbook", fetch=FetchType.LAZY) 
 	private List<Book> books;
 	
 	public BookAuthor() {}

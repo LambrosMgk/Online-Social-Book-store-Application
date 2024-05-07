@@ -13,9 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import myy803.BookStore.entity.BookAuthor;
-import myy803.BookStore.entity.BookCategory;
-
 @Entity
 @Table(name="book")
 public class Book {
@@ -34,6 +31,7 @@ public class Book {
 	@ManyToMany(targetEntity=BookAuthor.class, mappedBy="idauthor", fetch=FetchType.LAZY) 
 	private List<BookAuthor> bookAuthors;
 	
+	@OneToMany(targetEntity=UserProfile.class, mappedBy="id_user", fetch=FetchType.LAZY) 
 	private List<UserProfile> requestingUsers;
 	
 	public Book() {}
