@@ -1,4 +1,4 @@
-package myy803.BookStore.controller;
+package myy803.BookStore.mapper;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
