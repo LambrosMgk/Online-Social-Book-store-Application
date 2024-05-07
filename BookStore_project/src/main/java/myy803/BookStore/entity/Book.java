@@ -76,14 +76,6 @@ public class Book {
 		this.bookCategory = bookCategory;
 	}
 
-	public List<Book> getBookOffers() {
-		return bookOffers;
-	}
-
-	public void setBookOffers(List<Book> bookOffers) {
-		this.bookOffers = bookOffers;
-	}
-	
 	public String toString() {
 		return "";
 	}
