@@ -9,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 public class BookAuthor {
-	
-
 
 	private int idauthor;
 	private String name;
