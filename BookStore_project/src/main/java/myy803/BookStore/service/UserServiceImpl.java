@@ -32,6 +32,19 @@ public class UserServiceImpl implements UserService {
 		
 		return true; //storedUser.method();
 	}
+	
+	@Override
+	public User findByUsername(String username) {
+		User user = userMapper.findByUsername(username);
+		return user;
+	}
+
+
+	@Override
+	public UserDetails loadUserByUsername(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public User findById(String username) {
@@ -39,10 +52,6 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
-	@Override
-	public UserDetails loadUserByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	
 }
