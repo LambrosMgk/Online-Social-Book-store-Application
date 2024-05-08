@@ -9,38 +9,57 @@
     <div class="container">
         <h1>Create Profile!</h1>
         <form id="profileForm">
-            <label for="fullname">Full Name :</label>
-            <input type="text" id="fullname" name="fullname" placeholder="Full Name" maxlength="30" required>
+            <div class="form-group">
+                <label for="fullname">Full Name:</label>
+                <input type="text" id="fullname" name="fullname" maxlength="30" required>
+            </div>
 
-            <label for="address">Address</label>
-            <input type="text" id="address" name="address" placeholder="Address" maxlength="30">
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" maxlength="30">
+            </div>
 
-            <label for="age">Age</label>
-            <input type="number" id="age" name="age" placeholder="Age" min="10" max="100">
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" min="10" max="100">
+            </div>
 
-            <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" name="phone" placeholder="Phone Number" pattern="[0-9]{10}">
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" pattern="[0-9]{10}">
+            </div>
 
+            <!-- Categories with limited visibility and a scroll bar -->
             <fieldset>
                 <legend>Categories of Books:</legend>
-                <label><input type="checkbox" name="category" value="Art">Art</label>
-                <label><input type="checkbox" name="category" value="Comic">Comic</label>
-                <label><input type="checkbox" name="category" value="Fantasy">Fantasy</label>
-                <label><input type="checkbox" name="category" value="Fiction">Fiction</label>
-                <label><input type="checkbox" name="category" value="Biographies">Biographies</label>
-                <label><input type="checkbox" name="category" value="History">History</label>
-                <label><input type="checkbox" name="category" value="Science">Science</label>
-                <label><input type="checkbox" name="category" value="Literature">Literature</label>
-                <label><input type="checkbox" name="category" value="Adventure">Adventure</label>
-                <label><input type="checkbox" name="category" value="Crime">Crime</label>
-                <label><input type="checkbox" name="category" value="Other">Other</label>
+                <div class="scroll-container"> <!-- Scrollable area for categories -->
+                    <label><input type="checkbox" name="category" value="Art">Art</label>
+                    <label><input type="checkbox" name="category" value="Comic">Comic</label>
+                    <label><input type="checkbox" name="category" value="Fantasy">Fantasy</label>
+                    <label><input type="checkbox" name="category" value="Fiction">Fiction</label>
+                    <label><input type="checkbox" name="category" value="Biographies">Biographies</label>
+                    <label><input type="checkbox" name="category" value="History">History</label>
+                    <label><input type="checkbox" name="category" value="Science">Science</label>
+                    <label><input type="checkbox" name="category" value="Literature">Literature</label>
+                    <label><input type="checkbox" name="category" value="Adventure">Adventure</label>
+                    <label><input type="checkbox" name="category" value="Crime">Crime</label>
+                    <label><input type="checkbox" name="category" value="Other">Other</label>
+                </div>
             </fieldset>
 
+            <!-- Authors with limited visibility and a scroll bar -->
             <fieldset>
                 <legend>Favorite Authors:</legend>
-                <label><input type="checkbox" name="author" value="Author1">Author1</label>
-                <label><input type="checkbox" name="author" value="Author2">Author2</label>
-                <label><input type="checkbox" name="author" value="Author3">Author3</label>
+                <div class="scroll-container"> <!-- Scrollable area for authors -->
+                    <label><input type="checkbox" name="author" value="Author1">Author 1</label>
+                    <label><input type="checkbox" name="author" value="Author2">Author 2</label>
+                    <label><input type="checkbox" name="author" value="Author3">Author 3</label>
+                    <label><input type="checkbox" name="author" value="Author4">Author 4</label>
+                    <label><input type="checkbox" name="author" value="Author5">Author 5</label>
+                    <label><input type="checkbox" name="author" value="Author6">Author 6</label>
+                    <label><input type="checkbox" name="author" value="Author7">Author 7</label>
+                    <label><input type="checkbox" name="author" value="Author8">Author 8</label>
+                </div>
             </fieldset>
 
             <div class="buttons">
@@ -52,9 +71,7 @@
 
     <script>
         document.getElementById('profileForm').onsubmit = function() {
-            // Here you could add additional validation or processing before submitting the form
             alert('Profile Created Successfully!');
         };
     </script>
 </body>
-</html>
