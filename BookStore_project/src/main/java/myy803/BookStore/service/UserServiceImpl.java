@@ -5,7 +5,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import myy803.BookStore.entity.User;
 import myy803.BookStore.mapper.UserMapper;
-import myy803.BookStore.entity.User;
 import myy803.BookStore.entity.UserDetails;
 
 public class UserServiceImpl implements UserService {
@@ -15,9 +14,6 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserMapper userMapper;
-	
-public class UserServiceImpl implements UserDetailsService, UserService{
-	
 	
 	
 	@Override
@@ -35,15 +31,6 @@ public class UserServiceImpl implements UserDetailsService, UserService{
 			return false;
 		
 		return true; //storedUser.method();
-	public void saveUser(User user) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean isUserPresent(User user) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
