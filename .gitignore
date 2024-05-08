@@ -10,10 +10,10 @@ buildNumber.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
 *.class
-BookStore_project/target/classes/META-INF/maven/com.example/sp_project/pom.properties
 
 # Eclipse m2e generated files
 # Eclipse Core
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+BookStore_project/target/classes/META-INF/maven/com.example/sp_project/pom.properties
