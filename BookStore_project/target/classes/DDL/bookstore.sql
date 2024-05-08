@@ -29,6 +29,7 @@ CREATE TABLE `book` (
     idbook int NOT NULL AUTO_INCREMENT,
     title varchar(255) DEFAULT NULL,
     userid int NOT NULL,
+    idauthor int not NULL,
     description text,
     PRIMARY KEY (idbook),
     FOREIGN KEY (userid) REFERENCES userprofile(userid)

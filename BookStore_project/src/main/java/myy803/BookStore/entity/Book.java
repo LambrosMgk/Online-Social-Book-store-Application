@@ -2,12 +2,15 @@ package myy803.BookStore.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -25,13 +28,24 @@ public class Book {
 	@Column(name="title")
 	private String title;
 	
-	@ManyToOne(targetEntity=BookCategory.class, fetch=FetchType.LAZY)
-	private BookCategory bookCategory;
+	@Column(name="userid")
+	private int userid;
+		
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category")  // This should match the column in the database that holds the foreign key.
+    private BookCategory bookCategory;
 	
-	@ManyToMany(targetEntity=BookAuthor.class, mappedBy="idauthor", fetch=FetchType.LAZY) 
-	private List<BookAuthor> bookAuthors;
 	
-	@OneToMany(targetEntity=UserProfile.class, mappedBy="id_user", fetch=FetchType.LAZY) 
+    
+    @ManyToMany
+    @JoinTable(
+        name = "book_author",
+        joinColumns = @JoinColumn(name = "idbook"),
+        inverseJoinColumns = @JoinColumn(name = "idauthor")
+    )
+    private List<BookAuthor> bookAuthors;
+	
+	@OneToMany(mappedBy = "userid", cascade = CascadeType.ALL)
 	private List<UserProfile> requestingUsers;
 	
 	public Book() {}

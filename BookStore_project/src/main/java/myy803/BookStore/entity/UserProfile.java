@@ -8,6 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -18,7 +20,7 @@ public class UserProfile {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "userid")
-	private int id_user;
+	private int userid;
 	
 	@Column(name = "fullname")
 	private String full_name;
@@ -32,29 +34,40 @@ public class UserProfile {
 	@Column(name = "phonenumber")
 	private int phonenumber;
 	
-	@ManyToMany(targetEntity=BookAuthor.class, mappedBy="idauthor", fetch=FetchType.LAZY) 
+	@ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "user_favorite_authors",
+        joinColumns = @JoinColumn(name = "userid"),
+        inverseJoinColumns = @JoinColumn(name = "authors")
+    )
 	private List<BookAuthor> favouriteBookAuthors;
 	
-	@ManyToMany(targetEntity=BookCategory.class, mappedBy="category", fetch=FetchType.LAZY) 
-	private List<BookCategory> favouriteBookCategories;
-	
-	@ManyToMany(targetEntity=Book.class, mappedBy="idbook", fetch=FetchType.LAZY) 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "user_favorite_categories",
+        joinColumns = @JoinColumn(name = "userid"),
+        inverseJoinColumns = @JoinColumn(name = "category")
+    )
+    private List<BookCategory> favouriteBookCategories;
+    
+    
+	@ManyToMany(mappedBy="userid", fetch=FetchType.LAZY) 
 	private List<Book> bookOffers;
 	
 	
 	public UserProfile() {};
 	
 	public UserProfile(int id_user, String user_name) {
-		this.id_user = id_user;
+		this.userid = id_user;
 		this.user_name = user_name;	
 	}
 	
 	public int getId_user() {
-		return id_user;
+		return userid;
 	}
 
 	public void setId_user(int id_user) {
-		this.id_user = id_user;
+		this.userid = id_user;
 	}
 
 	public String getUser_name() {

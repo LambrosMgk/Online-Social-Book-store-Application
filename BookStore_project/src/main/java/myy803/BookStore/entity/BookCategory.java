@@ -23,8 +23,8 @@ public class BookCategory {
 	@Column(name = "name")
 	private String name; 
 	
-	@OneToMany(targetEntity=Book.class, mappedBy="idbook", fetch=FetchType.LAZY) 
-	private List<Book> books;
+    @OneToMany(mappedBy = "bookCategory", fetch = FetchType.LAZY)
+    private List<Book> books;
 	
 	public BookCategory() {}
 	
