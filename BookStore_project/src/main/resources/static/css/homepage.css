@@ -1,0 +1,56 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+}
+
+.container {
+    text-align: center;
+    padding: 30px; /* Increased padding for more space */
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    margin-bottom: 30px; /* Reducing bottom margin for better alignment */
+    font-size: 2em;
+}
+
+input {
+    display: block;
+    width: 80%;
+    padding: 10px;
+    margin: 10px auto; /* Keeps the input fields centered */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.error-message {
+    color: red;
+    font-size: 1em; /* Ensures the error message has the same font size as inputs */
+    margin-top: 10px;
+    margin-bottom: 20px; /* Space between error message and buttons */
+    display: none; /* Initially hidden */
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-around; /* Keeps buttons apart, creating a balanced look */
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3498db; /* Light blue */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+}

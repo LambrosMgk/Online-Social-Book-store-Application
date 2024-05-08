@@ -15,7 +15,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
-import myy803.BookStore.service.UserServiceImpl;
 
 
 @Configuration
@@ -27,7 +26,7 @@ public class WebSecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new UserServiceImpl();
+        return null;	//implement later
     }
 
     @Bean

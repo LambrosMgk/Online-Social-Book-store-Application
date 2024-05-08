@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Profile!</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/create-profile.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Create Profile!</h1>
+        <form id="profileForm">
+            <label for="fullname">Full Name :</label>
+            <input type="text" id="fullname" name="fullname" placeholder="Full Name" maxlength="30" required>
+
+            <label for="address">Address</label>
+            <input type="text" id="address" name="address" placeholder="Address" maxlength="30">
+
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" placeholder="Age" min="10" max="100">
+
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="Phone Number" pattern="[0-9]{10}">
+
+            <fieldset>
+                <legend>Categories of Books:</legend>
+                <label><input type="checkbox" name="category" value="Art">Art</label>
+                <label><input type="checkbox" name="category" value="Comic">Comic</label>
+                <label><input type="checkbox" name="category" value="Fantasy">Fantasy</label>
+                <label><input type="checkbox" name="category" value="Fiction">Fiction</label>
+                <label><input type="checkbox" name="category" value="Biographies">Biographies</label>
+                <label><input type="checkbox" name="category" value="History">History</label>
+                <label><input type="checkbox" name="category" value="Science">Science</label>
+                <label><input type="checkbox" name="category" value="Literature">Literature</label>
+                <label><input type="checkbox" name="category" value="Adventure">Adventure</label>
+                <label><input type="checkbox" name="category" value="Crime">Crime</label>
+                <label><input type="checkbox" name="category" value="Other">Other</label>
+            </fieldset>
+
+            <fieldset>
+                <legend>Favorite Authors:</legend>
+                <label><input type="checkbox" name="author" value="Author1">Author1</label>
+                <label><input type="checkbox" name="author" value="Author2">Author2</label>
+                <label><input type="checkbox" name="author" value="Author3">Author3</label>
+            </fieldset>
+
+            <div class="buttons">
+                <button type="submit">Register!</button>
+                <button type="button" onclick="location.href='homepage.html'">Never mind</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('profileForm').onsubmit = function() {
+            // Here you could add additional validation or processing before submitting the form
+            alert('Profile Created Successfully!');
+        };
+    </script>
+</body>
+</html>
