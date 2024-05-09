@@ -3,33 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Social Bookstore</title>
-    <link rel="stylesheet" type="text/css" href="../static/css/homepage.css"> <!-- External CSS reference -->
+    <link rel="stylesheet" type="text/css" href="/css/homepage.css">  <!-- External CSS reference -->
 </head>
 <body>
     <div class="container">
         <h1>Social Bookstore</h1>
-        <input type="text" id="username" placeholder="Username">
-        <input type="password" id="password" placeholder="Password">
-        <div class="error-message" id="error-message">Credentials not correct!</div> <!-- Error message initially hidden -->
-        <div class="buttons">
-            <button onclick="checkCredentials()">Sign In</button>
-            <button>Sign Up</button>
-        </div>
+        <form action="/login" method="post">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <div class="error-message" th:styleappend="${error} ? 'display:block;' : ''">Credentials not correct!</div> <!-- Conditional error display -->
+            <div class="buttons">
+                <button type="submit">Sign In</button> <!-- Submit button -->
+                <button type="button">Sign Up</button> <!-- Placeholder for future functionality -->
+            </div>
+        </form>
     </div>
-
-    <script>
-        function checkCredentials() {
-            var username = document.getElementById('username').value;
-            var password = document.getElementById('password').value;
-
-            // A simple validation logic for example purposes
-            if (username === 'user' && password === 'pass') {
-                document.getElementById('error-message').style.display = 'none'; // Hide error message if correct
-                // Redirect or continue with login flow
-            } else {
-                document.getElementById('error-message').style.display = 'block'; // Show error message if incorrect
-            }
-        }
-    </script>
 </body>
 </html>
