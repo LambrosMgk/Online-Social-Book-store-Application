@@ -23,10 +23,10 @@ public class UserProfile {
 	private int userid;
 	
 	@Column(name = "fullname")
-	private String full_name;
+	private String fullname;
 	
 	@Column(name = "username")
-	private String user_name;
+	private String username;
 	
 	@Column(name = "age")
 	private int age;
@@ -57,9 +57,9 @@ public class UserProfile {
 	
 	public UserProfile() {};
 	
-	public UserProfile(int id_user, String user_name) {
+	public UserProfile(int id_user, String username) {
 		this.userid = id_user;
-		this.user_name = user_name;	
+		this.username = username;	
 	}
 	
 	public int getId_user() {
@@ -70,20 +70,20 @@ public class UserProfile {
 		this.userid = id_user;
 	}
 
-	public String getUser_name() {
-		return user_name;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
-	public String getFull_name() {
-		return full_name;
+	public String getFullname() {
+		return fullname;
 	}
 
-	public void setFull_name(String full_name) {
-		this.full_name = full_name;
+	public void setFull_name(String fullname) {
+		this.fullname = fullname;
 	}
 
 	public int getAge() {

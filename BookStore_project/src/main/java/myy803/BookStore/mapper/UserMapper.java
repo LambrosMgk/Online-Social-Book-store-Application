@@ -6,6 +6,6 @@ import myy803.BookStore.entity.User;
 
 @Repository
 public interface UserMapper extends JpaRepository<User , Integer> { 
-	public void saveUser(User user);
+	
 	public User findByUsername(String username);
 }

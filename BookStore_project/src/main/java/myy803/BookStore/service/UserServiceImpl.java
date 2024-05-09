@@ -2,13 +2,14 @@ package myy803.BookStore.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import myy803.BookStore.entity.User;
 import myy803.BookStore.mapper.UserMapper;
 import myy803.BookStore.mapper.UserProfileMapper;
 import myy803.BookStore.entity.UserDetails;
-import myy803.BookStore.entity.UserProfile;
 
+@Service
 public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Autowired
