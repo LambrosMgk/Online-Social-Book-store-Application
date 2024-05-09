@@ -9,6 +9,4 @@ public interface UserService {
 	public void saveUser(User user);
     public boolean isUserPresent(User user);
     public User findByUsername(String username);
-    public UserDetails loadUserByUsername(String username);
-	public User findById(String username);
 }

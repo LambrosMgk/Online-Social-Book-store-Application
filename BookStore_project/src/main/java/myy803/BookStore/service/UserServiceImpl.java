@@ -5,15 +5,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import myy803.BookStore.entity.User;
 import myy803.BookStore.mapper.UserMapper;
+import myy803.BookStore.mapper.UserProfileMapper;
 import myy803.BookStore.entity.UserDetails;
+import myy803.BookStore.entity.UserProfile;
 
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserProfileService {
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private UserProfileMapper userMapperProfile;
 	
 	
 	@Override
@@ -39,19 +44,10 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 
-
 	@Override
 	public UserDetails loadUserByUsername(String username) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
-	@Override
-	public User findById(String username) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	
 }
