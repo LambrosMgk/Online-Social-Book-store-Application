@@ -9,7 +9,7 @@ import myy803.BookStore.mapper.UserProfileMapper;
 import myy803.BookStore.entity.UserDetails;
 import myy803.BookStore.entity.UserProfile;
 
-public class UserServiceImpl implements UserService, UserProfileService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService, UserProfileService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) {
-		
+		// TODO Auto-generated method stub
 		return null;
 	}
 
