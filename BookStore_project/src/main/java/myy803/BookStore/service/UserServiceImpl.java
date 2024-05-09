@@ -3,11 +3,12 @@ package myy803.BookStore.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import myy803.BookStore.entity.User;
 import myy803.BookStore.mapper.UserMapper;
-import myy803.BookStore.mapper.UserProfileMapper;
-import myy803.BookStore.entity.UserDetails;
+
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -17,10 +18,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	
 	@Autowired
 	private UserMapper userMapper;
-	
-	@Autowired
-	private UserProfileMapper userMapperProfile;
-	
+		
 	
 	@Override
 	public void saveUser(User user) {

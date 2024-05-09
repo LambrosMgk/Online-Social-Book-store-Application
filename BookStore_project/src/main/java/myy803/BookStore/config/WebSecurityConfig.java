@@ -29,7 +29,7 @@ public class WebSecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new UserServiceImpl;	
+        return new UserServiceImpl();	
     }
 
     @Bean
