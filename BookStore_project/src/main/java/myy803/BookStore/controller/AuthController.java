@@ -32,6 +32,8 @@ public class AuthController {
             model.addAttribute("successMessage", "User already registered!");
             return "auth/signin";
         }
+        
+        System.out.println("User registered with username : " + user.getUsername());
 
         userService.saveUser(user);
         model.addAttribute("successMessage", "User registered successfully!");
