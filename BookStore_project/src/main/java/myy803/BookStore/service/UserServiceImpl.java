@@ -1,10 +1,13 @@
 package myy803.BookStore.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import myy803.BookStore.entity.User;
 import myy803.BookStore.mapper.UserMapper;
@@ -29,7 +32,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Override
 	public boolean isUserPresent(User user) {
-		User storedUser = userMapper.findByUsername(user.getUsername());
+		Optional<User> storedUser = userMapper.findByUsername(user.getUsername());
 		
 		if(storedUser == null)
 			return false;
@@ -39,14 +42,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	
 	@Override
 	public User findByUsername(String username) {
-		User user = userMapper.findByUsername(username);
-		return user;
+		Optional<User> user = userMapper.findByUsername(username);
+		return user.get();
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		return userMapper.findByUsername(username).orElseThrow(
+	                ()-> new UsernameNotFoundException(
+	                        String.format("USER_NOT_FOUND %s", username)
+	                ));
 	}
 
 }

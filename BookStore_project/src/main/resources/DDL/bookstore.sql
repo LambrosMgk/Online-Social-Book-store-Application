@@ -10,10 +10,11 @@ DROP TABLE IF EXISTS `bookauthor`;
 SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE `users` (
+  userid int not NULL,
   username varchar(255) NOT NULL,
   password varchar(255) NOT NULL,
   role varchar(255) DEFAULT NULL,
-  PRIMARY KEY (username,password)
+  PRIMARY KEY (userid)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `userprofile` (
