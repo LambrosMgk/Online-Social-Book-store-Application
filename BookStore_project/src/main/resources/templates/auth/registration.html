@@ -1,14 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Create Profile!</title>
-    <link rel="stylesheet" type="text/css" href="../static/css/registration.css">
+    <link rel="stylesheet" type="text/css" href="/css/registration.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
 </head>
 <body>
     <div class="container">
         <h1>Create Profile!</h1>
-        <form id="profileForm">
+        <form id="profileForm" th:action="@{/save}" method="post">
+            <div class="form-group">
+                <label for="username">Username (30 characters max):</label>
+                <input type="text" id="username" name="username" maxlength="30" required>
+            </div>
+            
+            <div class="form-group password-group"> <!-- Password field with eye icon -->
+	            <label for="password">Password:</label>
+	            <input type="password" id="password" name="password" maxlength="30" required>
+	            <span class="toggle-password" onclick="togglePassword()">
+	                <i class="fas fa-eye"></i> <!-- Font Awesome eye icon -->
+	            </span>
+        	</div>
+            
             <div class="form-group">
                 <label for="fullname">Full Name (30 characters max):</label>
                 <input type="text" id="fullname" name="fullname" maxlength="30" required>
@@ -64,7 +79,7 @@
 
             <div class="buttons">
                 <button type="submit">Register!</button>
-                <button type="button" onclick="location.href='homepage.html'">Never mind</button>
+                <a th:href="@{/}" class="button-like">Never mind</a>
             </div>
         </form>
     </div>
@@ -73,5 +88,18 @@
         document.getElementById('profileForm').onsubmit = function() {
             alert('Profile Created Successfully!');
         };
+        
+        function togglePassword() {
+		    const passwordInput = document.getElementById('password');
+		    const toggleIcon = document.querySelector('.toggle-password i');
+		
+		    if (passwordInput.type === 'password') {
+		        passwordInput.type = 'text';
+		        toggleIcon.className = 'fas fa-eye-slash'; // Change icon to eye with slash
+		    } else {
+		        passwordInput.type = 'password';
+		        toggleIcon.className = 'fas fa-eye'; // Change icon to normal eye
+		    }
+		}
     </script>
 </body>

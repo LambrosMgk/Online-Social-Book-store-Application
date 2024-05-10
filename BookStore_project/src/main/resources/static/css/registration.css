@@ -96,3 +96,39 @@ button[type="button"] {
 button[type="button"]:hover {
     background-color: #7f8c8d;
 }
+
+.button-like {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #95a5a6;  /* Default color for type="button" */
+    color: white;
+    text-decoration: none;  /* Removes underline from the anchor */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button-like:hover {
+    background-color: #7f8c8d;  /* Hover effect for type="button" */
+}
+
+.password-group {
+    position: relative; /* Relative position to align the eye icon */
+}
+
+.password-group .toggle-password {
+    position: absolute; /* Absolute position to place the icon */
+    top: 50%;
+    right: 10px; /* Adjust as needed */
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.password-group .toggle-password i {
+    color: #888; /* Default color for the icon */
+    transition: color 0.3s; /* Smooth transition for color changes */
+}
+
+.password-group .toggle-password:hover i {
+    color: #3498db; /* Change color on hover */
+}

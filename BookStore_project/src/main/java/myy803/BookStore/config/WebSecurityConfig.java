@@ -17,7 +17,14 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import myy803.BookStore.service.UserServiceImpl;
 
 
-
+/*
+ * @Configuration Indicates that a class declares one or more 
+ * @Bean methods and may be processed by the 
+ * Spring container to generate bean definitions 
+ * and service requests for those beans at runtime. 
+ * The class may also have code that configures other 
+ * spring functionalities. 
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
@@ -82,9 +89,18 @@ public class WebSecurityConfig {
                 return http.build();
     }
 
+    
+    /**
+     * Configures Spring Security to bypass security filters for certain static resource paths.
+     * This allows these resources to be served without requiring authentication, ensuring
+     * that elements like images, JavaScript files, CSS files, and WebJars can be accessed freely.
+     * Paths specified in the antMatchers method are those that will not be intercepted by
+     * Spring Security, facilitating faster loading and unobstructed access to these resources.
+     */
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers("/images/**", "/js/**", "/webjars/**");
+        return (web) -> web.ignoring().antMatchers("/images/**", "/js/**", "/css/**", "/webjars/**");
     }
+
 
 }

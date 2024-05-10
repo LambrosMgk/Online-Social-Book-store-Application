@@ -36,12 +36,8 @@ input {
     display: none; /* Initially hidden */
 }
 
-.buttons {
-    display: flex;
-    justify-content: space-around; /* Keeps buttons apart, creating a balanced look */
-}
-
-button {
+button,
+.button-link { /* Shared styling for button and button-like anchor tags */
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -51,6 +47,11 @@ button {
     transition: background-color 0.3s;
 }
 
-button:hover {
+button:hover,
+.button-link:hover {
     background-color: #2980b9; /* Darker blue on hover */
+}
+
+.button-link {
+    text-decoration: none; /* Removes underline on anchor tag */
 }
