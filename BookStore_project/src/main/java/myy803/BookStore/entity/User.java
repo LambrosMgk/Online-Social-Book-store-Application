@@ -2,14 +2,18 @@ package myy803.BookStore.entity;
 
 
 import java.util.Collection;
+import java.util.Collections;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
@@ -29,9 +33,9 @@ public class User implements UserDetails{
 	@Column(name="password")
 	private String password;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name="role")
-	private String role;
-	
+	private Role role;
 	
 	public User() {};
 	
@@ -56,41 +60,39 @@ public class User implements UserDetails{
 		this.password = password;
 	}
 
-	public String getRole() {
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
+		SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
+		return Collections.singletonList(authority);
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
+
+
 }

@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS `bookauthor`;
 SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE `users` (
-  userid int not NULL,
+  userid int not NULL AUTO_INCREMENT,
   username varchar(255) NOT NULL,
   password varchar(255) NOT NULL,
   role varchar(255) DEFAULT NULL,
@@ -51,3 +51,9 @@ CREATE TABLE `bookauthor` (
     PRIMARY KEY (idauthor),
     FOREIGN KEY (userid) REFERENCES userprofile(userid)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+INSERT INTO `users` (username, password, role) VALUES
+('john_doe', 'password123', 'admin'),
+('jane_smith', 'secret456', 'user'),
+('bob_jackson', 'bobspassword', 'user');
+
