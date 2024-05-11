@@ -56,12 +56,16 @@ public class AuthController {
     }
 
     
-    @RequestMapping("/save")
-    public String registerUser(@ModelAttribute("user") User user, Model model) {
-    	if (userService.isUserPresent(user)) {
+    @PostMapping("/save")
+    public String registerUser(@ModelAttribute("user") User user, Model model) 
+    {
+    	System.out.println("User : " + user);
+    	if (userService.isUserPresent(user)) 	// Check if User already registered
+    	{
           model.addAttribute("errorMessage", "User already registered!");
-          return "/homepage"; // Return to the homepage page with error message
+          return "redirect:/?registerError"; // Return to the homepage page with error message
     	}
+    	
         userService.saveUser(user);
         model.addAttribute("successMessage", "User registered successfully!");
         return "redirect:/?registerSuccess"; // Redirect to the homepage with success message

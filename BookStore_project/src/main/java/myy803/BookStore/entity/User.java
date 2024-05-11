@@ -22,6 +22,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(name="users")
 public class User implements UserDetails{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "userid")
@@ -37,35 +42,34 @@ public class User implements UserDetails{
 	@Column(name="role")
 	private Role role;
 	
-	public User() {};
+	public User() {
+		this.role = Role.GUEST;
+	};
 	
 	public User(String username, String password) {
 		this.username = username;
 		this.password = password;	
+		this.role = Role.GUEST;
 	}
 	
-	public String getUsername() {
-		return username;
-	}
+	
+	public String getUsername() {return username;}
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+	public void setUsername(String username) {this.username = username;}
 
-	public String getPassword() {
-		return password;
-	}
+	public String getPassword() {return password;}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+	public void setPassword(String password) {this.password = password;}
 
-	public Role getRole() {
-		return role;
-	}
+	public Role getRole() {return role;}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setRole(Role role) {this.role = role;}
+	
+	
+	
+	public String toString()
+	{
+		return "username=" + this.username + ", role=" + this.role;
 	}
 
 	@Override
