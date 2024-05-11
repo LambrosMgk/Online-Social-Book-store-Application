@@ -63,13 +63,11 @@ public class WebSecurityConfig {
                 http.authorizeRequests()
                 // URL matching for accessibility
                 .antMatchers("/", "/login", "/register", "/save").permitAll()
-                .antMatchers("/professor/**").hasAnyAuthority("PROFESSOR")
-                .antMatchers("/student/**").hasAnyAuthority("STUDENT") // ??? ZAS is this needed ??? - changed from account to user
-                .anyRequest().authenticated()
+                .antMatchers("/user/**").hasAnyAuthority("User").anyRequest().authenticated()
                 .and()
                 // form login
                 .csrf().disable().formLogin()
-                .loginPage("/login")
+                .loginPage("/")
                 .failureUrl("/login?error=true")
                 .successHandler(customSecuritySuccessHandler)
                .usernameParameter("username")

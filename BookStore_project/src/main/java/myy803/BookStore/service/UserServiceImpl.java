@@ -34,10 +34,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	public boolean isUserPresent(User user) {
 		Optional<User> storedUser = userMapper.findByUsername(user.getUsername());
 		
-		if(storedUser == null)
+		/*When using the Optional class, the instance itself should never be null. 
+		 * An Optional is designed to either contain a value (indicating the existence of a result) or be empty, 
+		 * representing the absence of a result. The Optional pattern is used in place of null to avoid NullPointerException 
+		 * and make code safer and more explicit about the possibility of missing values.*/
+		if(storedUser.isEmpty())
+		{
 			return false;
+		}
 		
-		return true; //storedUser.method();
+		return true;
 	}
 	
 	@Override

@@ -1,3 +1,7 @@
 theloume epektasimotita wste px an thelei kapoioos na prosthesei ena role,ena category na mhn allaxei polu kwdika
 
 kane dynamic to registration form wste na bgazei opoious authors exei to database???
+
+oi users tha mporoun na kanoun aplh perihghsh sto site kai na blepoun ti paizei, enw an kanoun kai profile mporoun na kanoun kai offers
+
+delete formsdata???

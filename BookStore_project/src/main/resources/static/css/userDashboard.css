@@ -1,0 +1,39 @@
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logout-btn {
+    text-decoration: none;
+    padding: 8px 12px;
+    background-color: #ff6347;
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+
+.buttons {
+    margin-top: 20px;
+}
+
+.dashboard-btn {
+    display: block;
+    margin-bottom: 10px;
+    text-decoration: none;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+
+.dashboard-btn:hover {
+    background-color: #45a049;
+}
