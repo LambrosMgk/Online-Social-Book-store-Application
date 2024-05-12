@@ -25,7 +25,6 @@ public class UserProfileServiceImpl implements UserProfileService {
 	private BookCategoryMapper bookCategoriesMapper;
 	@Autowired 
 	private BookMapper bookMapper;
-	
 	@Autowired
 	private SearchStrategy searchStrategy;
 	@Autowired
@@ -42,7 +41,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 	@Override
 	public void save(UserProfileFormData userProfileFormData) {
 		// TODO Auto-generated method stub
-		
+	
 	}
 
 	@Override

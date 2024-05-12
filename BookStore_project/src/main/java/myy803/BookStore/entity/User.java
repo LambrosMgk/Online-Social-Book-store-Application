@@ -22,9 +22,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(name="users")
 public class User implements UserDetails{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -52,6 +49,7 @@ public class User implements UserDetails{
 		this.role = Role.GUEST;
 	}
 	
+	public int getUserid() {return userid;} // only getter for id 
 	
 	public String getUsername() {return username;}
 

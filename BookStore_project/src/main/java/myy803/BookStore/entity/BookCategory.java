@@ -1,9 +1,9 @@
 package myy803.BookStore.entity;
 
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,44 +17,34 @@ public class BookCategory {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "category")
-	private int category; 
+	@Column(name = "categoryid")
+	private int categoryid; 
 	
 	@Column(name = "name")
 	private String name; 
 	
-    @OneToMany(mappedBy = "bookCategory", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "bookCategory", cascade = CascadeType.ALL)
     private List<Book> books;
 	
+    
+  
 	public BookCategory() {}
 	
-	public BookCategory(int category, String name) {
-		this.category = category;
+	public BookCategory(int categoryid, String name) {
+		this.categoryid = categoryid;
 		this.name = name;
 	}
 	
 	
-	public int getCategory() {
-		return category;
-	}
+	public int getCategoryid() {return categoryid;}
 
-	public void setCategory(int category) {
-		this.category = category;
-	}
+	public void setCategoryid(int category) {this.categoryid = category;}
 
-	public String getName() {
-		return name;
-	}
+	public String getName() {return name;}
 
-	public void setName(String name) {
-		this.name = name;
-	}
+	public void setName(String name) {this.name = name;}
 
-	public List<Book> getBooks() {
-		return books;
-	}
+	public List<Book> getBooks() {return books;}
 
-	public void setBooks(List<Book> books) {
-		this.books = books;
-	}
+	public void setBooks(List<Book> books) {this.books = books;}
 }

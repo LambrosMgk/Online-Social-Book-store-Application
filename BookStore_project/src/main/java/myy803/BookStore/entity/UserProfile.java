@@ -28,6 +28,9 @@ public class UserProfile {
 	@Column(name = "username")
 	private String username;
 	
+	@Column(name = "address")
+	private String address;
+
 	@Column(name = "age")
 	private int age;
 	
@@ -36,23 +39,28 @@ public class UserProfile {
 	
 	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "user_favorite_authors",
+        name = "user_authors",
         joinColumns = @JoinColumn(name = "userid"),
-        inverseJoinColumns = @JoinColumn(name = "authors")
+        inverseJoinColumns = @JoinColumn(name = "authorid")
     )
 	private List<BookAuthor> favouriteBookAuthors;
 	
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "user_favorite_categories",
+        name = "user_categories",
         joinColumns = @JoinColumn(name = "userid"),
-        inverseJoinColumns = @JoinColumn(name = "category")
+        inverseJoinColumns = @JoinColumn(name = "categoryid")
     )
     private List<BookCategory> favouriteBookCategories;
     
     
-	@ManyToMany(mappedBy="userid", fetch=FetchType.LAZY) 
-	private List<Book> bookOffers;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "user_book",
+        joinColumns = @JoinColumn(name = "userid"),
+        inverseJoinColumns = @JoinColumn(name = "bookid")
+    )
+    private List<Book> bookOffers;
 	
 	
 	public UserProfile() {};
@@ -62,41 +70,32 @@ public class UserProfile {
 		this.username = username;	
 	}
 	
-	public int getId_user() {
-		return userid;
-	}
+	// setter _/_ getter 
+	public int getId_user() {return userid;}
 
-	public void setId_user(int id_user) {
-		this.userid = id_user;
-	}
+	public void setId_user(int id_user) {this.userid = id_user;}
 
-	public String getUsername() {
-		return username;
-	}
+	public String getUsername() {return username;}
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+	public void setUsername(String username) {this.username = username;}
 	
-	public String getFullname() {
-		return fullname;
-	}
+	public String getFullname() {return fullname;}
 
-	public void setFull_name(String fullname) {
-		this.fullname = fullname;
-	}
+	public void setFull_name(String fullname) {this.fullname = fullname;}
+	
+	public String getAddress() {return address;	}
 
-	public int getAge() {
-		return age;
-	}
+	public void setAddress(String address) {this.address = address;}
+	
+	public int getAge() {return age;}
 
-	public void setAge(int age) {
-		this.age = age;
-	}
+	public void setAge(int age) {this.age = age;}
+	
+	public int getPhonenumber() {return phonenumber;}
 
-	public List<BookAuthor> getFavouriteBookAuthors() {
-		return favouriteBookAuthors;
-	}
+	public void setPhonenumber(int phonenumber) {this.phonenumber = phonenumber;}
+
+	public List<BookAuthor> getFavouriteBookAuthors() {return favouriteBookAuthors;}
 
 	public void setFavouriteBookAuthors(List<BookAuthor> favouriteBookAuthors) {
 		this.favouriteBookAuthors = favouriteBookAuthors;
@@ -118,5 +117,3 @@ public class UserProfile {
 		this.bookOffers = bookOffers;
 	}
 }
-	
-	

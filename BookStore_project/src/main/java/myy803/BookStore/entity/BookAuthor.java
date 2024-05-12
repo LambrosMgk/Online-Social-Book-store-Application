@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -16,13 +18,19 @@ public class BookAuthor {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name= "idauthor")
+	@Column(name= "authorid")
 	private int idauthor;
 	
 	@Column(name= "name")
 	private String name;
 	
-    @ManyToMany(mappedBy="bookAuthors")
+    @ManyToMany
+    @JoinTable
+    (
+        name = "book_author_book",
+        joinColumns = @JoinColumn(name = "authorid"),
+        inverseJoinColumns = @JoinColumn(name = "bookid")
+    )
     private List<Book> books;
 	
 	public BookAuthor() {}
@@ -32,27 +40,15 @@ public class BookAuthor {
 		this.name = name;
 	}
 	
-	public int getIdauthor() {
-		return idauthor;
-	}
+	public int getIdauthor() {return idauthor;}
 
-	public void setIdauthor(int idauthor) {
-		this.idauthor = idauthor;
-	}
+	public void setIdauthor(int idauthor) {this.idauthor = idauthor;}
 
-	public String getName() {
-		return name;
-	}
+	public String getName() {return name;}
 
-	public void setName(String name) {
-		this.name = name;
-	}
+	public void setName(String name) {this.name = name;}
 
-	public List<Book> getBooks() {
-		return books;
-	}
+	public List<Book> getBooks() {return books;}
 
-	public void setBooks(List<Book> books) {
-		this.books = books;
-	}
+	public void setBooks(List<Book> books) {this.books = books;}
 }

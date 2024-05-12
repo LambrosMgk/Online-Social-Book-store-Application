@@ -8,7 +8,6 @@ import myy803.BookStore.FormsData.BookFormData;
 import myy803.BookStore.FormsData.RecommendationsFormData;
 import myy803.BookStore.FormsData.SearchFormData;
 import myy803.BookStore.FormsData.UserProfileFormData;
-import myy803.BookStore.entity.UserDetails;
 
 @Service
 public interface UserProfileService {

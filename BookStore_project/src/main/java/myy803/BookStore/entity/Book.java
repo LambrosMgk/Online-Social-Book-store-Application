@@ -22,7 +22,7 @@ public class Book {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="idbook")
+	@Column(name="bookid")
 	private int idbook;
 	
 	@Column(name="title")
@@ -32,16 +32,15 @@ public class Book {
 	private int userid;
 		
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category")  // This should match the column in the database that holds the foreign key.
+    @JoinColumn(name = "categoryid")  // This should match the column in the database that holds the foreign key.
     private BookCategory bookCategory;
 	
-	
-    
     @ManyToMany
-    @JoinTable(
-        name = "book_author",
-        joinColumns = @JoinColumn(name = "idbook"),
-        inverseJoinColumns = @JoinColumn(name = "idauthor")
+    @JoinTable
+    (
+        name = "book_author_book",
+        joinColumns = @JoinColumn(name = "bookid"),
+        inverseJoinColumns = @JoinColumn(name = "authorid")
     )
     private List<BookAuthor> bookAuthors;
 	
@@ -56,40 +55,24 @@ public class Book {
 		this.bookCategory = bookCategory;
 	}
 	
-	public int getIdbook() {
-		return idbook;
-	}
+	public int getIdbook() {return idbook;}
 
-	public void setIdbook(int idbook) {
-		this.idbook = idbook;
-	}
+	public void setIdbook(int idbook) {this.idbook = idbook;}
 
-	public String getTitle() {
-		return title;
-	}
+	public String getTitle() {return title;}
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+	public void setTitle(String title) {this.title = title;}
 
-	public List<BookAuthor> getBookAuthors() {
-		return bookAuthors;
-	}
+	public List<BookAuthor> getBookAuthors() {return bookAuthors;}
 
-	public void setBookAuthors(List<BookAuthor> bookAuthors) {
-		this.bookAuthors = bookAuthors;
-	}
+	public void setBookAuthors(List<BookAuthor> bookAuthors) {this.bookAuthors = bookAuthors;}
 
-	public BookCategory getBookCategory() {
-		return bookCategory;
-	}
+	public BookCategory getBookCategory() {return bookCategory;}
 
-	public void setBookCategory(BookCategory bookCategory) {
-		this.bookCategory = bookCategory;
-	}
+	public void setBookCategory(BookCategory bookCategory) {this.bookCategory = bookCategory;}
 
 	public String toString() {
-		return "";
+		return "Book with title : " + this.title + " from the user with id " + this.userid;
 	}
 
 }
