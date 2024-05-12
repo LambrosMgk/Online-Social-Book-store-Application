@@ -6,8 +6,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("homepage");
-    }
+	 @Override
+	    public void addViewControllers(ViewControllerRegistry registry) 
+	 {
+	    	/*
+	    	 * ViewControllerRegistry allows to create 
+	    	 * simple automated controllers pre-configured 
+	    	 * with status code and/or a view
+	    	 */
+	        registry.addViewController("/").setViewName("homepage");
+	    }
 }

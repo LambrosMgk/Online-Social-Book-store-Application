@@ -47,8 +47,15 @@ public class WebSecurityConfig {
         return authConfig.getAuthenticationManager();
     }
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
+    /*
+     * DaoAuthenticationProvider is an AuthenticationProvider implementation that uses 
+     * a UserDetailsService 
+     * and PasswordEncoder 
+     * to authenticate a username and password.
+     */
+	@Bean
+    public DaoAuthenticationProvider authenticationProvider() 
+	{
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
         authProvider.setUserDetailsService(userDetailsService());
@@ -63,7 +70,8 @@ public class WebSecurityConfig {
                 http.authorizeRequests()
                 // URL matching for accessibility
                 .antMatchers("/", "/login", "/register", "/save").permitAll()
-                .antMatchers("/user/**").hasAnyAuthority("User").anyRequest().authenticated()
+                .antMatchers("/user/**").hasAnyAuthority("USER")
+                .antMatchers("/user/**").hasAnyAuthority("GUEST").anyRequest().authenticated()
                 .and()
                 // form login
                 .csrf().disable().formLogin()

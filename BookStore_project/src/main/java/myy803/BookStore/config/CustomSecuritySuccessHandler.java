@@ -17,24 +17,33 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 @Configuration
 public class CustomSecuritySuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-	 @Override
-	    protected void handle(HttpServletRequest request,HttpServletResponse response,Authentication authentication)throws java.io.IOException {
-			String targetUrl = determineTargetUrl(authentication);
-			if(response.isCommitted()) 
-				return;
-			RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-			redirectStrategy.sendRedirect(request, response, targetUrl);
-	    }
+	@Override
+    protected void handle(HttpServletRequest request, HttpServletResponse response,
+            Authentication authentication) throws java.io.IOException 
+	{
+        String targetUrl = determineTargetUrl(authentication);
+        if (response.isCommitted())
+            return;
+        getRedirectStrategy().sendRedirect(request, response, targetUrl);
+    }
+	
 
-	    protected String determineTargetUrl(Authentication authentication){
-	        String url = "/login?error=true";
-	        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-	        List<String> roles = new ArrayList<String>();
-	        
-	        for(GrantedAuthority a : authorities){
-	            roles.add(a.getAuthority());
-	        }
-	        
-	        return "/user/dashboard";
-	    }
+    protected String determineTargetUrl(Authentication authentication)
+    {
+    	String url = "/?loginError";
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        List<String> roles = new ArrayList<String>();
+        
+        for(GrantedAuthority a : authorities){
+            roles.add(a.getAuthority());
+        }
+        
+        if(roles.contains("USER") || roles.contains("GUEST"))
+        {
+        	System.out.println("User will be redirected to " + url);
+        	url = "/user/userDashboard";
+        }
+        
+        return url;
+    }
 }
