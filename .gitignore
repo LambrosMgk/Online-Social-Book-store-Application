@@ -1,6 +1,6 @@
-bin/
+BookStore_project/target/classes/META-INF/maven/com.example/sp_project/pom.properties
+
 target/
-.settings/
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
