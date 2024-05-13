@@ -11,4 +11,6 @@ public interface UserMapper extends JpaRepository<User , Integer> {
 	Optional<User> findByUsername(String username);
 	
 	public User findUserByuserid(Integer id);
+	
+	public User findByusername(String username);
 }

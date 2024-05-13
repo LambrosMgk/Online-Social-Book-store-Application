@@ -33,6 +33,7 @@ public class Book {
 	
 	@OneToMany(mappedBy = "userid", cascade = CascadeType.ALL)
 	private List<UserProfile> requestingUsers;
+
 	
 	public Book() {}
 	
@@ -57,7 +58,12 @@ public class Book {
 	public BookCategory getBookCategory() {return bookCategory;}
 
 	public void setBookCategory(BookCategory bookCategory) {this.bookCategory = bookCategory;}
+	
+	public List<UserProfile> getRequestingUsers() {return requestingUsers;}
 
+	public void setRequestingUsers(List<UserProfile> requestingUsers) {this.requestingUsers = requestingUsers;}
+
+	
 	public String toString() {
 		return "Book with title : " + this.title + " from the user with id " + this.userid;
 	}

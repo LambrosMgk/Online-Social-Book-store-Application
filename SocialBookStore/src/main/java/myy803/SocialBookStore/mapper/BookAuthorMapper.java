@@ -6,5 +6,6 @@ import myy803.SocialBookStore.entity.BookAuthor;
 
 
 public interface BookAuthorMapper extends JpaRepository<BookAuthor, Integer> {
+	
 	public List<BookAuthor> findByName(String Name);
 }

@@ -79,6 +79,14 @@ CREATE TABLE `user_book` (
   FOREIGN KEY (`bookid`) REFERENCES `book` (`bookid`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE `user_requested_books` (
+  `userid` INT NOT NULL,
+  `bookid` INT NOT NULL,
+  PRIMARY KEY (`userid`, `bookid`),
+  FOREIGN KEY (`userid`) REFERENCES `userprofile` (`userid`),
+  FOREIGN KEY (`bookid`) REFERENCES `book` (`bookid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 CREATE TABLE `book_author_book` (
   `bookid` INT NOT NULL,
   `authorid` INT NOT NULL,
@@ -86,6 +94,8 @@ CREATE TABLE `book_author_book` (
   FOREIGN KEY (`bookid`) REFERENCES `book` (`bookid`) ON DELETE CASCADE,
   FOREIGN KEY (`authorid`) REFERENCES `bookauthor` (`authorid`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
 
 INSERT INTO `users` (username, password, role) VALUES
 ('john_doe', 'password123', 'GUEST'),

@@ -52,12 +52,29 @@ public class UserProfile {
     )
     private List<Book> bookOffers;
 	
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "user_requested_books",
+        joinColumns = @JoinColumn(name = "userid"),
+        inverseJoinColumns = @JoinColumn(name = "bookid")
+    )
+    private List<Book> booksRequested;
+    
 	
 	public UserProfile() {};
 	
 	public UserProfile(int id_user, String username) {
 		this.userid = id_user;
 		this.username = username;	
+	}
+	
+	public UserProfile(int userid, String fullname, String username, String address, int age, int phonenumber) {
+		this.userid = userid;
+		this.fullname = fullname;
+		this.username = username;
+		this.address = address;
+		this.age = age;
+		this.phonenumber = phonenumber;
 	}
 	
 	// setter _/_ getter 
@@ -99,11 +116,12 @@ public class UserProfile {
 		this.favouriteBookCategories = favouriteBookCategories;
 	}
 
-	public List<Book> getBookOffers() {
-		return bookOffers;
-	}
+	public List<Book> getBookOffers() {return bookOffers;}
 
-	public void setBookOffers(List<Book> bookOffers) {
-		this.bookOffers = bookOffers;
-	}
+	public void setBookOffers(List<Book> bookOffers) {this.bookOffers = bookOffers;}
+	
+	public List<Book> getBooksRequested() {return booksRequested;}
+
+	public void setBooksRequested(List<Book> booksRequested) {this.booksRequested = booksRequested;}
+
 }

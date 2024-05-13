@@ -1,13 +1,14 @@
 package myy803.SocialBookStore.formsData;
 
 
+import java.util.List;
+import myy803.SocialBookStore.entity.Book;
+import myy803.SocialBookStore.entity.BookAuthor;
+import myy803.SocialBookStore.entity.BookCategory;
 import myy803.SocialBookStore.entity.User;
 import myy803.SocialBookStore.entity.UserProfile;
 
 public class UserProfileFormData {
-	
-	private User user;
-	private UserProfile userProfile;
 	
 	private int user_id;
 	private String username;
@@ -15,21 +16,24 @@ public class UserProfileFormData {
 	private String address;
 	private int age;
 	private int phonenum;
+    private List<BookAuthor> favoriteAuthors;
+    private List<BookCategory> favoriteCategories;
+    private List<Book> bookOffers;
+    private List<Book> requestedBooks;
 	
-	public UserProfileFormData() 
+
+	public UserProfileFormData(UserProfile userProfile) 
 	{
-		if (this.user.getUserid() != this.userProfile.getId_user()) 
-		{
-			System.out.println("WARNING, the user class that you initialize is not the same with the user profile");
-		}
-		
-		this.user_id = this.user.getUserid();
-		this.username = this.user.getUsername();
-		this.fullname = this.userProfile.getFullname();
-		this.address = this.userProfile.getAddress();
-		this.age = this.userProfile.getAge();
-		this.phonenum = this.userProfile.getPhonenumber();
-		
+		this.user_id = userProfile.getId_user();
+		this.username = userProfile.getUsername();
+		this.fullname = userProfile.getFullname();
+		this.address = userProfile.getAddress();
+		this.age = userProfile.getAge();
+		this.phonenum =userProfile.getPhonenumber();
+		this.favoriteAuthors = userProfile.getFavouriteBookAuthors();
+		this.favoriteCategories = userProfile.getFavouriteBookCategories();
+		this.bookOffers = userProfile.getBookOffers();
+		this.requestedBooks = userProfile.getBooksRequested(); 
 	}
 	
 	
@@ -45,6 +49,21 @@ public class UserProfileFormData {
 
 	public int getPhonenum() {return phonenum;}
 	
+    public List<BookAuthor> getFavoriteAuthors() {return favoriteAuthors;}
+
+    public void setFavoriteAuthors(List<BookAuthor> favoriteAuthors) {this.favoriteAuthors = favoriteAuthors;}
+
+    public List<BookCategory> getFavoriteCategories() {return favoriteCategories;}
+
+    public void setFavoriteCategories(List<BookCategory> favoriteCategories) {this.favoriteCategories = favoriteCategories;}
+
+    public List<Book> getBookOffers() {return bookOffers;}
+
+    public void setBookOffers(List<Book> bookOffers) {this.bookOffers = bookOffers;}
+    
+	public List<Book> getRequestedBooks() {return requestedBooks;}
+
+	public void setRequestedBooks(List<Book> requestedBooks) {this.requestedBooks = requestedBooks;}
 	
 	@Override
 	public String toString() {
