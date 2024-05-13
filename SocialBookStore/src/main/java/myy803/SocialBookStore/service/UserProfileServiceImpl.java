@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import myy803.SocialBookStore.entity.Book;
+import myy803.SocialBookStore.entity.BookAuthor;
+import myy803.SocialBookStore.entity.BookCategory;
 import myy803.SocialBookStore.entity.UserProfile;
 import myy803.SocialBookStore.formsData.BookFormData;
 import myy803.SocialBookStore.formsData.RecommendationsFormData;
@@ -21,10 +23,11 @@ public class UserProfileServiceImpl implements UserProfileService {
 	private UserProfileMapper userProfileMapper;
 	@Autowired 
 	private BookMapper bookMapper;
-	@Autowired
+	
+	//Autowired
 	private SearchStrategy searchStrategy;
 	@Autowired
-	private RecommendationsFactory recommendationsFactory;
+	private RecommendationsStrategy recommendationsStrategy;
 	
 	
 	
@@ -84,11 +87,13 @@ public class UserProfileServiceImpl implements UserProfileService {
 		
 		
 	}
-
+	
+	// to return a list of books after searching
 	@Override
 	public List<BookFormData> searchBooks(SearchFormData searchFormData) {
-		// TODO Auto-generated method stub
-		return null;
+		List<BookFormData> booksFormData = new ArrayList<>();
+		booksFormData = searchStrategy.search(searchFormData,bookMapper);
+		return booksFormData;
 	}
 
 	@Override

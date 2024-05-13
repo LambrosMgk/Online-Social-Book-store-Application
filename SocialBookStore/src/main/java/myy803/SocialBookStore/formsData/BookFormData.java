@@ -1,7 +1,6 @@
 package myy803.SocialBookStore.formsData;
 
 import java.util.List;
-import myy803.SocialBookStore.entity.Book;
 import myy803.SocialBookStore.entity.BookAuthor;
 import myy803.SocialBookStore.entity.BookCategory;
 
