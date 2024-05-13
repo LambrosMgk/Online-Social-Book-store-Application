@@ -17,7 +17,7 @@ public class AuthController {
 
     @RequestMapping("/login")
     public String login(){
-        return "auth/signin";
+        return "auth/signin";	// the whole login process is handled by WebSecurityConfig and the custom handlers there
     }
 
     @RequestMapping("/register")

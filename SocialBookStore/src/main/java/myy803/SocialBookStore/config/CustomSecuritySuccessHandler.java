@@ -42,7 +42,14 @@ public class CustomSecuritySuccessHandler extends SimpleUrlAuthenticationSuccess
 	        }
 	        
 
-	        url = "/guest/dashboard"; 
+	        if(roles.contains("GUEST"))
+	        {
+	        	url = "/guest/dashboard"; 
+	        }
+	        else if (roles.contains("USER"))
+	        {
+	        	url = "/user/dashboard"; 
+	        }
 	        
 	        
 	        return url;

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-			<!-- GUEST DASHBOARD -->
-
+    		<!-- USER DASHBOARD -->
+    
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     
     <!-- External CSS reference -->
-    <link rel="stylesheet" type="text/css" href="css/guest/dashboard.css"> 
+    <link rel="stylesheet" type="text/css" href="css/user/dashboard.css"> 
     
     <title>User Dashboard</title>
 </head>
@@ -19,7 +19,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12 col-md-8 text-center">
-            <h2>Welcome to Guest Dashboard</h2>
+            <h2>Welcome to User Dashboard</h2>
             <h4>Logged as: <span sec:authentication="name"></span></h4>
             <h4>Has role: <span sec:authentication="authorities"></span></h4>
         </div>
@@ -30,19 +30,13 @@
     </div>
     <hr>
     <div class="button-group text-center">
-        <a th:href="@{/guest/create-profile}" class="btn btn-secondary btn-sm mb-3">Create Profile</a>
-        <button onclick="alertProfile()" class="btn btn-secondary btn-sm mb-3">Show Requests</button>
-        <button onclick="alertProfile()" class="btn btn-secondary btn-sm mb-3">Show Recommendations</button>
-        <button onclick="alertProfile()" class="btn btn-secondary btn-sm mb-3">My Offerings</button>
-        <button onclick="alertProfile()" class="btn btn-secondary btn-sm mb-3">My Wishlist</button>
-        <a th:href="@{/guest/search-book}" class="btn btn-secondary btn-sm mb-3">Search Book</a>
+        <a th:href="@{/user/edit-profile}" class="btn btn-secondary btn-sm mb-3">Edit Profile</a>
+        <a th:href="@{/user/show-requests}" class="btn btn-secondary btn-sm mb-3">Show Requests</a>
+        <a th:href="@{/user/show-recommendations}" class="btn btn-secondary btn-sm mb-3">Show Recommendations</a>
+        <a th:href="@{/user/my-offerings}" class="btn btn-secondary btn-sm mb-3">My Offerings</a>
+        <a th:href="@{/user/my-wishlist}" class="btn btn-secondary btn-sm mb-3">My Wishlist</a>
+        <a th:href="@{/user/search-book}" class="btn btn-secondary btn-sm mb-3">Search Book</a>
     </div>
 </div>
-
-<script>
-function alertProfile() {
-    alert("You must create a profile first to access this function.");
-}
-</script>
 </body>
 </html>
