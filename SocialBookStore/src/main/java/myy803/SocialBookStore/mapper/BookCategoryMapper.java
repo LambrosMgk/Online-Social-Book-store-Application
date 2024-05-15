@@ -6,6 +6,10 @@ import myy803.SocialBookStore.entity.BookCategory;
 
 
 public interface BookCategoryMapper extends JpaRepository<BookCategory, Integer> {
-	public List<BookCategory> findByName(String name);
+//	public List<BookCategory> findByName(String name);
+	
+	public BookCategory findBycategoryid(int categoryid);
+	
+	public BookCategory findByName (String name);
 }
 
