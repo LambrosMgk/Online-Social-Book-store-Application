@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS `bookauthor`;
 DROP TABLE IF EXISTS `user_authors`;
 DROP TABLE IF EXISTS `user_categories`;
 DROP TABLE IF EXISTS `book_author_book`;
-DROP TABLE IF EXISTS `user_book_offers`;
+DROP TABLE IF EXISTS `user_book_offers` ;
 DROP TABLE IF EXISTS `user_requested_books`;
 SET FOREIGN_KEY_CHECKS = 1;
 
