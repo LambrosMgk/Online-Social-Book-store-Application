@@ -10,8 +10,8 @@ DROP TABLE IF EXISTS `bookauthor`;
 DROP TABLE IF EXISTS `user_authors`;
 DROP TABLE IF EXISTS `user_categories`;
 DROP TABLE IF EXISTS `book_author_book`;
-DROP TABLE IF EXISTS`user_book` ;
-DROP TABLE IF EXISTS`user_requested_books` ;
+DROP TABLE IF EXISTS `user_book_offers`;
+DROP TABLE IF EXISTS `user_requested_books`;
 SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE `users` (
@@ -71,7 +71,7 @@ CREATE TABLE `user_authors` (
   FOREIGN KEY (authorid) REFERENCES `bookauthor`(authorid)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `user_book` (
+CREATE TABLE `user_book_offers` (
   `userprofile_id` INT NOT NULL,
   `bookid` INT NOT NULL,
   PRIMARY KEY (`userprofile_id`, `bookid`),
