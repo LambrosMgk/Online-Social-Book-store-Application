@@ -63,15 +63,11 @@ public class GuestController {
     	//save profile to base
     	userProfileForm.setUsername(username);
     	userProfileForm.setUser_id(userService.findByUsername(username).getUserid());	// This should not throw an error since the user is logged in
-    	System.err.println("User data id : " + userProfileForm.getUser_id());	// debug, remove later
     	userProfileService.save(userProfileForm);
     	
-    	//favoriteAuthors;
-        //private List<BookCategory> favoriteCategories;
     	
-    	System.out.println("Fullname : " + userProfileForm.getFullname() + ", Categories : " + userProfileForm.getFavoriteCategories());	// debug
-    	model.addAttribute("successMessage", "Profile created, login again to have access as user!");
-    	return "guest/dashboard";
+    	model.addAttribute("successMessage", "Profile created, you are now a user!");
+    	return "redirect:/logout";
     }
     
     

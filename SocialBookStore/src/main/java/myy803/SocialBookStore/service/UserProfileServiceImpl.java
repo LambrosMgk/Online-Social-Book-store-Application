@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import myy803.SocialBookStore.entity.Book;
+import myy803.SocialBookStore.entity.Role;
+import myy803.SocialBookStore.entity.User;
 import myy803.SocialBookStore.entity.UserProfile;
 import myy803.SocialBookStore.formsData.BookFormData;
 import myy803.SocialBookStore.formsData.RecommendationsFormData;
@@ -19,6 +21,8 @@ public class UserProfileServiceImpl implements UserProfileService {
 	
 	@Autowired
 	private UserProfileMapper userProfileMapper;
+	@Autowired
+	private UserService userService;
 	@Autowired 
 	private BookMapper bookMapper;
 	
@@ -41,13 +45,18 @@ public class UserProfileServiceImpl implements UserProfileService {
 	public void save(UserProfileFormData userProfileFormData) {
 		UserProfile userProfile = new UserProfile(
 				userProfileFormData.getUser_id(),
-				userProfileFormData.getFullname(),
 				userProfileFormData.getUsername(),
+				userProfileFormData.getFullname(),
 				userProfileFormData.getAddress(),
 				userProfileFormData.getAge(),
 				userProfileFormData.getPhonenum());
 		
-		System.err.println("2User data id : " + userProfile.getUserid());	// debug, remove later
+		userProfile.setFavouriteBookCategories(userProfileFormData.getFavoriteCategories());
+		userProfile.setFavouriteBookAuthors(userProfileFormData.getFavoriteAuthors());
+		
+		User user = userService.findByUsername(userProfileFormData.getUsername());
+		user.setRole(Role.USER);
+		userService.saveUser(user);
 		
 		userProfileMapper.save(userProfile);
 	
@@ -208,7 +217,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 	        	
 	        for (Iterator<UserProfile> iterator = requestingUsers.iterator(); iterator.hasNext();) {
 	            UserProfile requestingUser = iterator.next();
-	            if (requestingUser.getUserid() == userProfile.getUserid()) {
+	            if (requestingUser.getUserprofile_id() == userProfile.getUserprofile_id()) {
 	                iterator.remove(); 
 	                break; 
 	            }

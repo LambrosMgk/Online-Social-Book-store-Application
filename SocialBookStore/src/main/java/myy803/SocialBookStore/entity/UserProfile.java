@@ -9,14 +9,17 @@ public class UserProfile {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "userprofile_id")
+	private int userprofile_id;
+	
 	@Column(name = "userid")
 	private int userid;
 	
-	@Column(name = "fullname")
-	private String fullname;
-	
 	@Column(name = "username")
 	private String username;
+	
+	@Column(name = "fullname")
+	private String fullname;
 	
 	@Column(name = "address")
 	private String address;
@@ -30,7 +33,7 @@ public class UserProfile {
 	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "user_authors",
-        joinColumns = @JoinColumn(name = "userid"),
+        joinColumns = @JoinColumn(name = "userprofile_id"),
         inverseJoinColumns = @JoinColumn(name = "authorid")
     )
 	private List<BookAuthor> favouriteBookAuthors;
@@ -38,7 +41,7 @@ public class UserProfile {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "user_categories",
-        joinColumns = @JoinColumn(name = "userid"),
+        joinColumns = @JoinColumn(name = "userprofile_id"),
         inverseJoinColumns = @JoinColumn(name = "categoryid")
     )
     private List<BookCategory> favouriteBookCategories;
@@ -47,7 +50,7 @@ public class UserProfile {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "user_book_offers",
-        joinColumns = @JoinColumn(name = "userid"),
+        joinColumns = @JoinColumn(name = "userprofile_id"),
         inverseJoinColumns = @JoinColumn(name = "bookid")
     )
     private List<Book> bookOffers;
@@ -55,7 +58,7 @@ public class UserProfile {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "user_requested_books",
-        joinColumns = @JoinColumn(name = "userid"),
+        joinColumns = @JoinColumn(name = "userprofile_id"),
         inverseJoinColumns = @JoinColumn(name = "bookid")
     )
     private List<Book> booksRequested;
@@ -63,24 +66,28 @@ public class UserProfile {
 	
 	public UserProfile() {};
 	
-	public UserProfile(int id_user, String username) 
+	public UserProfile(int userid, String username) 
 	{
-		this.userid = id_user;
+		this.userid = userid;
 		this.username = username;	
 	}
 	
-	public UserProfile(int userid, String fullname, String username, String address, int age, int phonenumber) 
+	public UserProfile(int userid, String username, String fullname, String address, int age, int phonenumber) 
 	{
 		this.userid = userid;
-		this.fullname = fullname;
 		this.username = username;
+		this.fullname = fullname;
 		this.address = address;
 		this.age = age;
 		this.phonenumber = phonenumber;
 	}
 	
 	
-	public void setUserid(int Userid) {this.userid = Userid;}
+	public void setUserprofile_id(int Userprofile_id) {this.userprofile_id = Userprofile_id;}
+	public int getUserprofile_id() {return userprofile_id;}
+	
+	
+	public void setUserid(int userid) {this.userid = userid;}
 	public int getUserid() {return userid;}
 
 	

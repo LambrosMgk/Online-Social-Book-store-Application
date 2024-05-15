@@ -9,6 +9,7 @@ import myy803.SocialBookStore.entity.UserProfile;
 
 public class UserProfileFormData {
 	
+	private int userprofile_id;
 	private int user_id;
 	private String username;
 	private String fullname;
@@ -23,6 +24,7 @@ public class UserProfileFormData {
 
 	public UserProfileFormData(UserProfile userProfile) 
 	{
+		this.userprofile_id = userProfile.getUserprofile_id();
 		this.user_id = userProfile.getUserid();
 		this.username = userProfile.getUsername();
 		this.fullname = userProfile.getFullname();
@@ -38,6 +40,7 @@ public class UserProfileFormData {
 	/* This constructor should be used to help create a profile for a guest without needing to import the entity userProfile*/
 	public UserProfileFormData() 
 	{
+		this.userprofile_id = -1;
 		this.user_id = -1;
 		this.username = null;
 		this.fullname = null;
@@ -51,9 +54,13 @@ public class UserProfileFormData {
 	}
 	
 	
-	public void setUser_id(int user_id) { this.user_id = user_id; }
-	public int getUser_id() {return user_id;}
+	public void setUserprofile_id(int userprofile_id) { this.userprofile_id = userprofile_id; }
+	public int getUserprofile_id() {return userprofile_id;}
 
+	
+	public void setUser_id(int user_id) {this.user_id = user_id;}
+	public int getUser_id() {return user_id;}
+	
 	
 	public void setUsername(String username) { this.username = username; }
 	public String getUsername() {return username;}
@@ -92,9 +99,10 @@ public class UserProfileFormData {
 	
 	@Override
 	public String toString() {
-		return "UserProfileFormData [user_id=" + this.user_id + ", username=" + this.username + ", fullname=" + this.fullname
+		return "UserProfileFormData [userprofile_id=" + this.userprofile_id + ", user_id=" + this.user_id + ", username=" + this.username + ", fullname=" + this.fullname
 				+ ", address=" + this.address + ", age=" + this.age + ", phonenum=" + this.phonenum + "]";
 	}
+
 }
 	
 	

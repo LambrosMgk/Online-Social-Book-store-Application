@@ -15,8 +15,8 @@ public class Book {
 	@Column(name="title")
 	private String title;
 	
-	@Column(name="userid")
-	private int userid;
+	@Column(name="userprofile_id")
+	private int userprofile_id;
 		
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoryid")  // This should match the column in the database that holds the foreign key.
@@ -31,7 +31,7 @@ public class Book {
     )
     private List<BookAuthor> bookAuthors;
 	
-	@OneToMany(mappedBy = "userid", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "userprofile_id", cascade = CascadeType.ALL)
 	private List<UserProfile> requestingUsers;
 
 	
@@ -42,30 +42,30 @@ public class Book {
 		this.title = title;
 		this.bookCategory = bookCategory;
 	}
+
 	
+	public void setIdbook(int idbook) {this.idbook = idbook;}
 	public int getIdbook() {return idbook;}
 
-	public void setIdbook(int idbook) {this.idbook = idbook;}
-
+	
+	public void setTitle(String title) {this.title = title;}
 	public String getTitle() {return title;}
 
-	public void setTitle(String title) {this.title = title;}
-
+	
+	public void setBookAuthors(List<BookAuthor> bookAuthors) {this.bookAuthors = bookAuthors;}
 	public List<BookAuthor> getBookAuthors() {return bookAuthors;}
 
-	public void setBookAuthors(List<BookAuthor> bookAuthors) {this.bookAuthors = bookAuthors;}
-
+	
+	public void setBookCategory(BookCategory bookCategory) {this.bookCategory = bookCategory;}
 	public BookCategory getBookCategory() {return bookCategory;}
 
-	public void setBookCategory(BookCategory bookCategory) {this.bookCategory = bookCategory;}
 	
-	public List<UserProfile> getRequestingUsers() {return requestingUsers;}
-
 	public void setRequestingUsers(List<UserProfile> requestingUsers) {this.requestingUsers = requestingUsers;}
+	public List<UserProfile> getRequestingUsers() {return requestingUsers;}
 
 	
 	public String toString() {
-		return "Book with title : " + this.title + " from the user with id " + this.userid;
+		return "Book with title : " + this.title + " from the user with id " + this.userprofile_id;
 	}
 
 }

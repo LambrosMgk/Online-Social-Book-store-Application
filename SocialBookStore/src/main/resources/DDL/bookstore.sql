@@ -24,12 +24,15 @@ CREATE TABLE `users` (
 
 CREATE TABLE `userprofile` (
     userprofile_id int NOT NULL AUTO_INCREMENT,
+    userid int NOT NULL,
     fullname varchar(255) DEFAULT NULL,
     username varchar(255) DEFAULT NULL, 
     age int NOT NULL,
     address varchar(255),
     phonenumber int, 
-    PRIMARY KEY (userprofile_id)
+    PRIMARY KEY (userprofile_id),
+    UNIQUE KEY `unique_userid` (userid),
+    FOREIGN KEY (userid) REFERENCES `users`(userid)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `bookcategory` (
@@ -101,7 +104,8 @@ INSERT INTO `users` (username, password, role) VALUES
 ('john_doe', 'password123', 'GUEST'),
 ('user1', '12345', 'USER'),
 ('bob_jackson', 'bobspassword', 'GUEST'),
-('waaaargr', '$2a$10$YECF6Bj11.sz7FDIs4104uRYLjSSeSQt0ln3VyfvccxwJLLshkiLC', 'USER');
+('waaaargr', '$2a$10$YECF6Bj11.sz7FDIs4104uRYLjSSeSQt0ln3VyfvccxwJLLshkiLC', 'USER'),
+('forthnet', '$2a$10$DElagAdAfKrabR9bOfYCp.aYq648YjXMKvbWJCNvW/iXGGS6.0Fza', 'GUEST');
 
 INSERT INTO `bookcategory` (name) VALUES ('Art'), ('Comic'), ('Fantasy'), ('Fiction'), 
 ('Biographies'), ('History'), ('Science'), ('Literature'), ('Adventure'), ('Crime'), ('Other');
