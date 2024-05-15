@@ -1,12 +1,20 @@
 package myy803.SocialBookStore.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import myy803.SocialBookStore.formsData.UserProfileFormData;
+import myy803.SocialBookStore.service.UserProfileService;
 
 @Controller
 public class UserController {
+	
+	@Autowired
+	UserProfileService userProfileService;
 
     @RequestMapping("/user/dashboard")
     public String getUserHome()
@@ -20,11 +28,30 @@ public class UserController {
     
     
     @RequestMapping("/user/edit-profile")
-    public String editProfile()
+    public String editProfile(Model model)	// Get profile from base and autofill the fields in editProfile.html
     {
-		// Get profile from base and autofill the fields in editProfile.html
-        return "user/editProfile";
+    	// User is already signed in so we can get the username
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserProfileFormData userProfileForm = userProfileService.retreiveProfile(authentication.getName());
+		
+		model.addAttribute("userProfileForm", userProfileForm);
+
+		return "user/editProfile";
     }
+    
+    
+    @RequestMapping("/user/save-profile")
+    public String saveProfile(Model model)
+    {
+    	
+    	
+    	
+    	System.out.println("User profile updated successfully!");
+    	model.addAttribute("successMessage", "Update successfull!");
+    	
+		return "user/dashboard";
+    }
+    
     
     @RequestMapping("/user/show-requests")
     public String showRequests()

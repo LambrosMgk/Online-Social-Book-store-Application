@@ -24,7 +24,7 @@ CREATE TABLE `users` (
 
 CREATE TABLE `userprofile` (
     userid int NOT NULL AUTO_INCREMENT,
-    userfullname varchar(255) DEFAULT NULL,
+    fullname varchar(255) DEFAULT NULL,
     username varchar(255) DEFAULT NULL, 
     age int NOT NULL,
     address varchar(255),
@@ -101,5 +101,8 @@ CREATE TABLE `book_author_book` (
 INSERT INTO `users` (username, password, role) VALUES
 ('john_doe', 'password123', 'GUEST'),
 ('user1', '12345', 'USER'),
-('bob_jackson', 'bobspassword', 'GUEST');
+('bob_jackson', 'bobspassword', 'GUEST'),
+('waaaargr', '$2a$10$YECF6Bj11.sz7FDIs4104uRYLjSSeSQt0ln3VyfvccxwJLLshkiLC', 'USER');
 
+INSERT INTO `bookcategory` (name) VALUES ('Art'), ('Comic'), ('Fantasy'), ('Fiction'), 
+('Biographies'), ('History'), ('Science'), ('Literature'), ('Adventure'), ('Crime'), ('Other');

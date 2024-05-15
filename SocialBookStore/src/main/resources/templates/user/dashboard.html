@@ -19,9 +19,15 @@
 <div class="container">
     <div class="row">
         <div class="col-12 col-md-8 text-center">
+        
             <h2>Welcome to User Dashboard</h2>
+            
             <h4>Logged as: <span sec:authentication="name"></span></h4>
+            
             <h4>Has role: <span sec:authentication="authorities"></span></h4>
+            
+            <span th:utext="${successMessage}"></span>
+            
         </div>
         <div class="col-12 col-md-4 text-right">
             <a th:href="@{/}" class="btn btn-primary btn-sm mb-3">Home</a>

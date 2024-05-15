@@ -35,34 +35,60 @@ public class UserProfileFormData {
 		this.requestedBooks = userProfile.getBooksRequested(); 
 	}
 	
+	/* This constructor should be used to help create a profile for a guest without needing to import the entity userProfile*/
+	public UserProfileFormData() 
+	{
+		this.user_id = -1;
+		this.username = null;
+		this.fullname = null;
+		this.address = null;
+		this.age = 0;
+		this.phonenum = 0;
+		this.favoriteAuthors = null;
+		this.favoriteCategories = null;
+		this.bookOffers = null;
+		this.requestedBooks = null; 
+	}
 	
+	
+	public void setUser_id(int user_id) { this.user_id = user_id; }
 	public int getUser_id() {return user_id;}
 
+	
+	public void setUsername(String username) { this.username = username; }
 	public String getUsername() {return username;}
 
+	
+	public void setFullname(String fullname) { this.fullname = fullname; }
 	public String getFullname() {return fullname;}
 
+	
+	public void setAddress(String address) { this.address = address; }
 	public String getAddress() {return address;}
 
+	
+	public void setAge(int age) { this.age = age; }
 	public int getAge() {return age;}
 
+	
+	public void setPhonenum(int phonenum) { this.phonenum = phonenum; }
 	public int getPhonenum() {return phonenum;}
 	
+	
+	public void setFavoriteAuthors(List<BookAuthor> favoriteAuthors) { this.favoriteAuthors = favoriteAuthors; } 
     public List<BookAuthor> getFavoriteAuthors() {return favoriteAuthors;}
 
-    public void setFavoriteAuthors(List<BookAuthor> favoriteAuthors) {this.favoriteAuthors = favoriteAuthors;}
-
+    
+    public void setFavoriteCategories(List<BookCategory> favoriteCategories) {this.favoriteCategories = favoriteCategories;}
     public List<BookCategory> getFavoriteCategories() {return favoriteCategories;}
 
-    public void setFavoriteCategories(List<BookCategory> favoriteCategories) {this.favoriteCategories = favoriteCategories;}
-
-    public List<Book> getBookOffers() {return bookOffers;}
-
-    public void setBookOffers(List<Book> bookOffers) {this.bookOffers = bookOffers;}
     
+    public void setBookOffers(List<Book> bookOffers) {this.bookOffers = bookOffers;}
+    public List<Book> getBookOffers() {return bookOffers;}
+    
+    
+    public void setRequestedBooks(List<Book> requestedBooks) {this.requestedBooks = requestedBooks;}
 	public List<Book> getRequestedBooks() {return requestedBooks;}
-
-	public void setRequestedBooks(List<Book> requestedBooks) {this.requestedBooks = requestedBooks;}
 	
 	@Override
 	public String toString() {

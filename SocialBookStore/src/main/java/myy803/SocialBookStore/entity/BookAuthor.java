@@ -26,20 +26,20 @@ public class BookAuthor {
 	
 	public BookAuthor() {}
 	
-	public BookAuthor(int idauthor, String name) {
+	public BookAuthor(int idauthor, String name) 
+	{
 		this.idauthor = idauthor;
 		this.name = name;
 	}
 	
+	public void setIdauthor(int idauthor) {this.idauthor = idauthor;}
 	public int getIdauthor() {return idauthor;}
 
-	public void setIdauthor(int idauthor) {this.idauthor = idauthor;}
-
+	
+	public void setName(String name) {this.name = name;}
 	public String getName() {return name;}
 
-	public void setName(String name) {this.name = name;}
-
-	public List<Book> getBooks() {return books;}
-
+	
 	public void setBooks(List<Book> books) {this.books = books;}
+	public List<Book> getBooks() {return books;}
 }
