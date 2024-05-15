@@ -23,21 +23,21 @@ public class BookCategory {
   
 	public BookCategory() {}
 	
-	public BookCategory(int categoryid, String name) {
+	public BookCategory(int categoryid, String name) 
+	{
 		this.categoryid = categoryid;
 		this.name = name;
 	}
 	
 	
-	public int getCategoryid() {return categoryid;}
-
 	public void setCategoryid(int category) {this.categoryid = category;}
+	public int getCategoryid() {return this.categoryid;}
 
-	public String getName() {return name;}
-
+	
 	public void setName(String name) {this.name = name;}
+	public String getName() {return this.name;}
 
-	public List<Book> getBooks() {return books;}
-
+	
 	public void setBooks(List<Book> books) {this.books = books;}
+	public List<Book> getBooks() {return this.books;}
 }

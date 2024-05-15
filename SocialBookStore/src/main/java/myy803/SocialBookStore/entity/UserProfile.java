@@ -46,7 +46,7 @@ public class UserProfile {
     
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "user_book",
+        name = "user_book_offers",
         joinColumns = @JoinColumn(name = "userid"),
         inverseJoinColumns = @JoinColumn(name = "bookid")
     )
@@ -63,12 +63,14 @@ public class UserProfile {
 	
 	public UserProfile() {};
 	
-	public UserProfile(int id_user, String username) {
+	public UserProfile(int id_user, String username) 
+	{
 		this.userid = id_user;
 		this.username = username;	
 	}
 	
-	public UserProfile(int userid, String fullname, String username, String address, int age, int phonenumber) {
+	public UserProfile(int userid, String fullname, String username, String address, int age, int phonenumber) 
+	{
 		this.userid = userid;
 		this.fullname = fullname;
 		this.username = username;
@@ -77,51 +79,50 @@ public class UserProfile {
 		this.phonenumber = phonenumber;
 	}
 	
-	// setter _/_ getter 
-	public int getId_user() {return userid;}
+	
+	public void setUserid(int Userid) {this.userid = Userid;}
+	public int getUserid() {return userid;}
 
-	public void setId_user(int id_user) {this.userid = id_user;}
-
-	public String getUsername() {return username;}
-
+	
 	public void setUsername(String username) {this.username = username;}
+	public String getUsername() {return username;}
 	
-	public String getFullname() {return fullname;}
-
+	
 	public void setFull_name(String fullname) {this.fullname = fullname;}
+	public String getFullname() {return fullname;}
 	
-	public String getAddress() {return address;	}
-
+	
 	public void setAddress(String address) {this.address = address;}
+	public String getAddress() {return address;	}
 	
-	public int getAge() {return age;}
-
+	
 	public void setAge(int age) {this.age = age;}
+	public int getAge() {return age;}
 	
+	
+	public void setPhonenumber(int phonenumber) {this.phonenumber = phonenumber;}
 	public int getPhonenumber() {return phonenumber;}
 
-	public void setPhonenumber(int phonenumber) {this.phonenumber = phonenumber;}
-
-	public List<BookAuthor> getFavouriteBookAuthors() {return favouriteBookAuthors;}
-
+	
 	public void setFavouriteBookAuthors(List<BookAuthor> favouriteBookAuthors) {
 		this.favouriteBookAuthors = favouriteBookAuthors;
 	}
+	public List<BookAuthor> getFavouriteBookAuthors() {return favouriteBookAuthors;}
 
-	public List<BookCategory> getFavouriteBookCategories() {
-		return favouriteBookCategories;
-	}
-
+	
 	public void setFavouriteBookCategories(List<BookCategory> favouriteBookCategories) {
 		this.favouriteBookCategories = favouriteBookCategories;
 	}
-
+	public List<BookCategory> getFavouriteBookCategories() {
+		return favouriteBookCategories;
+	}
+	
+	
+	public void setBookOffers(List<Book> bookOffers) {this.bookOffers = bookOffers;}
 	public List<Book> getBookOffers() {return bookOffers;}
 
-	public void setBookOffers(List<Book> bookOffers) {this.bookOffers = bookOffers;}
 	
-	public List<Book> getBooksRequested() {return booksRequested;}
-
 	public void setBooksRequested(List<Book> booksRequested) {this.booksRequested = booksRequested;}
+	public List<Book> getBooksRequested() {return booksRequested;}
 
 }

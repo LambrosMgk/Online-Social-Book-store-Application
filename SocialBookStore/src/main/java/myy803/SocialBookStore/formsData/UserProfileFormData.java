@@ -15,20 +15,20 @@ public class UserProfileFormData {
 	private String address;
 	private int age;
 	private int phonenum;
+	private List<BookCategory> favoriteCategories;
     private List<BookAuthor> favoriteAuthors;
-    private List<BookCategory> favoriteCategories;
     private List<Book> bookOffers;
     private List<Book> requestedBooks;
 	
 
 	public UserProfileFormData(UserProfile userProfile) 
 	{
-		this.user_id = userProfile.getId_user();
+		this.user_id = userProfile.getUserid();
 		this.username = userProfile.getUsername();
 		this.fullname = userProfile.getFullname();
 		this.address = userProfile.getAddress();
 		this.age = userProfile.getAge();
-		this.phonenum =userProfile.getPhonenumber();
+		this.phonenum = userProfile.getPhonenumber();
 		this.favoriteAuthors = userProfile.getFavouriteBookAuthors();
 		this.favoriteCategories = userProfile.getFavouriteBookCategories();
 		this.bookOffers = userProfile.getBookOffers();

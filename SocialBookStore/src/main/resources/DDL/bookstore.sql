@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS `bookauthor`;
 DROP TABLE IF EXISTS `user_authors`;
 DROP TABLE IF EXISTS `user_categories`;
 DROP TABLE IF EXISTS `book_author_book`;
-DROP TABLE IF EXISTS`user_book` ;
+DROP TABLE IF EXISTS`user_book_offers` ;
 DROP TABLE IF EXISTS`user_requested_books` ;
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -23,13 +23,13 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `userprofile` (
-    userid int NOT NULL AUTO_INCREMENT,
+    userprofile_id int AUTO_INCREMENT,
     fullname varchar(255) DEFAULT NULL,
     username varchar(255) DEFAULT NULL, 
     age int NOT NULL,
     address varchar(255),
     phonenumber int, 
-    PRIMARY KEY (userid)
+    PRIMARY KEY (userprofile_id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `bookcategory` (
@@ -41,50 +41,49 @@ CREATE TABLE `bookcategory` (
 CREATE TABLE `bookauthor` (
     authorid int NOT NULL AUTO_INCREMENT,
     name varchar(255) DEFAULT NULL,
-    userid int NOT NULL,
     PRIMARY KEY (authorid)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `book` (
     bookid int NOT NULL AUTO_INCREMENT,
     title varchar(255) DEFAULT NULL,
-    userid int NOT NULL,
+    userprofile_id int NOT NULL,
     authorid int not NULL,
     description text,
     PRIMARY KEY (bookid),
-    FOREIGN KEY (userid) REFERENCES `userprofile`(userid),
+    FOREIGN KEY (userprofile_id) REFERENCES `userprofile`(userprofile_id),
     FOREIGN KEY (authorid) REFERENCES `bookauthor`(authorid)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `user_categories` (
-  userid int NOT NULL,
+  userprofile_id int NOT NULL,
   categoryid int NOT NULL,
-  PRIMARY KEY (userid, categoryid),
-  FOREIGN KEY (userid) REFERENCES `userprofile`(userid),
+  PRIMARY KEY (userprofile_id, categoryid),
+  FOREIGN KEY (userprofile_id) REFERENCES `userprofile`(userprofile_id),
   FOREIGN KEY (categoryid) REFERENCES `bookcategory`(categoryid)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `user_authors` (
-  userid int NOT NULL,
+  userprofile_id int NOT NULL,
   authorid int NOT NULL,
-  PRIMARY KEY (userid, authorid),
-  FOREIGN KEY (userid) REFERENCES `userprofile`(userid),
+  PRIMARY KEY (userprofile_id, authorid),
+  FOREIGN KEY (userprofile_id) REFERENCES `userprofile`(userprofile_id),
   FOREIGN KEY (authorid) REFERENCES `bookauthor`(authorid)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `user_book` (
-  `userid` INT NOT NULL,
+CREATE TABLE `user_book_offers` (
+  `userprofile_id` INT NOT NULL,
   `bookid` INT NOT NULL,
-  PRIMARY KEY (`userid`, `bookid`),
-  FOREIGN KEY (`userid`) REFERENCES `userprofile` (`userid`) ON DELETE CASCADE,
+  PRIMARY KEY (`userprofile_id`, `bookid`),
+  FOREIGN KEY (`userprofile_id`) REFERENCES `userprofile` (`userprofile_id`) ON DELETE CASCADE,
   FOREIGN KEY (`bookid`) REFERENCES `book` (`bookid`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `user_requested_books` (
-  `userid` INT NOT NULL,
+  `userprofile_id` INT NOT NULL,
   `bookid` INT NOT NULL,
-  PRIMARY KEY (`userid`, `bookid`),
-  FOREIGN KEY (`userid`) REFERENCES `userprofile` (`userid`),
+  PRIMARY KEY (`userprofile_id`, `bookid`),
+  FOREIGN KEY (`userprofile_id`) REFERENCES `userprofile` (`userprofile_id`),
   FOREIGN KEY (`bookid`) REFERENCES `book` (`bookid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -106,3 +105,6 @@ INSERT INTO `users` (username, password, role) VALUES
 
 INSERT INTO `bookcategory` (name) VALUES ('Art'), ('Comic'), ('Fantasy'), ('Fiction'), 
 ('Biographies'), ('History'), ('Science'), ('Literature'), ('Adventure'), ('Crime'), ('Other');
+
+INSERT INTO `bookauthor` (name) VALUES ('Author1'), ('Author2'), ('Author3'), ('Author4'), 
+('Author5'), ('Author6'), ('Author7'), ('Author8'), ('Author9'), ('Author10'), ('Author11');

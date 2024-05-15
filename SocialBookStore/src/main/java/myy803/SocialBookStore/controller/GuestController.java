@@ -1,5 +1,6 @@
 package myy803.SocialBookStore.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,6 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import myy803.SocialBookStore.formsData.UserProfileFormData;
+import myy803.SocialBookStore.service.BookAuthorService;
+import myy803.SocialBookStore.service.BookCategoryService;
+import myy803.SocialBookStore.service.UserProfileService;
 import myy803.SocialBookStore.service.UserService;
 
 
@@ -17,6 +21,12 @@ public class GuestController {
 	
 	@Autowired
 	UserService userService;
+	@Autowired
+	UserProfileService userProfileService;
+	@Autowired
+	BookCategoryService bookCategoryService;
+	@Autowired
+	BookAuthorService bookAuthorService;
 
     @RequestMapping("/guest/dashboard")
     public String getUserHome()
@@ -35,10 +45,11 @@ public class GuestController {
     	UserProfileFormData userProfileFormData = new UserProfileFormData();
     	
     	// Give all the categories as favorite so they appear in the html form
-    	userProfileFormData.setFavoriteCategories(categoryService.getAllCategories());
-    	userProfileFormData.setFavoriteAuthors();
+    	userProfileFormData.setFavoriteCategories(bookCategoryService.ReturnCategories());
+    	userProfileFormData.setFavoriteAuthors(bookAuthorService.ReturnAuthors());
     	
     	model.addAttribute("userProfileFormData", userProfileFormData);
+    	
         return "guest/createProfile";
     }
     
@@ -48,11 +59,19 @@ public class GuestController {
     {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     	String username = authentication.getName();
+    	
     	//save profile to base
+    	userProfileForm.setUsername(username);
+    	userProfileForm.setUser_id(userService.findByUsername(username).getUserid());	// This should not throw an error since the user is logged in
+    	System.err.println("User data id : " + userProfileForm.getUser_id());	// debug, remove later
+    	userProfileService.save(userProfileForm);
+    	
+    	//favoriteAuthors;
+        //private List<BookCategory> favoriteCategories;
     	
     	System.out.println("Fullname : " + userProfileForm.getFullname() + ", Categories : " + userProfileForm.getFavoriteCategories());	// debug
     	model.addAttribute("successMessage", "Profile created, login again to have access as user!");
-    	return "guest/dashboard"; // assuming you have a createProfile.html in your templates
+    	return "guest/dashboard";
     }
     
     

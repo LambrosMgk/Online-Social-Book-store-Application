@@ -6,8 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import myy803.SocialBookStore.entity.Book;
-import myy803.SocialBookStore.entity.BookAuthor;
-import myy803.SocialBookStore.entity.BookCategory;
 import myy803.SocialBookStore.entity.UserProfile;
 import myy803.SocialBookStore.formsData.BookFormData;
 import myy803.SocialBookStore.formsData.RecommendationsFormData;
@@ -41,8 +39,16 @@ public class UserProfileServiceImpl implements UserProfileService {
 
 	@Override
 	public void save(UserProfileFormData userProfileFormData) {
-		int userProfileId = userProfileFormData.getUser_id();
-		UserProfile userProfile = userProfileMapper.findByuserid(userProfileId);
+		UserProfile userProfile = new UserProfile(
+				userProfileFormData.getUser_id(),
+				userProfileFormData.getFullname(),
+				userProfileFormData.getUsername(),
+				userProfileFormData.getAddress(),
+				userProfileFormData.getAge(),
+				userProfileFormData.getPhonenum());
+		
+		System.err.println("2User data id : " + userProfile.getUserid());	// debug, remove later
+		
 		userProfileMapper.save(userProfile);
 	
 	}
@@ -202,7 +208,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 	        	
 	        for (Iterator<UserProfile> iterator = requestingUsers.iterator(); iterator.hasNext();) {
 	            UserProfile requestingUser = iterator.next();
-	            if (requestingUser.getId_user() == userProfile.getId_user()) {
+	            if (requestingUser.getUserid() == userProfile.getUserid()) {
 	                iterator.remove(); 
 	                break; 
 	            }
