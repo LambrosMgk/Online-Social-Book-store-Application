@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS `bookauthor`;
 DROP TABLE IF EXISTS `user_authors`;
 DROP TABLE IF EXISTS `user_categories`;
 DROP TABLE IF EXISTS `book_author_book`;
-DROP TABLE IF EXISTS`user_book_offers` ;
+DROP TABLE IF EXISTS`user_book` ;
 DROP TABLE IF EXISTS`user_requested_books` ;
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -23,7 +23,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `userprofile` (
-    userprofile_id int AUTO_INCREMENT,
+    userprofile_id int NOT NULL AUTO_INCREMENT,
     fullname varchar(255) DEFAULT NULL,
     username varchar(255) DEFAULT NULL, 
     age int NOT NULL,
@@ -71,7 +71,7 @@ CREATE TABLE `user_authors` (
   FOREIGN KEY (authorid) REFERENCES `bookauthor`(authorid)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `user_book_offers` (
+CREATE TABLE `user_book` (
   `userprofile_id` INT NOT NULL,
   `bookid` INT NOT NULL,
   PRIMARY KEY (`userprofile_id`, `bookid`),
