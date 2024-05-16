@@ -10,4 +10,5 @@ public interface BookAuthorMapper extends JpaRepository<BookAuthor, Integer> {
 	public List<BookAuthor> findByName(String Name); // why??
 	
 	public BookAuthor findByidauthor(int idauthor); // from the id of the author find the 
+	
 }

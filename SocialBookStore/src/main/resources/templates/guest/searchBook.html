@@ -15,7 +15,10 @@
 
 	<h3>Book List</h3>
 	<hr>
-		
+	<a th:href="@{/guest/dashboard}"
+		class="btn btn-primary btn-sm mb-3">
+		Go Back
+	</a>
 	<table class="table table-bordered table-striped">
 		<thead class="thead-dark">
 			<tr>
@@ -36,7 +39,9 @@
 				<td>					
 					<!-- Add "See Book Description" button/link -->					
 					<a 
-						th:href="@{/guest/seeBook(idbook=${book.idbook})}"			   
+						th:href="@{/guest/seeBook(idbook=${book.idbook})}"		
+						class="btn btn-info btn-sm">
+						See Book	   
 					</a>
 					
 				</td>

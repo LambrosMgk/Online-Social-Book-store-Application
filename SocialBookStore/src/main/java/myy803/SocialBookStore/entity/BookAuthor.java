@@ -15,7 +15,7 @@ public class BookAuthor {
 	@Column(name= "name")
 	private String name;
 	
-    @ManyToMany
+	@ManyToMany
     @JoinTable
     (
         name = "book_author_book",
@@ -42,4 +42,5 @@ public class BookAuthor {
 	
 	public void setBooks(List<Book> books) {this.books = books;}
 	public List<Book> getBooks() {return books;}
+
 }

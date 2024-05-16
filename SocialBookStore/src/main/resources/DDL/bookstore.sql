@@ -123,3 +123,8 @@ INSERT INTO `book` (title, userprofile_id, authorid, categoryid, description) VA
 ('The Great Gatsby', 1, 1, 5, 'The story of the fabulously wealthy Jay Gatsby and his love for the beautiful Daisy Buchanan.'),
 ('1984', 1, 2, 6, 'A dystopian social science fiction novel and cautionary tale of a totalitarian society.');
 
+INSERT INTO `book_author_book` (bookid, authorid) VALUES
+(1, 1);
+
+INSERT INTO `book_author_book` (bookid, authorid) VALUES
+(2, 2);

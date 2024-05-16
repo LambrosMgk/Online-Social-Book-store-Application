@@ -10,5 +10,6 @@ import myy803.SocialBookStore.formsData.BookFormData;
 public interface BookService {
 	public List<BookFormData>  findAllBooks();
 	public List<Book> retrieveAllBooks();
-	public void saveAuthorsIntheBook();
+	public Book findBookByid(int idbook);
+	
 }

@@ -15,6 +15,12 @@ public class Book {
 	@Column(name="title")
 	private String title;
 	
+	@Column(name="authorid")
+	private int authorid;
+	
+	@Column(name="description")
+	private String description;
+
 	@Column(name="userprofile_id")
 	private int userprofile_id;
 		
@@ -37,10 +43,11 @@ public class Book {
 	
 	public Book() {}
 	
-	public Book(int idbook, String title, BookCategory bookCategory) {
+	public Book(int idbook, String title, BookCategory bookCategory,String description) {
 		this.idbook = idbook;
 		this.title = title;
 		this.bookCategory = bookCategory;
+		this.description = description;
 	}
 
 	
@@ -63,6 +70,11 @@ public class Book {
 	public void setRequestingUsers(List<UserProfile> requestingUsers) {this.requestingUsers = requestingUsers;}
 	public List<UserProfile> getRequestingUsers() {return requestingUsers;}
 
+	public int getAuthorid() {return authorid;}
+	public void setAuthorid(int authorid) {this.authorid = authorid;}
+	
+	public String getDescription() {return description;}
+	public void setDescription(String description) {this.description = description;}
 	
 	public String toString() {
 		return "Book with title : " + this.title + " from the user with id " + this.userprofile_id;

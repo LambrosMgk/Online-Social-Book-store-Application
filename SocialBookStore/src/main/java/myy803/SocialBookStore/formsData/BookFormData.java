@@ -3,12 +3,9 @@ package myy803.SocialBookStore.formsData;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import myy803.SocialBookStore.entity.BookAuthor;
 import myy803.SocialBookStore.entity.BookCategory;
-import myy803.SocialBookStore.mapper.BookAuthorMapper;
-import myy803.SocialBookStore.mapper.BookMapper;
+
 
 public class BookFormData {
     
@@ -16,19 +13,20 @@ public class BookFormData {
     private String title;
     private BookCategory bookCategory;
     private String nameOfCategory;
-    
+    private String description;
 	private List<BookAuthor> bookAuthors;
     private List<String> nameOfTheAuthors; 
-       
+    
     public BookFormData() {}
     
-    public BookFormData(int idbook, String title, BookCategory bookCategory, List<BookAuthor> bookAuthors) {
+    public BookFormData(int idbook, String title, BookCategory bookCategory, List<BookAuthor> bookAuthors,String description) {
         this.idbook = idbook;
         this.title = title;
         this.bookCategory = bookCategory;
         this.bookAuthors = bookAuthors;
         this.nameOfTheAuthors = this.SetAuthorsOfTheBook();
         this.SetNameofCategory();
+        this.description = description;
     }
     
     public int getIdbook() { return idbook; }
@@ -49,6 +47,8 @@ public class BookFormData {
 	public List<String> getNameOfTheAuthors() {return nameOfTheAuthors;}
 	public void setNameOfTheAuthors(List<String> nameOfTheAuthors) {this.nameOfTheAuthors = nameOfTheAuthors;}
 	
+	public String getDescription() {return description;}
+	public void setDescription(String description) {this.description = description;}
     
     private  void SetNameofCategory() {
     	this.nameOfCategory = this.bookCategory.getName();

@@ -1,7 +1,5 @@
 package myy803.SocialBookStore.controller;
 
-
-import java.awt.print.Book;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
+import myy803.SocialBookStore.entity.Book;
 import myy803.SocialBookStore.entity.BookAuthor;
 import myy803.SocialBookStore.formsData.BookFormData;
 import myy803.SocialBookStore.formsData.UserProfileFormData;
@@ -81,17 +80,24 @@ public class GuestController {
     	return "redirect:/logout";
     }
     
-  //in the book service we must combine the bookauthors with the books because i insert books in the base and i can not combine then with thei authors 
 
     @RequestMapping("/guest/search-book")
     public String searchBook(Model theModel) 
     {
-    	bookService.saveAuthorsIntheBook();
     	List<BookFormData> allTheBooks = bookService.findAllBooks();   	
-    	
     	theModel.addAttribute("books",allTheBooks);
-    	
-    
+    	    
         return "guest/searchBook";
+    }
+    
+    @RequestMapping("/guest/seeBook")
+    public String seeBook(@RequestParam("idbook") int theBookId, Model theModel) {
+    	
+    	
+    	Book book = bookService.findBookByid(theBookId);
+    	BookFormData theBook= new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategory(),book.getBookAuthors(),book.getDescription()); 
+    	theModel.addAttribute("book", theBook);
+    	
+    	return "guest/BookDescription";
     }
 }
