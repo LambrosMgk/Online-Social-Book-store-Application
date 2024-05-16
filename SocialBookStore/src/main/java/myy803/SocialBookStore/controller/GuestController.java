@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import myy803.SocialBookStore.entity.Book;
 import myy803.SocialBookStore.formsData.BookFormData;
 import myy803.SocialBookStore.formsData.UserProfileFormData;
 import myy803.SocialBookStore.service.BookAuthorService;
@@ -87,8 +89,8 @@ public class GuestController {
     }
     
     @RequestMapping("/guest/seeBook")
-    public String seeBook(@RequestParam("idbook") int theBookId, Model theModel) {
-    	
+    public String seeBook(@RequestParam("idbook") int theBookId, Model theModel) 
+    {
     	
     	Book book = bookService.findBookByid(theBookId);
     	BookFormData theBook= new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategory(),book.getBookAuthors(),book.getDescription()); 
