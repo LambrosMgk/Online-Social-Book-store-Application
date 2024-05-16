@@ -56,8 +56,9 @@ public class UserProfileServiceImpl implements UserProfileService {
 		
 		User user = userService.findByUsername(userProfileFormData.getUsername());
 		user.setRole(Role.USER);
+//		System.out.println((user.getRole().toString())+ " <= this is the role of the use ");
 		userService.saveUser(user);
-		
+//		System.out.println(userProfile.getUserprofile_id() +" " +  userProfile.getAddress() + " " + userProfile.getFavouriteBookAuthors().toString());
 		userProfileMapper.save(userProfile);
 	
 	}
@@ -124,7 +125,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 		
 		if(userProfile != null) 
 		{
-			Book requestedBook = bookMapper.findById(bookid);
+			Book requestedBook = bookMapper.findByIdbook(bookid);
 			if(requestedBook != null) {
 				if(!userProfile.getBooksRequested().contains(requestedBook)) {
 					userProfile.getBooksRequested().add(requestedBook);
@@ -170,7 +171,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 		
 		List<UserProfileFormData> requestingUsers = new ArrayList<>();
 		
-		Book book = bookMapper.findById(bookid);
+		Book book = bookMapper.findByIdbook(bookid);
 		if(book!=null) 
 		{
 			List<UserProfile> userProfiles = book.getRequestingUsers();
@@ -213,7 +214,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 		
 		if(userProfile!= null) 
 		{
-	        List<UserProfile> requestingUsers = bookMapper.findById(bookid).getRequestingUsers();
+	        List<UserProfile> requestingUsers = bookMapper.findByIdbook(bookid).getRequestingUsers();
 	        	
 	        for (Iterator<UserProfile> iterator = requestingUsers.iterator(); iterator.hasNext();) {
 	            UserProfile requestingUser = iterator.next();
@@ -222,7 +223,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 	                break; 
 	            }
 	        }
-	        bookMapper.save(bookMapper.findById(bookid));
+	        bookMapper.save(bookMapper.findByIdbook(bookid));
 	    } else {
 	        System.out.println("User profile not found for username: " + username);
 	    }

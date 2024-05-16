@@ -9,9 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.*;
 
-
-
-
 @Entity
 @Table(name="users")
 public class User implements UserDetails{

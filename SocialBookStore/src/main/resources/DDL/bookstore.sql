@@ -29,7 +29,7 @@ CREATE TABLE `userprofile` (
     username varchar(255) DEFAULT NULL, 
     age int NOT NULL,
     address varchar(255),
-    phonenumber int, 
+    phonenumber long, 
     PRIMARY KEY (userprofile_id),
     UNIQUE KEY `unique_userid` (userid),
     FOREIGN KEY (userid) REFERENCES `users`(userid)
@@ -52,6 +52,7 @@ CREATE TABLE `book` (
     title varchar(255) DEFAULT NULL,
     userprofile_id int NOT NULL,
     authorid int not NULL,
+    categoryid int not NULL,
     description text,
     PRIMARY KEY (bookid),
     FOREIGN KEY (userprofile_id) REFERENCES `userprofile`(userprofile_id),
@@ -112,3 +113,13 @@ INSERT INTO `bookcategory` (name) VALUES ('Art'), ('Comic'), ('Fantasy'), ('Fict
 
 INSERT INTO `bookauthor` (name) VALUES ('Author1'), ('Author2'), ('Author3'), ('Author4'), 
 ('Author5'), ('Author6'), ('Author7'), ('Author8'), ('Author9'), ('Author10'), ('Author11');
+
+INSERT INTO `userprofile` (userid, fullname, username, age, address, phonenumber) VALUES
+(1, 'John Doe', 'john_doe', 30, '123 Main St', 1234567890),
+(2, 'Jane Smith', 'jane_smith', 25, '456 Elm St', 2345678901),
+(3, 'Alice Johnson', 'alice_johnson', 28, '789 Oak St', 3456789012);
+
+INSERT INTO `book` (title, userprofile_id, authorid, categoryid, description) VALUES
+('The Great Gatsby', 1, 1, 5, 'The story of the fabulously wealthy Jay Gatsby and his love for the beautiful Daisy Buchanan.'),
+('1984', 1, 2, 6, 'A dystopian social science fiction novel and cautionary tale of a totalitarian society.');
+
