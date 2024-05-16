@@ -155,7 +155,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 			
 			for (Book book: bookrequested) 
 			{
-				BookFormData bookFormdata = new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategory(),book.getBookAuthors());
+				BookFormData bookFormdata = new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategory(),book.getBookAuthors(),book.getDescription());
 				
 				bookRequests.add(bookFormdata);
 			}
