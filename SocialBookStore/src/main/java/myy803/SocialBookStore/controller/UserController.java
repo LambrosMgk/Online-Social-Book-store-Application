@@ -71,10 +71,16 @@ public class UserController {
     
     
     @RequestMapping("/user/show-requests")
-    public String showRequests()
+    public String showRequests(Model model)
     {
-		// Get the requests for books this user has from base
-        return "user/";
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    	String username = authentication.getName();
+		
+    	List<BookFormData> offers = userProfileService.retreiveBookOffers(username);	// Get the requests for books this user has from base
+    	
+    	model.addAttribute("offers", offers);
+    	
+        return "user/ShowRequests";
     }
     
     

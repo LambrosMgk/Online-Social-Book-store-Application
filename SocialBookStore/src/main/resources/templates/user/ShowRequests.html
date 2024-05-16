@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    
+    <title>Offers List</title>
+    
+    <link rel="stylesheet" type="text/css" href="/css/user/ShowRequests.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Go Back Button -->
+        <button onclick="window.location.href='/user/dashboard';">Go Back</button>
+        
+        <!-- Offers List -->
+        <div th:if="${offers != null and !offers.empty}">
+            <div th:each="offer : ${offers}" class="offer-block">
+                <!-- Display offer details here -->
+                <p th:text="${offer.title}">Offer Title</p>
+                <p th:text="${offer.description}">Offer Description</p>
+                
+                <!-- See Request Button -->
+                <button onclick="window.location.href='/user/see-request'">See Request</button>
+            </div>
+        </div>
+        
+        <!-- Message if no offers are available -->
+        <div th:if="${offers == null or offers.empty}">
+            <p>No offers available at the moment.</p>
+        </div>
+    </div>
+</body>
+</html>
