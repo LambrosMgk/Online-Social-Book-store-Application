@@ -1,15 +1,21 @@
 package myy803.SocialBookStore.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import myy803.SocialBookStore.entity.Book;
+import myy803.SocialBookStore.formsData.BookFormData;
 import myy803.SocialBookStore.formsData.UserProfileFormData;
 import myy803.SocialBookStore.service.BookAuthorService;
 import myy803.SocialBookStore.service.BookCategoryService;
+import myy803.SocialBookStore.service.BookService;
 import myy803.SocialBookStore.service.UserProfileService;
 
 @Controller
@@ -21,12 +27,14 @@ public class UserController {
 	BookCategoryService bookCategoryService;
 	@Autowired
 	BookAuthorService bookAuthorService;
+	@Autowired
+	BookService bookService;
 
     @RequestMapping("/user/dashboard")
     public String getUserHome()
     {
-    	 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		 String currentPrincipalName = authentication.getName();
+    	 //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		 //String currentPrincipalName = authentication.getName();
 		 //System.err.println("UserController : username=" + currentPrincipalName);
 		
         return "user/dashboard";
@@ -53,7 +61,7 @@ public class UserController {
     public String saveProfile(Model model)
     {
     	
-    	
+    	//fill this later
     	
     	System.out.println("User profile updated successfully!");
     	model.addAttribute("successMessage", "Update successfull!");
@@ -69,6 +77,7 @@ public class UserController {
         return "user/";
     }
     
+    
     @RequestMapping("/user/show-recommendations")
     public String showRecommendations()
     {
@@ -77,12 +86,14 @@ public class UserController {
         return "user/";
     }
     
+    
     @RequestMapping("/user/my-offerings")
     public String myOfferings()
     {
 		// Get the offering list for this user from base
         return "user/";
     }
+    
     
     @RequestMapping("/user/my-wishlist")
     public String myWishlist()
@@ -91,10 +102,26 @@ public class UserController {
         return "user/";
     }
     
+    
     @RequestMapping("/user/search-book")
-    public String searchBook()
+    public String searchBook(Model theModel) 
     {
-		// Search for the requested book? redirect to a page for this or dynamically show this to user dashboard
-        return "user/";
+    	// Search for the requested book or see all available books? redirect to a page for this or dynamically show this to user dashboard
+        List<BookFormData> allTheBooks = bookService.findAllBooks();   	
+    	theModel.addAttribute("books",allTheBooks);
+    	    
+        return "user/searchBook";
+    }
+    
+    
+    @RequestMapping("/user/seeBook")
+    public String seeBook(@RequestParam("idbook") int theBookId, Model theModel) 
+    {
+    	
+    	Book book = bookService.findBookByid(theBookId);
+    	BookFormData theBook= new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategory(),book.getBookAuthors(),book.getDescription()); 
+    	theModel.addAttribute("book", theBook);
+    	
+    	return "user/BookDescription";
     }
 }
