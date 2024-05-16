@@ -33,34 +33,21 @@
             <!-- Categories with limited visibility and a scroll bar -->
             <fieldset>
                 <legend>Categories of Books:</legend>
-                <div class="scroll-container"> <!-- Scrollable area for categories -->
-                    <label><input type="checkbox" name="category" value="Art">Art</label>
-                    <label><input type="checkbox" name="category" value="Comic">Comic</label>
-                    <label><input type="checkbox" name="category" value="Fantasy">Fantasy</label>
-                    <label><input type="checkbox" name="category" value="Fiction">Fiction</label>
-                    <label><input type="checkbox" name="category" value="Biographies">Biographies</label>
-                    <label><input type="checkbox" name="category" value="History">History</label>
-                    <label><input type="checkbox" name="category" value="Science">Science</label>
-                    <label><input type="checkbox" name="category" value="Literature">Literature</label>
-                    <label><input type="checkbox" name="category" value="Adventure">Adventure</label>
-                    <label><input type="checkbox" name="category" value="Crime">Crime</label>
-                    <label><input type="checkbox" name="category" value="Other">Other</label>
-                </div>
+                <div class="scroll-container">
+				    <label th:each="category : ${userProfileForm.favoriteCategories}">
+				        <input type="checkbox" name="favoriteCategories" th:value="${category.categoryid}" th:text="${category.name}">
+				    </label>
+				</div>
             </fieldset>
 
             <!-- Authors with limited visibility and a scroll bar -->
             <fieldset>
                 <legend>Favorite Authors:</legend>
-                <div class="scroll-container"> <!-- Scrollable area for authors -->
-                    <label><input type="checkbox" name="author" value="Author1">Author 1</label>
-                    <label><input type="checkbox" name="author" value="Author2">Author 2</label>
-                    <label><input type="checkbox" name="author" value="Author3">Author 3</label>
-                    <label><input type="checkbox" name="author" value="Author4">Author 4</label>
-                    <label><input type="checkbox" name="author" value="Author5">Author 5</label>
-                    <label><input type="checkbox" name="author" value="Author6">Author 6</label>
-                    <label><input type="checkbox" name="author" value="Author7">Author 7</label>
-                    <label><input type="checkbox" name="author" value="Author8">Author 8</label>
-                </div>
+                <div class="scroll-container">
+			        <label th:each="author : ${userProfileForm.favoriteAuthors}">
+			            <input type="checkbox" name="favoriteAuthors" th:value="${author.idauthor}" th:text="${author.name}">
+			        </label>
+			    </div>
             </fieldset>
 
             <div class="buttons">

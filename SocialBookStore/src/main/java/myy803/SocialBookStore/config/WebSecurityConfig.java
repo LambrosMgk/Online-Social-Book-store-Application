@@ -66,7 +66,7 @@ public class WebSecurityConfig {
 
         authProvider.setUserDetailsService(userDetailsService());
         authProvider.setPasswordEncoder(passwordEncoder());
-
+        
         return authProvider;
     }
 
@@ -88,9 +88,10 @@ public class WebSecurityConfig {
                         .usernameParameter("username")
                         .passwordParameter("password"));
                 
-                http.logout(logOut -> logOut.logoutUrl("/logout")
+                http.logout(logOut -> 
+                		logOut.logoutUrl("/logout")
                 		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                		.logoutSuccessUrl("/")
+                		.logoutSuccessUrl("/?logout=true")
                 		);
 
                 http.authenticationProvider(authenticationProvider());

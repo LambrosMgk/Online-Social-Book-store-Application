@@ -29,6 +29,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setPassword(encodedPassword);
         userMapper.save(user);
     }
+	
+	@Override
+	/*No encoding for password*/
+	public void saveUser2(User user) {
+        userMapper.save(user);
+    }
 
 	@Override
 	public boolean isUserPresent(User user) {

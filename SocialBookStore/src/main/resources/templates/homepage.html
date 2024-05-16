@@ -14,35 +14,40 @@
 
 
 <body>
-<div class="container">
+	<div class="container">
+	
+		<h2>Welcome to Homepage</h2>
+	 	<span th:utext="${successMessage}"></span>
+	 <br> <br> <hr> <br> <br>
+	 
+	  <div sec:authorize="hasRole('ROLE_ANONYMOUS')">
+	    <p>
+	    	<a th:href="@{/login}" class="btn btn-primary btn-sm mb-3" th:text="Login"></a>
+	    	<a th:href="@{/register}" class="btn btn-primary btn-sm mb-3" th:text="Register"></a>
+	    </p>
+	  </div>
+	
+	  <div sec:authorize="isAuthenticated()">
+	    <h4>Logged as: <span sec:authentication="name"></span></h4>
+	    <h4>Has role: <span sec:authentication="authorities"></span></h4>
+	    
+	    <br> <br> <hr> <br> <br>
+	    
+	    <p sec:authorize="hasAuthority('GUEST')">
+	    	<a th:href="@{/guest/dashboard}" class="btn btn-primary btn-sm mb-3"> Guest Dashboard</a>
+	    	<a th:href="@{/logout}" class="btn btn-danger btn-sm mb-3"> Logout</a>
+	    </p>
+	    
+	    <p sec:authorize="hasAuthority('USER')">
+	    	<a th:href="@{/user/dashboard}" class="btn btn-primary btn-sm mb-3"> User Dashboard</a>
+	    	<a th:href="@{/logout}" class="btn btn-danger btn-sm mb-3"> Logout</a>	
+	    </p>
+	
+	</div>
 
-  <h2>Welcome to Homepage</h2>
- 
- <br> <br> <hr> <br> <br>
- 
-  <div sec:authorize="hasRole('ROLE_ANONYMOUS')">
-    <p>
-    	<a th:href="@{/login}" class="btn btn-primary btn-sm mb-3" th:text="Login"></a>
-    	<a th:href="@{/register}" class="btn btn-primary btn-sm mb-3" th:text="Register"></a>
-    </p>
-  </div>
-
-  <div sec:authorize="isAuthenticated()">
-    <h4>Logged as: <span sec:authentication="name"></span></h4>
-    <h4>Has role: <span sec:authentication="authorities"></span></h4>
-    
-    <br> <br> <hr> <br> <br>
-    
-    <p sec:authorize="hasAuthority('GUEST')">
-    	<a th:href="@{/guest/dashboard}" class="btn btn-primary btn-sm mb-3"> Guest Dashboard</a>
-    	<a th:href="@{/logout}" class="btn btn-danger btn-sm mb-3"> Logout</a>
-    </p>
-    
-    <p sec:authorize="hasAuthority('USER')">
-    	<a th:href="@{/user/dashboard}" class="btn btn-primary btn-sm mb-3"> User Dashboard</a>
-    	<a th:href="@{/logout}" class="btn btn-danger btn-sm mb-3"> Logout</a>	
-    </p>
-
-</div>
+ 	<!-- Check for logout parameter and show alert -->
+    <script th:if="${param.logout}">
+        alert("You have been successfully logged out.");
+    </script>
 </body>
 </html>

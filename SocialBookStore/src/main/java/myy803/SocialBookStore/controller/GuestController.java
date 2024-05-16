@@ -9,14 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import myy803.SocialBookStore.entity.Book;
-import myy803.SocialBookStore.entity.BookAuthor;
+
 import myy803.SocialBookStore.formsData.BookFormData;
 import myy803.SocialBookStore.formsData.UserProfileFormData;
-import myy803.SocialBookStore.mapper.BookMapper;
 import myy803.SocialBookStore.service.BookAuthorService;
 import myy803.SocialBookStore.service.BookCategoryService;
 import myy803.SocialBookStore.service.BookService;
@@ -70,6 +65,7 @@ public class GuestController {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     	String username = authentication.getName();
     	
+    	
     	//save profile to base
     	userProfileForm.setUsername(username);
     	userProfileForm.setUser_id(userService.findByUsername(username).getUserid());	// This should not throw an error since the user is logged in
@@ -77,7 +73,7 @@ public class GuestController {
     	
     	
     	model.addAttribute("successMessage", "Profile created, you are now a user!");
-    	return "redirect:/logout";
+    	return "redirect:/logout";	// Note : redirecting to user dashboard is forbidden by WebSecurityConfig because of role
     }
     
 

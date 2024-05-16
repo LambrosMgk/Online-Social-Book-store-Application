@@ -15,7 +15,7 @@ public class UserProfileFormData {
 	private String fullname;
 	private String address;
 	private int age;
-	private int phonenum;
+	private String phonenum;
 	private List<BookCategory> favoriteCategories;
     private List<BookAuthor> favoriteAuthors;
     private List<Book> bookOffers;
@@ -46,7 +46,7 @@ public class UserProfileFormData {
 		this.fullname = null;
 		this.address = null;
 		this.age = 0;
-		this.phonenum = 0;
+		this.phonenum = null;
 		this.favoriteAuthors = null;
 		this.favoriteCategories = null;
 		this.bookOffers = null;
@@ -78,8 +78,8 @@ public class UserProfileFormData {
 	public int getAge() {return age;}
 
 	
-	public void setPhonenum(int phonenum) { this.phonenum = phonenum; }
-	public int getPhonenum() {return phonenum;}
+	public void setPhonenum(String phonenum) { this.phonenum = phonenum; }
+	public String getPhonenum() {return phonenum;}
 	
 	
 	public void setFavoriteAuthors(List<BookAuthor> favoriteAuthors) { this.favoriteAuthors = favoriteAuthors; } 

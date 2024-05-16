@@ -28,7 +28,7 @@ public class UserProfile {
 	private int age;
 	
 	@Column(name = "phonenumber")
-	private int phonenumber;
+	private String phonenumber;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -72,7 +72,7 @@ public class UserProfile {
 		this.username = username;	
 	}
 	
-	public UserProfile(int userid, String username, String fullname, String address, int age, int phonenumber) 
+	public UserProfile(int userid, String username, String fullname, String address, int age, String phonenumber) 
 	{
 		this.userid = userid;
 		this.username = username;
@@ -107,8 +107,8 @@ public class UserProfile {
 	public int getAge() {return age;}
 	
 	
-	public void setPhonenumber(int phonenumber) {this.phonenumber = phonenumber;}
-	public int getPhonenumber() {return phonenumber;}
+	public void setPhonenumber(String phonenumber) {this.phonenumber = phonenumber;}
+	public String getPhonenumber() {return phonenumber;}
 
 	
 	public void setFavouriteBookAuthors(List<BookAuthor> favouriteBookAuthors) {

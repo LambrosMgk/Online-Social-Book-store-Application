@@ -41,7 +41,7 @@ public class CustomSecuritySuccessHandler extends SimpleUrlAuthenticationSuccess
 	            roles.add(a.getAuthority());
 	        }
 	        
-
+	        
 	        if(roles.contains("GUEST"))
 	        {
 	        	url = "/guest/dashboard"; 
@@ -49,6 +49,10 @@ public class CustomSecuritySuccessHandler extends SimpleUrlAuthenticationSuccess
 	        else if (roles.contains("USER"))
 	        {
 	        	url = "/user/dashboard"; 
+	        }
+	        else
+	        {
+	        	System.err.println("CustomSecuritySuccessHandler : unknown role.");
 	        }
 	        
 	        

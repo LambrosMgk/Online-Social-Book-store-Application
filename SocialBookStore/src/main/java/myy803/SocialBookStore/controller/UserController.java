@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import myy803.SocialBookStore.formsData.UserProfileFormData;
+import myy803.SocialBookStore.service.BookAuthorService;
+import myy803.SocialBookStore.service.BookCategoryService;
 import myy803.SocialBookStore.service.UserProfileService;
 
 @Controller
@@ -15,13 +17,17 @@ public class UserController {
 	
 	@Autowired
 	UserProfileService userProfileService;
+	@Autowired
+	BookCategoryService bookCategoryService;
+	@Autowired
+	BookAuthorService bookAuthorService;
 
     @RequestMapping("/user/dashboard")
     public String getUserHome()
     {
     	 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		 String currentPrincipalName = authentication.getName();
-		 System.err.println("UserController : " + currentPrincipalName);
+		 //System.err.println("UserController : username=" + currentPrincipalName);
 		
         return "user/dashboard";
     }
@@ -34,6 +40,9 @@ public class UserController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserProfileFormData userProfileForm = userProfileService.retreiveProfile(authentication.getName());
 		
+		userProfileForm.setFavoriteCategories(bookCategoryService.ReturnCategories());
+		userProfileForm.setFavoriteAuthors(bookAuthorService.ReturnAuthors());
+    	
 		model.addAttribute("userProfileForm", userProfileForm);
 
 		return "user/editProfile";

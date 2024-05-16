@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import myy803.SocialBookStore.entity.Book;
 import myy803.SocialBookStore.entity.Role;
@@ -37,7 +38,8 @@ public class UserProfileServiceImpl implements UserProfileService {
 	public UserProfileFormData retreiveProfile(String username) {
 		UserProfile userProfile = userProfileMapper.findByUsername(username);
 		UserProfileFormData userProfileFormData = new UserProfileFormData(userProfile);
-		System.out.println("This is the userprofile object which will be returned " + userProfileFormData.toString());
+		
+		//System.out.println("This is the userprofile object which will be returned " + userProfileFormData.toString());
 		return userProfileFormData;
 	}
 
@@ -56,13 +58,12 @@ public class UserProfileServiceImpl implements UserProfileService {
 		
 		User user = userService.findByUsername(userProfileFormData.getUsername());
 		user.setRole(Role.USER);
-//		System.out.println((user.getRole().toString())+ " <= this is the role of the use ");
-		userService.saveUser(user);
-//		System.out.println(userProfile.getUserprofile_id() +" " +  userProfile.getAddress() + " " + userProfile.getFavouriteBookAuthors().toString());
+		
+		userService.saveUser2(user);
 		userProfileMapper.save(userProfile);
-	
 	}
 
+	
 	@Override
 	public List<BookFormData> retreiveBookOffers(String username) 
 	{
