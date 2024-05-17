@@ -1,11 +1,12 @@
 package myy803.SocialBookStore.formsData;
 
+
 public class RequestFormData {
 	
 	private int book_id;
 	private int offersBook_user_id;
 	private int wantsBook_user_id;
-	private String offerDescription;
+	private String requestDescription;
 	
 	
 	public RequestFormData() {}

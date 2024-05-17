@@ -82,9 +82,9 @@ public class UserController {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     	String username = authentication.getName();
 		
-    	List<BookFormData> offers = userProfileService.retreiveBookOffers(username);	// Get the requests for books this user has from base
+    	List<BookFormData> requests = userProfileService.retrieveBookRequests(username);	// Get the requests for books this user has from base
     	
-    	model.addAttribute("offers", offers);
+    	model.addAttribute("requests", requests);
     	
         return "user/ShowRequests";
     }
