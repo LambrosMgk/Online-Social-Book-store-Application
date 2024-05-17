@@ -104,8 +104,7 @@ CREATE TABLE `book_author_book` (
 INSERT INTO `users` (username, password, role) VALUES
 ('user1', '$2a$10$YECF6Bj11.sz7FDIs4104uRYLjSSeSQt0ln3VyfvccxwJLLshkiLC', 'USER'),
 ('user2', '$2a$10$YECF6Bj11.sz7FDIs4104uRYLjSSeSQt0ln3VyfvccxwJLLshkiLC', 'USER'),
-('user3', '$2a$10$YECF6Bj11.sz7FDIs4104uRYLjSSeSQt0ln3VyfvccxwJLLshkiLC', 'GUEST'),
-('waaaargr', '$2a$10$YECF6Bj11.sz7FDIs4104uRYLjSSeSQt0ln3VyfvccxwJLLshkiLC', 'USER');
+('user3', '$2a$10$YECF6Bj11.sz7FDIs4104uRYLjSSeSQt0ln3VyfvccxwJLLshkiLC', 'GUEST');
 
 INSERT INTO `bookcategory` (name) VALUES ('Art'), ('Comic'), ('Fantasy'), ('Fiction'), 
 ('Biographies'), ('History'), ('Science'), ('Literature'), ('Adventure'), ('Crime'), ('Other');
@@ -131,5 +130,4 @@ INSERT INTO `user_requested_books` (userprofile_id, bookid) VALUES
 INSERT INTO `book_author_book` (bookid, authorid) VALUES
 (1, 1), (2, 2);
 
-INSERT INTO `user_book` (userprofile_id, bookid) VALUES
-(1, 1), (2, 2);
+
