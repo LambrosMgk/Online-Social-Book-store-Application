@@ -102,9 +102,9 @@ CREATE TABLE `book_author_book` (
 
 
 INSERT INTO `users` (username, password, role) VALUES
-('john_doe', 'password123', 'GUEST'),
-('user1', '12345', 'USER'),
-('bob_jackson', 'bobspassword', 'GUEST'),
+('user1', '$2a$10$YECF6Bj11.sz7FDIs4104uRYLjSSeSQt0ln3VyfvccxwJLLshkiLC', 'USER'),
+('user2', '$2a$10$YECF6Bj11.sz7FDIs4104uRYLjSSeSQt0ln3VyfvccxwJLLshkiLC', 'USER'),
+('user3', '$2a$10$YECF6Bj11.sz7FDIs4104uRYLjSSeSQt0ln3VyfvccxwJLLshkiLC', 'GUEST'),
 ('waaaargr', '$2a$10$YECF6Bj11.sz7FDIs4104uRYLjSSeSQt0ln3VyfvccxwJLLshkiLC', 'USER');
 
 INSERT INTO `bookcategory` (name) VALUES ('Art'), ('Comic'), ('Fantasy'), ('Fiction'), 
@@ -114,16 +114,22 @@ INSERT INTO `bookauthor` (name) VALUES ('Author1'), ('Author2'), ('Author3'), ('
 ('Author5'), ('Author6'), ('Author7'), ('Author8'), ('Author9'), ('Author10'), ('Author11');
 
 INSERT INTO `userprofile` (userid, fullname, username, age, address, phonenumber) VALUES
-(1, 'John Doe', 'john_doe', 30, '123 Main St', 1234567890),
-(2, 'Jane Smith', 'jane_smith', 25, '456 Elm St', 2345678901),
-(3, 'Alice Johnson', 'alice_johnson', 28, '789 Oak St', 3456789012);
+(1, 'John Doe', 'user1', 30, '123 Main St', 1234567890),
+(2, 'Jane Smith', 'user2', 25, '456 Elm St', 2345678901),
+(3, 'Alice Johnson', 'user3', 28, '789 Oak St', 3456789012);
 
 INSERT INTO `book` (title, userprofile_id, authorid, categoryid, description) VALUES
 ('The Great Gatsby', 1, 1, 5, 'The story of the fabulously wealthy Jay Gatsby and his love for the beautiful Daisy Buchanan.'),
 ('1984', 1, 2, 6, 'A dystopian social science fiction novel and cautionary tale of a totalitarian society.');
 
-INSERT INTO `book_author_book` (bookid, authorid) VALUES
-(1, 1);
+INSERT INTO `user_book_offers` (userprofile_id, bookid) VALUES
+('1','1'), ('1','2');
+
+INSERT INTO `user_requested_books` (userprofile_id, bookid) VALUES
+('2','1'), ('2','2');
 
 INSERT INTO `book_author_book` (bookid, authorid) VALUES
-(2, 2);
+(1, 1), (2, 2);
+
+INSERT INTO `user_book` (userprofile_id, bookid) VALUES
+(1, 1), (2, 2);

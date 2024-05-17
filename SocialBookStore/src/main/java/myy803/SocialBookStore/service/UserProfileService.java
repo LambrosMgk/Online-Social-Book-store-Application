@@ -27,7 +27,7 @@ public interface UserProfileService {
 	
 	public void requestBook(int bookid, String username);
 	
-	public List<BookFormData> retrieveBookRequests(String username);
+	public List<BookFormData> retrieveBookRequests(int userprofileid);
 	
 	public List<UserProfileFormData> retrieveRequestingUsers(int bookid);
 	

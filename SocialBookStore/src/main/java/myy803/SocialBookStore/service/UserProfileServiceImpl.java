@@ -3,8 +3,9 @@ package myy803.SocialBookStore.service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import myy803.SocialBookStore.entity.Book;
 import myy803.SocialBookStore.entity.Role;
@@ -153,25 +154,33 @@ public class UserProfileServiceImpl implements UserProfileService {
 	}
 
 	@Override
-	public List<BookFormData> retrieveBookRequests(String username) 
+	public List<BookFormData> retrieveBookRequests(int userprofileid) 
 	{
 		List<BookFormData> bookRequests = new ArrayList<>();
-		UserProfile userProfile = userProfileMapper.findByUsername(username);
-		if(userProfile != null) 
+		UserProfile userProfile = userProfileMapper.findByUserprofileid(userprofileid);
+		
+		if(userProfile == null)	// This "if" should never execute unless we entered wrong data straight to the database
 		{
-			List<Book> bookrequested = userProfile.getBooksRequested();
-			
-			
-			for (Book book: bookrequested) 
+			System.err.println("UserProfileServiceImpl.retrieveBookRequests(): User profile not found for userid: " + userprofileid);
+		}
+		
+		// When a user offers a book it gets added to the "book" table as well as the "user_book_offers" table
+		// So we look for all the books offered by this user in the "book" table
+		List<Book> books = bookMapper.findByUserprofileid(userprofileid);	
+		
+		
+		for (Book book: books) 
+		{
+			if(!book.getRequestingUsers().isEmpty())	// Add only the books that have requests on them
 			{
-				BookFormData bookFormdata = new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategory(),book.getBookAuthors(),book.getDescription());
+				//System.err.println("Testing : bookid=" + book.getIdbook());
+				BookFormData bookFormdata = new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategory(),book.getBookAuthors(),
+						book.getDescription(), book.getRequestingUsers());
 				
 				bookRequests.add(bookFormdata);
 			}
-			
-		}else {
-			System.out.println("User profile not found for username: " + username);
 		}
+		
 		return bookRequests;
 	}
 

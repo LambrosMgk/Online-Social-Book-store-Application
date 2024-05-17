@@ -2,9 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    
     <title>Requests List</title>
-    
     <link rel="stylesheet" type="text/css" href="/css/user/ShowRequests.css">
 </head>
 <body>
@@ -13,14 +11,16 @@
         <button onclick="window.location.href='/user/dashboard';">Go Back</button>
         
         <!-- Requests List -->
-        <div th:if="${offers != null and !offers.empty}">
+        <div th:if="${requests != null and !requests.empty}">
             <div th:each="request : ${requests}" class="request-block">
                 <!-- Display request details here -->
-                <p th:text="${request.title}">Request Title</p>
-                <p th:text="${request.description}">Request Description</p>
-                
+                <div class="request-content">
+                    <p th:text="${request.title}">Request Title</p>
+                    <p th:text="${request.description}">Request Description</p>
+                </div>
                 <!-- See Request Button -->
-                <button onclick="window.location.href='/user/see-request'">See Request</button>
+                <a th:href="@{/user/see-requests(bookid=${request.idbook}, userprofile_id=${userprofile_id})}"
+                   th:text="'See Request (' + ${request.getRequestingUsers().size()} + ')'" class="btn btn-info btn-sm"></a>
             </div>
         </div>
         

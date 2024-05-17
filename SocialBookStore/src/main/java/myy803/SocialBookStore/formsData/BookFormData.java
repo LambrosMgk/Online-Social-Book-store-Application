@@ -5,6 +5,7 @@ import java.util.List;
 
 import myy803.SocialBookStore.entity.BookAuthor;
 import myy803.SocialBookStore.entity.BookCategory;
+import myy803.SocialBookStore.entity.UserProfile;
 
 
 public class BookFormData {
@@ -15,21 +16,22 @@ public class BookFormData {
     private String nameOfCategory;
     private String description;
 	private List<BookAuthor> bookAuthors;
-	private List<String> authorsOfTheBook;
 
 
 	private String nameOfTheAuthors; 
+    private List<UserProfile> requestingUsers;
     
     public BookFormData() {}
     
-    public BookFormData(int idbook, String title, BookCategory bookCategory, List<BookAuthor> bookAuthors,String description) {
+    public BookFormData(int idbook, String title, BookCategory bookCategory, List<BookAuthor> bookAuthors,String description,
+    		List<UserProfile> requestingUsers) {
         this.idbook = idbook;
         this.title = title;
         this.bookCategory = bookCategory;
         this.bookAuthors = bookAuthors;
-        this.authorsOfTheBook = this.SetAuthorsOfTheBook();
         this.SetNameofCategory();
         this.description = description;
+        this.requestingUsers = requestingUsers;
     }
     
     public int getIdbook() { return idbook; }
@@ -52,24 +54,13 @@ public class BookFormData {
 	
 	public String getDescription() {return description;}
 	public void setDescription(String description) {this.description = description;}
+    
 	
-    public List<String> getAuthorsOfTheBook() {return authorsOfTheBook;}
-	public void setAuthorsOfTheBook(List<String> authorsOfTheBook) {this.authorsOfTheBook = authorsOfTheBook;}
-
-    
-    private  void SetNameofCategory() {
-    	this.nameOfCategory = this.bookCategory.getName();
-    }
-    
-    private List<String> SetAuthorsOfTheBook() {
-    	
-    	List<String> names_of_authors = new ArrayList<>();
-    	
-    	for (BookAuthor bookAuth : this.bookAuthors) {
-    		names_of_authors.add(bookAuth.getName());
-    	}
-		return names_of_authors;
-    }
+	public void setRequestingUsers(List<UserProfile> requestingUsers) {this.requestingUsers = requestingUsers;}
+	public List<UserProfile> getRequestingUsers() {return requestingUsers;}
+	
+	
+    private  void SetNameofCategory() {this.nameOfCategory = this.bookCategory.getName();}
     
     
     @Override
@@ -77,4 +68,7 @@ public class BookFormData {
         return "BookFormData [idbook=" + idbook + ", title=" + title + ", bookCategory=" + bookCategory
                 + ", bookAuthors=" + bookAuthors + "]";
     }
+
+    
+
 }

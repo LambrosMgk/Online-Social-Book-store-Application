@@ -44,6 +44,7 @@ public class UserController {
 		UserProfileFormData userProfileForm = userProfileService.retreiveProfile(authentication.getName());
 		
 		model.addAttribute("user", userProfileForm);
+		System.err.println("UserController : userProfileid=" + userProfileForm.getUserprofile_id());
 		return "user/dashboard";
     }
     
@@ -78,16 +79,35 @@ public class UserController {
     
     
     @RequestMapping("/user/show-requests")
-    public String showRequests(@RequestParam("userprofile_id") int userid,Model model)
+    public String showRequests(@RequestParam("userprofile_id") int userprofileid,Model model)
     {
-    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    	String username = authentication.getName();
-		
-    	List<BookFormData> requests = userProfileService.retrieveBookRequests(username);	// Get the requests for books this user has from base
+    	// Get the requests for this user's books from base
+    	List<BookFormData> requests = userProfileService.retrieveBookRequests(userprofileid);	
     	
     	model.addAttribute("requests", requests);
+    	model.addAttribute("userprofile_id", userprofileid);
     	
         return "user/ShowRequests";
+    }
+    
+    
+    @RequestMapping("/user/see-requests")
+    public String seeRequests(@RequestParam("bookid") int bookid,@RequestParam("userprofile_id") int userprofileid,Model model)
+    {
+    	BookFormData requestedBook = bookService.findBookFormDataByid(bookid);
+    	
+    	
+    	model.addAttribute("userprofile_id", userprofileid);	// To help redirect the user to "user/ShowRequests?userprofile_id=X"
+    	if(requestedBook == null)
+    	{
+    		model.addAttribute("successMessage", "?");
+    		System.err.println("UserController : seeRequests failed");
+    		return "user/SeeRequests";
+    	}
+    	
+    	model.addAttribute("users", requestedBook.getRequestingUsers());
+    	
+        return "user/SeeRequests";
     }
     
     
@@ -110,6 +130,7 @@ public class UserController {
         theModel.addAttribute("user",userForm); // user
 		return "/user/MyOffers";
     }
+    
     
     @RequestMapping("/user/addBookOffer")
     public String addBookOffer(@RequestParam("userprofile_id") int userid, Model theModel)
@@ -172,7 +193,8 @@ public class UserController {
     {
     	
     	Book book = bookService.findBookByid(theBookId);
-    	BookFormData theBook= new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategory(),book.getBookAuthors(),book.getDescription()); 
+    	BookFormData theBook= new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategory(),book.getBookAuthors(),
+    			book.getDescription(),book.getRequestingUsers()); 
     	theModel.addAttribute("book", theBook);
     	
     	return "user/BookDescription";

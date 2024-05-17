@@ -11,6 +11,7 @@ public interface BookService {
 	public List<BookFormData>  findAllBooks();
 	public List<Book> retrieveAllBooks();
 	public Book findBookByid(int idbook);
+	public BookFormData findBookFormDataByid(int idbook);
 	public void saveBook(BookFormData bookFormData,int userprofileid);
 	
 }

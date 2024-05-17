@@ -30,7 +30,8 @@ public class BookServiceImpl implements BookService{
 			for (Book book : books ) 
 			{
 				System.out.println("authors" + book.getBookAuthors().toString());
-				BookFormData formBook = new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategory(),book.getBookAuthors(),book.getDescription());
+				BookFormData formBook = new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategory(),book.getBookAuthors(),
+						book.getDescription(),book.getRequestingUsers());
 				booksFormData.add(formBook); // list of all books
 			}
 		}else {
@@ -47,6 +48,16 @@ public class BookServiceImpl implements BookService{
 	public Book findBookByid(int idbook) {
 		Book book = bookMapper.findByIdbook(idbook);
 		return book;
+	}
+	
+	@Override
+	public BookFormData findBookFormDataByid(int idbook)
+	{
+		Book book = bookMapper.findByIdbook(idbook);
+		BookFormData bookForm = new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategory(),book.getBookAuthors(),
+				book.getDescription(),book.getRequestingUsers());
+		
+		return bookForm;
 	}
 
 	@Override
