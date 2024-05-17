@@ -15,7 +15,10 @@ public class BookFormData {
     private String nameOfCategory;
     private String description;
 	private List<BookAuthor> bookAuthors;
-    private List<String> nameOfTheAuthors; 
+	private List<String> authorsOfTheBook;
+
+
+	private String nameOfTheAuthors; 
     
     public BookFormData() {}
     
@@ -24,7 +27,7 @@ public class BookFormData {
         this.title = title;
         this.bookCategory = bookCategory;
         this.bookAuthors = bookAuthors;
-        this.nameOfTheAuthors = this.SetAuthorsOfTheBook();
+        this.authorsOfTheBook = this.SetAuthorsOfTheBook();
         this.SetNameofCategory();
         this.description = description;
     }
@@ -44,11 +47,15 @@ public class BookFormData {
     public String getNameOfCategory() {return nameOfCategory;}
 	public void setNameOfCategory(String nameOfCategory) {this.nameOfCategory = nameOfCategory;}
 
-	public List<String> getNameOfTheAuthors() {return nameOfTheAuthors;}
-	public void setNameOfTheAuthors(List<String> nameOfTheAuthors) {this.nameOfTheAuthors = nameOfTheAuthors;}
+	public String getNameOfTheAuthors() {return nameOfTheAuthors;}
+	public void setNameOfTheAuthors(String nameOfTheAuthors) {this.nameOfTheAuthors = nameOfTheAuthors;}
 	
 	public String getDescription() {return description;}
 	public void setDescription(String description) {this.description = description;}
+	
+    public List<String> getAuthorsOfTheBook() {return authorsOfTheBook;}
+	public void setAuthorsOfTheBook(List<String> authorsOfTheBook) {this.authorsOfTheBook = authorsOfTheBook;}
+
     
     private  void SetNameofCategory() {
     	this.nameOfCategory = this.bookCategory.getName();

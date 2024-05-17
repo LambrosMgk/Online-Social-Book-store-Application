@@ -1,5 +1,6 @@
 package myy803.SocialBookStore.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -127,10 +128,22 @@ public class UserController {
     
     
     @RequestMapping("/user/BookSave")
-    public String saveBookOffer(@ModelAttribute("book") BookFormData theBookFormData,Model theModel)
+    public String saveBookOffer(@RequestParam("userprofile_id") int userid,@ModelAttribute("book") BookFormData theBookFormData,Model theModel)
     {
+    	String authors = theBookFormData.getNameOfTheAuthors();
+        String[] ArrayOfAuthors = authors.split(",");
+        List<String> ListOfAuthors = Arrays.asList(ArrayOfAuthors);
+        
+        
+        for (String authorName : ListOfAuthors){ // Save the bookAuthor
+        	BookAuthor bookAuthor = new BookAuthor();
+        	bookAuthor.setName(authorName);
+        	bookAuthorService.BookAuthorSave(bookAuthor);
+        }
+        
+        bookService.saveBook(theBookFormData,userid);
+        
     	
-
     	return"redirect:/user/dashboard";
     }
     

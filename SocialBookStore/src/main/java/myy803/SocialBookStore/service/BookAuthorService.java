@@ -10,4 +10,6 @@ import myy803.SocialBookStore.entity.BookAuthor;
 @Service
 public interface BookAuthorService {
 	public List<BookAuthor>  ReturnAuthors();
+	
+	public void BookAuthorSave(BookAuthor bookauthor);
 }

@@ -20,9 +20,8 @@
 		<hr>
 		
 	
-		<form action="#" th:action="@{/user/BookSave}"
-						 th:object="${book}" 
-						 th:object="${bookAuthor}" method="POST">
+		<form action="#" th:action="@{/user/BookSave(userprofile_id=${user.userprofile_id})}"
+						 th:object="${book}" method="POST">
 		
 			<!-- Add hidden form field to handle update -->
 			<input type="hidden" th:field="*{idbook}" />
@@ -35,13 +34,13 @@
                 <legend>Categories of the Book:</legend>
                 <div class="scroll-container">
 				    <label th:each="category : ${bookCategories}">
-				        <input type="checkbox"  name="Categories" th:value="${category.categoryid}" th:text="${category.name}">
+				        <input type="checkbox"  name="Categories" th:text="${category.name}">
 				    </label>
 				</div>
             </fieldset>
-
-			<input type="text" th:field="*{bookAuthor.name}"
-					class="form-control mb-4 col-4" placeholder="Insert the Authors of the Book">
+            
+			<input type="text" th:field="*{nameOfTheAuthors}"
+					class="form-control mb-4 col-4" placeholder="give the names ">
 			
 			<input type="text" th:field="*{description}"
 					class="form-control mb-4 col-4" placeholder="Insert a Summary of the book">

@@ -44,11 +44,13 @@ public class Book {
 	
 	public Book() {}
 	
-	public Book( String title, BookCategory bookCategory,List<BookAuthor> bookAuthors,String description) {
+	public Book( String title, BookCategory bookCategory,List<BookAuthor> bookAuthors, int authorid, String description,int userprofileid) {
 		this.title = title;
 		this.bookCategory = bookCategory;
 		this.bookAuthors = bookAuthors;
+		this.authorid = authorid;
 		this.description = description;
+		this.userprofileid = userprofileid;
 	}
 	
 	public Book(int idbook, String title, BookCategory bookCategory,String description) {
