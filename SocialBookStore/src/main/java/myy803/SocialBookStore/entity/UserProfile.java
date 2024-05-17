@@ -10,7 +10,7 @@ public class UserProfile {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "userprofile_id")
-	private int userprofile_id;
+	private int userprofileid;
 	
 	@Column(name = "userid")
 	private int userid;
@@ -83,8 +83,8 @@ public class UserProfile {
 	}
 	
 	
-	public void setUserprofile_id(int Userprofile_id) {this.userprofile_id = Userprofile_id;}
-	public int getUserprofile_id() {return userprofile_id;}
+	public void setUserprofile_id(int Userprofile_id) {this.userprofileid = Userprofile_id;}
+	public int getUserprofile_id() {return userprofileid;}
 	
 	
 	public void setUserid(int userid) {this.userid = userid;}

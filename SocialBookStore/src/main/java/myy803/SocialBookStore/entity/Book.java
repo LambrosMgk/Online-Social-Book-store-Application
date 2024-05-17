@@ -1,5 +1,6 @@
 package myy803.SocialBookStore.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import jakarta.persistence.*;
 
@@ -22,7 +23,7 @@ public class Book {
 	private String description;
 
 	@Column(name="userprofile_id")
-	private int userprofile_id;
+	private int userprofileid;
 		
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoryid")  // This should match the column in the database that holds the foreign key.
@@ -37,11 +38,18 @@ public class Book {
     )
     private List<BookAuthor> bookAuthors;
 	
-	@OneToMany(mappedBy = "userprofile_id", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "userprofileid", cascade = CascadeType.ALL)
 	private List<UserProfile> requestingUsers;
 
 	
 	public Book() {}
+	
+	public Book( String title, BookCategory bookCategory,List<BookAuthor> bookAuthors,String description) {
+		this.title = title;
+		this.bookCategory = bookCategory;
+		this.bookAuthors = bookAuthors;
+		this.description = description;
+	}
 	
 	public Book(int idbook, String title, BookCategory bookCategory,String description) {
 		this.idbook = idbook;
@@ -76,8 +84,16 @@ public class Book {
 	public String getDescription() {return description;}
 	public void setDescription(String description) {this.description = description;}
 	
+	public List<String> getBookAuthorsNames(){
+		List<String> bookauthorsnames = new ArrayList<>();
+		for (BookAuthor bookAuthor : this.bookAuthors) {
+			bookauthorsnames.add(bookAuthor.getName());
+		}
+		return bookauthorsnames;
+	}
+	
 	public String toString() {
-		return "Book with title : " + this.title + " from the user with id " + this.userprofile_id;
+		return "Book with title : " + this.title + " from the user with id " + this.userprofileid;
 	}
 
 }

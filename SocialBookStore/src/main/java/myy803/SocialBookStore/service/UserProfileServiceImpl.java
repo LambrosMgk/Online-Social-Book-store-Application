@@ -37,9 +37,17 @@ public class UserProfileServiceImpl implements UserProfileService {
 	@Override
 	public UserProfileFormData retreiveProfile(String username) {
 		UserProfile userProfile = userProfileMapper.findByUsername(username);
+
 		UserProfileFormData userProfileFormData = new UserProfileFormData(userProfile);
 		
 		//System.out.println("This is the userprofile object which will be returned " + userProfileFormData.toString());
+		return userProfileFormData;
+	}
+	
+	@Override 
+	public UserProfileFormData retreiveProfile(int userid) {
+		UserProfile userProfile = userProfileMapper.findByUserprofileid(userid);		
+		UserProfileFormData userProfileFormData = new UserProfileFormData(userProfile);
 		return userProfileFormData;
 	}
 

@@ -4,6 +4,6 @@ kane dynamic to registration form wste na bgazei opoious authors exei to databas
 
 oi users tha mporoun na kanoun aplh perihghsh sto site kai na blepoun ti paizei, enw an kanoun kai profile mporoun na kanoun kai offers
 
-isws prosthikh pediwn sto profileFormData gia na exei kai ola ta categories kai tou user ta selected gia to EditProfile
+isws prosthikh pediwn sto profileFormData gia na exei kai ola ta categories kai tou user ta selected gia to EditProfile ?? 
 
 isws search bar gia anazhthsh me onoma sto search book

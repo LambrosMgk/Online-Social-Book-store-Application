@@ -7,10 +7,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import myy803.SocialBookStore.entity.Book;
+import myy803.SocialBookStore.entity.BookAuthor;
+import myy803.SocialBookStore.entity.BookCategory;
 import myy803.SocialBookStore.formsData.BookFormData;
 import myy803.SocialBookStore.formsData.UserProfileFormData;
 import myy803.SocialBookStore.service.BookAuthorService;
@@ -31,13 +34,16 @@ public class UserController {
 	BookService bookService;
 
     @RequestMapping("/user/dashboard")
-    public String getUserHome()
+    public String getUserHome(Model model)
     {
     	 //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		 //String currentPrincipalName = authentication.getName();
 		 //System.err.println("UserController : username=" + currentPrincipalName);
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserProfileFormData userProfileForm = userProfileService.retreiveProfile(authentication.getName());
 		
-        return "user/dashboard";
+		model.addAttribute("user", userProfileForm);
+		return "user/dashboard";
     }
     
     
@@ -71,7 +77,7 @@ public class UserController {
     
     
     @RequestMapping("/user/show-requests")
-    public String showRequests(Model model)
+    public String showRequests(@RequestParam("userprofile_id") int userid,Model model)
     {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     	String username = authentication.getName();
@@ -85,7 +91,7 @@ public class UserController {
     
     
     @RequestMapping("/user/show-recommendations")
-    public String showRecommendations()
+    public String showRecommendations(@RequestParam("userprofile_id") int userid)
     {
 		// Get profile from base and check what categories the user likes
     	// then sort the books by these categories
@@ -94,15 +100,43 @@ public class UserController {
     
     
     @RequestMapping("/user/my-offerings")
-    public String myOfferings()
+    public String myOfferings(@RequestParam("userprofile_id") int userid, Model theModel)
     {
-		// Get the offering list for this user from base
-        return "user/";
+    	UserProfileFormData userForm = userProfileService.retreiveProfile(userid) ;  
+		List<BookFormData> bookOffers = userProfileService.retreiveBookOffers(userForm.getUsername());
+		
+		theModel.addAttribute("books",bookOffers);// list of book offers in the html 
+        theModel.addAttribute("user",userForm); // user
+		return "/user/MyOffers";
+    }
+    
+    @RequestMapping("/user/addBookOffer")
+    public String addBookOffer(@RequestParam("userprofile_id") int userid, Model theModel)
+    {
+    	UserProfileFormData userForm = userProfileService.retreiveProfile(userid) ;  
+    	List<BookCategory> categories = bookCategoryService.ReturnCategories();
+    	BookAuthor bookauthor = new BookAuthor();
+//    	userProfileService.retreiveProfile(0)
+        BookFormData book = new BookFormData();
+        theModel.addAttribute("book",book);
+        theModel.addAttribute("user",userForm); 
+        theModel.addAttribute("bookCategories",categories);
+        theModel.addAttribute("bookauthor",bookauthor);
+		return "/user/addOffer";
     }
     
     
-    @RequestMapping("/user/my-wishlist")
-    public String myWishlist()
+    @RequestMapping("/user/BookSave")
+    public String saveBookOffer(@ModelAttribute("book") BookFormData theBookFormData,Model theModel)
+    {
+    	
+
+    	return"redirect:/user/dashboard";
+    }
+    
+    
+    @RequestMapping("/user/my-wishlist") //? to 8eloume
+    public String myWishlist(@RequestParam("userprofile_id") int userid)
     {
 		// Get the wish list for this user from base
         return "user/";
@@ -116,7 +150,7 @@ public class UserController {
         List<BookFormData> allTheBooks = bookService.findAllBooks();   	
     	theModel.addAttribute("books",allTheBooks);
     	    
-        return "user/searchBook";
+        return "/user/searchBook";
     }
     
     

@@ -37,10 +37,9 @@
     <hr>
     <div class="button-group text-center">
         <a th:href="@{/user/edit-profile}" class="btn btn-secondary btn-sm mb-3">Edit Profile</a>
-        <a th:href="@{/user/show-requests}" class="btn btn-secondary btn-sm mb-3">Show Requests</a>
-        <a th:href="@{/user/show-recommendations}" class="btn btn-secondary btn-sm mb-3">Show Recommendations</a>
-        <a th:href="@{/user/my-offerings}" class="btn btn-secondary btn-sm mb-3">My Offerings</a>
-        <a th:href="@{/user/my-wishlist}" class="btn btn-secondary btn-sm mb-3">My Wishlist</a>
+        <a th:href="@{/user/show-requests(userprofile_id=${user.userprofile_id})}" class="btn btn-secondary btn-sm mb-3">Show Requests</a>
+        <a th:href="@{/user/show-recommendations(userprofile_id=${user.userprofile_id})}" class="btn btn-secondary btn-sm mb-3">Show Recommendations</a>
+        <a th:href="@{/user/my-offerings(userprofile_id=${user.userprofile_id})}" class="btn btn-secondary btn-sm mb-3">My Offerings</a>
         <a th:href="@{/user/search-book}" class="btn btn-secondary btn-sm mb-3">Search Book</a>
     </div>
 </div>

@@ -13,6 +13,8 @@ import myy803.SocialBookStore.formsData.UserProfileFormData;
 public interface UserProfileService {
 	public UserProfileFormData retreiveProfile(String username);
 	
+	public UserProfileFormData retreiveProfile(int userid);
+	
 	public void save(UserProfileFormData userProfileFormData);
 	
 	public List<BookFormData> retreiveBookOffers(String username);
