@@ -183,7 +183,6 @@ public class UserController {
     	// Search for the requested book or see all available books? redirect to a page for this or dynamically show this to user dashboard
         List<BookFormData> allTheBooks = bookService.findAllBooks();   	
     	theModel.addAttribute("books",allTheBooks);
-    	    
         return "/user/searchBook";
     }
     
@@ -193,10 +192,13 @@ public class UserController {
     {
     	
     	Book book = bookService.findBookByid(theBookId);
-    	BookFormData theBook= new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategory(),book.getBookAuthors(),
-    			book.getDescription(),book.getRequestingUsers()); 
+    	BookFormData theBook= new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategory(),book.getBookAuthors(),book.getDescription(),book.getRequestingUsers()); 
     	theModel.addAttribute("book", theBook);
+    	theModel.addAttribute("bookAuthors", theBook.getBookAuthors());
     	
     	return "user/BookDescription";
     }
+    
+    
+
 }

@@ -1,13 +1,11 @@
 package myy803.SocialBookStore.formsData;
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 import myy803.SocialBookStore.entity.BookAuthor;
 import myy803.SocialBookStore.entity.BookCategory;
 import myy803.SocialBookStore.entity.UserProfile;
-
-
 public class BookFormData {
     
     private int idbook;
@@ -16,8 +14,6 @@ public class BookFormData {
     private String nameOfCategory;
     private String description;
 	private List<BookAuthor> bookAuthors;
-
-
 	private String nameOfTheAuthors; 
     private List<UserProfile> requestingUsers;
     
@@ -36,19 +32,15 @@ public class BookFormData {
     
     public int getIdbook() { return idbook; }
     public void setIdbook(int idbook) { this.idbook = idbook; }
-
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
-
     public BookCategory getBookCategory() { return bookCategory; }
     public void setBookCategory(BookCategory bookCategory) { this.bookCategory = bookCategory; }
-
     public List<BookAuthor> getBookAuthors() { return bookAuthors; }
     public void setBookAuthors(List<BookAuthor> bookAuthors) { this.bookAuthors = bookAuthors; }
     
     public String getNameOfCategory() {return nameOfCategory;}
 	public void setNameOfCategory(String nameOfCategory) {this.nameOfCategory = nameOfCategory;}
-
 	public String getNameOfTheAuthors() {return nameOfTheAuthors;}
 	public void setNameOfTheAuthors(String nameOfTheAuthors) {this.nameOfTheAuthors = nameOfTheAuthors;}
 	
@@ -68,7 +60,5 @@ public class BookFormData {
         return "BookFormData [idbook=" + idbook + ", title=" + title + ", bookCategory=" + bookCategory
                 + ", bookAuthors=" + bookAuthors + "]";
     }
-
     
-
 }

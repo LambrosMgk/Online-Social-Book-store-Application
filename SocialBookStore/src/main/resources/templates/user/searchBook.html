@@ -19,6 +19,10 @@
 		class="btn btn-primary btn-sm mb-3">
 		Go Back
 	</a>
+	<a th:href="@{/user/seachBookWithStrategy}"
+		class="btn btn-primary btn-sm mb-3">
+		Search With filters
+	</a>
 	<table class="table table-bordered table-striped">
 		<thead class="thead-dark">
 			<tr>
@@ -33,7 +37,7 @@
 			<tr th:each="book : ${books}">
 			
 				<td th:text="${book.title}" />	
-				<td th:text="${book.authorsOfTheBook}" />	
+				<td th:text="${book.bookAuthors}" />	
 				<td th:text="${book.nameOfCategory}" />	
 				
 				<td>					
@@ -43,6 +47,7 @@
 						class="btn btn-info btn-sm">
 						See Book	   
 					</a>
+
 					
 				</td>
 				
