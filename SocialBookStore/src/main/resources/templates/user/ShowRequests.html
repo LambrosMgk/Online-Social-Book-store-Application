@@ -15,8 +15,8 @@
             <div th:each="request : ${requests}" class="request-block">
                 <!-- Display request details here -->
                 <div class="request-content">
-                    <p th:text="${request.title}">Request Title</p>
-                    <p th:text="${request.description}">Request Description</p>
+                    <p><strong>Book Title:</strong> <span th:text="${request.title}"></span></p>
+                    <p><strong>Book Description:</strong> <span th:text="${request.description}"></span></p>
                 </div>
                 <!-- See Request Button -->
                 <a th:href="@{/user/see-requests(bookid=${request.idbook}, userprofile_id=${userprofile_id})}"
