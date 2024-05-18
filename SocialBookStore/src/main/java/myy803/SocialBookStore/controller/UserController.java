@@ -1,5 +1,6 @@
 package myy803.SocialBookStore.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import myy803.SocialBookStore.entity.Book;
 import myy803.SocialBookStore.entity.BookAuthor;
 import myy803.SocialBookStore.entity.BookCategory;
 import myy803.SocialBookStore.formsData.BookFormData;
+import myy803.SocialBookStore.formsData.SearchFormData;
 import myy803.SocialBookStore.formsData.UserProfileFormData;
 import myy803.SocialBookStore.service.BookAuthorService;
 import myy803.SocialBookStore.service.BookCategoryService;
@@ -48,10 +50,7 @@ public class UserController {
 		return "user/dashboard";
     }
     
-    
-    
-    
-    
+
     @RequestMapping("/user/edit-profile")
     public String editProfile(Model model)	// Get profile from base and autofill the fields in editProfile.html
     {
@@ -78,10 +77,7 @@ public class UserController {
 		return "user/dashboard";
     }
     
-    
-    
-    
-    
+
     @RequestMapping("/user/show-requests")
     public String showRequests(@RequestParam("userprofile_id") int userprofileid,Model model)
     {
@@ -113,9 +109,7 @@ public class UserController {
         return "user/seeRequests";
     }
     
-    
-    
-    
+
     @RequestMapping("/user/show-recommendations")
     public String showRecommendations(@RequestParam("userprofile_id") int userid)
     {
@@ -124,8 +118,7 @@ public class UserController {
         return "user/showRecommendations";
     }
     
-    
-    
+
     
     @RequestMapping("/user/my-offers-list")
     public String myBookOfferList(@RequestParam("userprofile_id") int userprofile_id, Model theModel)
@@ -184,9 +177,7 @@ public class UserController {
     	return"/user/createAuthor";
     }
     
-    
-    
-    
+
     
     @RequestMapping("/user/search-book")
     public String searchBook(Model theModel) 
@@ -207,5 +198,30 @@ public class UserController {
     	
     	return "user/searchBookDescription";
     }
-
+    
+    @RequestMapping("/user/seachBookWithStrategy")
+    public String SearchStrategies(Model theModel) {
+    	
+    	SearchFormData searchFormData = new SearchFormData();
+    	theModel.addAttribute("searchObject",searchFormData);
+    	return "/user/searchBookWithFilters";
+    }
+    
+    @RequestMapping("/user/searchBooksfilters")
+    public String searchBooksFilted(@RequestParam String title,@RequestParam String author,@RequestParam String typeOfSearch,Model theModel) 
+    {
+    	SearchFormData searchFormData = new SearchFormData();
+        searchFormData.setTitle(title);
+        
+        searchFormData.setAuthor(bookAuthorService.findBookAuthorByName(author,searchFormData));
+        searchFormData.setTypeOfSearch(typeOfSearch);
+        List<BookFormData> books = userProfileService.searchBooks(searchFormData);
+        System.out.println(books);
+        theModel.addAttribute("books", books);
+    	
+    	
+    	return "/user/searchBook";
+    }
+    
+    
 }

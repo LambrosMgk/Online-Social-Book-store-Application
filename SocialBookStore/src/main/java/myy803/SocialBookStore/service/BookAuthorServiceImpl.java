@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import myy803.SocialBookStore.entity.BookAuthor;
+import myy803.SocialBookStore.formsData.SearchFormData;
 import myy803.SocialBookStore.mapper.BookAuthorMapper;
 
 
@@ -15,6 +16,7 @@ public class BookAuthorServiceImpl implements BookAuthorService {
 
 	@Autowired 
 	private BookAuthorMapper bookAuthor;
+	private SearchFormData searchFormData;
 	
 	@Override
 	public List<BookAuthor> ReturnAuthors() {
@@ -26,6 +28,13 @@ public class BookAuthorServiceImpl implements BookAuthorService {
 	@Transactional
 	public void BookAuthorSave(BookAuthor bookauthor) {
 		bookAuthor.save(bookauthor);
+	}
+
+	@Override
+	public BookAuthor findBookAuthorByName(String name,SearchFormData searchFormData) {
+		searchFormData.setAuthor(bookAuthor.findByname(name));
+		System.out.println(searchFormData.getAuthor().getName());
+		return bookAuthor.findByname(name);
 	}
 
 }

@@ -33,6 +33,10 @@ public class UserProfileServiceImpl implements UserProfileService {
 	private SearchStrategy searchStrategy;
 	@Autowired
 	private RecommendationsStrategy recommendationsStrategy;
+	@Autowired
+	private ExactSearchStrategy exactSearch;
+	@Autowired
+	private ApproximateSearchStrategy approxSearch;
 	
 	
 	
@@ -122,9 +126,15 @@ public class UserProfileServiceImpl implements UserProfileService {
 	// to return a list of books after searching
 	@Override
 	public List<BookFormData> searchBooks(SearchFormData searchFormData) {
-		List<BookFormData> booksFormData = new ArrayList<>();
-		booksFormData = searchStrategy.search(searchFormData,bookMapper);
-		return booksFormData;
+		if("exact".equals(searchFormData.getTypeOfSearch()))
+		{
+			return exactSearch.search(searchFormData, bookMapper);
+		}
+		else if("approximate".equals(searchFormData.getTypeOfSearch())) {
+			return approxSearch.search(searchFormData, bookMapper);
+		}else {
+			throw new IllegalArgumentException("Unknown search");
+		}
 	}
 
 	@Override
