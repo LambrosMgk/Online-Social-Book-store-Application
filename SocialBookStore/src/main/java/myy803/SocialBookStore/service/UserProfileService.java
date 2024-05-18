@@ -17,7 +17,7 @@ public interface UserProfileService {
 	
 	public void save(UserProfileFormData userProfileFormData);
 	
-	public List<BookFormData> retreiveBookOffers(String username);
+	public List<BookFormData> retreiveBookOffers(int userprofile_id);
 	
 	public void addBookOffer(String username, BookFormData bookFormData);
 	

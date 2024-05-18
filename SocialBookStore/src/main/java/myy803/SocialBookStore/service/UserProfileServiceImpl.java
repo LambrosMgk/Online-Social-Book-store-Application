@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import myy803.SocialBookStore.entity.Book;
+import myy803.SocialBookStore.entity.BookAuthor;
+import myy803.SocialBookStore.entity.BookCategory;
 import myy803.SocialBookStore.entity.Role;
 import myy803.SocialBookStore.entity.User;
 import myy803.SocialBookStore.entity.UserProfile;
@@ -73,20 +75,24 @@ public class UserProfileServiceImpl implements UserProfileService {
 
 	
 	@Override
-	public List<BookFormData> retreiveBookOffers(String username) 
+	public List<BookFormData> retreiveBookOffers(int userprofile_id) 
 	{
-        UserProfile userProfile = userProfileMapper.findByUsername(username);
+        UserProfile userProfile = userProfileMapper.findByUserprofileid(userprofile_id);
 
         List<Book> bookOffers = userProfile.getBookOffers();
-
+        
         // Convert each Book object into a corresponding BookFormData object
         List<BookFormData> bookFormDataList = new ArrayList<>();
-        for (Book book : bookOffers) {
-            BookFormData bookFormData = new BookFormData();
-            bookFormData.setIdbook(book.getIdbook());
-            bookFormData.setTitle(book.getTitle());
-            bookFormData.setBookCategory(book.getBookCategory());
-            bookFormData.setBookAuthors(book.getBookAuthors());
+        for (Book book : bookOffers) 
+        {
+            BookFormData bookFormData = new BookFormData(
+            		book.getIdbook(), 
+            		book.getTitle(), 
+            		book.getBookCategory(),
+            		book.getBookAuthors(), 
+            		book.getDescription(), 
+            		book.getRequestingUsers()
+            		);
             bookFormDataList.add(bookFormData);
         }
         return bookFormDataList;

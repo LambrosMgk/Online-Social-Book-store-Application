@@ -44,9 +44,12 @@ public class UserController {
 		UserProfileFormData userProfileForm = userProfileService.retreiveProfile(authentication.getName());
 		
 		model.addAttribute("user", userProfileForm);
-		System.err.println("UserController : userProfileid=" + userProfileForm.getUserprofile_id());
+		//System.err.println("UserController : userProfileid=" + userProfileForm.getUserprofile_id());
 		return "user/dashboard";
     }
+    
+    
+    
     
     
     @RequestMapping("/user/edit-profile")
@@ -63,8 +66,6 @@ public class UserController {
 
 		return "user/editProfile";
     }
-    
-    
     @RequestMapping("/user/save-profile")
     public String saveProfile(Model model)
     {
@@ -78,6 +79,9 @@ public class UserController {
     }
     
     
+    
+    
+    
     @RequestMapping("/user/show-requests")
     public String showRequests(@RequestParam("userprofile_id") int userprofileid,Model model)
     {
@@ -87,10 +91,8 @@ public class UserController {
     	model.addAttribute("requests", requests);
     	model.addAttribute("userprofile_id", userprofileid);
     	
-        return "user/ShowRequests";
+        return "user/showRequests";
     }
-    
-    
     @RequestMapping("/user/see-requests")
     public String seeRequests(@RequestParam("bookid") int bookid,@RequestParam("userprofile_id") int userprofileid,Model model)
     {
@@ -102,13 +104,16 @@ public class UserController {
     	{
     		model.addAttribute("successMessage", "?");
     		System.err.println("UserController : seeRequests failed");
-    		return "user/SeeRequests";
+    		return "user/seeRequests";
     	}
     	
+    	model.addAttribute("bookTitle", requestedBook.getTitle());
     	model.addAttribute("users", requestedBook.getRequestingUsers());
     	
-        return "user/SeeRequests";
+        return "user/seeRequests";
     }
+    
+    
     
     
     @RequestMapping("/user/show-recommendations")
@@ -116,65 +121,71 @@ public class UserController {
     {
 		// Get profile from base and check what categories the user likes
     	// then sort the books by these categories
-        return "user/";
+        return "user/showRecommendations";
     }
     
     
-    @RequestMapping("/user/my-offerings")
-    public String myOfferings(@RequestParam("userprofile_id") int userid, Model theModel)
+    
+    
+    @RequestMapping("/user/my-offers-list")
+    public String myBookOfferList(@RequestParam("userprofile_id") int userprofile_id, Model theModel)
     {
-    	UserProfileFormData userForm = userProfileService.retreiveProfile(userid) ;  
-		List<BookFormData> bookOffers = userProfileService.retreiveBookOffers(userForm.getUsername());
+		List<BookFormData> bookOffers = userProfileService.retreiveBookOffers(userprofile_id);
 		
-		theModel.addAttribute("books",bookOffers);// list of book offers in the html 
-        theModel.addAttribute("user",userForm); // user
-		return "/user/MyOffers";
+		theModel.addAttribute("books", bookOffers); 
+        theModel.addAttribute("userprofile_id", userprofile_id);
+        
+		return "/user/myOffersList";
+    }
+    @RequestMapping("/user/myOffersBookDetails")
+    public String myOfferingsDetails(@RequestParam("idbook") int theBookId, @RequestParam("userprofile_id") int userprofile_id, Model theModel) 
+    {
+    	
+    	Book book = bookService.findBookByid(theBookId);
+    	BookFormData theBook= new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategory(),book.getBookAuthors(),book.getDescription(),book.getRequestingUsers()); 
+    	theModel.addAttribute("userprofile_id", userprofile_id);
+    	theModel.addAttribute("book", theBook);
+    	theModel.addAttribute("bookAuthors", theBook.getBookAuthors());
+    	
+    	return "user/myOffersBookDetails";
     }
     
     
     @RequestMapping("/user/addBookOffer")
-    public String addBookOffer(@RequestParam("userprofile_id") int userid, Model theModel)
+    public String addBookOffer(@RequestParam("userprofile_id") int userprofile_id, Model theModel)
     {
-    	UserProfileFormData userForm = userProfileService.retreiveProfile(userid) ;  
     	List<BookCategory> categories = bookCategoryService.ReturnCategories();
-    	BookAuthor bookauthor = new BookAuthor();
-//    	userProfileService.retreiveProfile(0)
-        BookFormData book = new BookFormData();
-        theModel.addAttribute("book",book);
-        theModel.addAttribute("user",userForm); 
+    	List<BookAuthor> authors = bookAuthorService.ReturnAuthors();
+    	BookFormData book = new BookFormData();
+    	
+    	book.setBookAuthors(authors);
+    	theModel.addAttribute("newBook",book);
+        theModel.addAttribute("userprofile_id", userprofile_id); 
         theModel.addAttribute("bookCategories",categories);
-        theModel.addAttribute("bookauthor",bookauthor);
-		return "/user/addOffer";
+        //theModel.addAttribute("bookAuthors",authors);
+        
+		return "/user/addBookOffer";
     }
-    
-    
     @RequestMapping("/user/BookSave")
-    public String saveBookOffer(@RequestParam("userprofile_id") int userid,@ModelAttribute("book") BookFormData theBookFormData,Model theModel)
+    public String saveBookOffer(@RequestParam("userprofile_id") int userid,@ModelAttribute("newBook") BookFormData newBook,Model theModel)
     {
-    	String authors = theBookFormData.getNameOfTheAuthors();
-        String[] ArrayOfAuthors = authors.split(",");
-        List<String> ListOfAuthors = Arrays.asList(ArrayOfAuthors);
-        
-        
-        for (String authorName : ListOfAuthors){ // Save the bookAuthor
-        	BookAuthor bookAuthor = new BookAuthor();
-        	bookAuthor.setName(authorName);
-        	bookAuthorService.BookAuthorSave(bookAuthor);
-        }
-        
-        bookService.saveBook(theBookFormData,userid);
-        
+    	
+    	bookService.saveBook(newBook,userid);
     	
     	return"redirect:/user/dashboard";
     }
-    
-    
-    @RequestMapping("/user/my-wishlist") //? to 8eloume
-    public String myWishlist(@RequestParam("userprofile_id") int userid)
+    @RequestMapping("/user/authorCreate")
+    public String newAuthorCreate(@RequestParam("userprofile_id") int userid, Model theModel)
     {
-		// Get the wish list for this user from base
-        return "user/";
+    	BookAuthor bookauthor = new BookAuthor();
+    	
+    	theModel.addAttribute("newBookAuthor",bookauthor);
+    	
+    	return"/user/createAuthor";
     }
+    
+    
+    
     
     
     @RequestMapping("/user/search-book")
@@ -185,8 +196,6 @@ public class UserController {
     	theModel.addAttribute("books",allTheBooks);
         return "/user/searchBook";
     }
-    
-    
     @RequestMapping("/user/seeBook")
     public String seeBook(@RequestParam("idbook") int theBookId, Model theModel) 
     {
@@ -196,9 +205,7 @@ public class UserController {
     	theModel.addAttribute("book", theBook);
     	theModel.addAttribute("bookAuthors", theBook.getBookAuthors());
     	
-    	return "user/BookDescription";
+    	return "user/searchBookDescription";
     }
-    
-    
 
 }

@@ -61,25 +61,23 @@ public class BookServiceImpl implements BookService{
 	}
 
 	@Override
-	public void saveBook(BookFormData bookFormData,int userProfileid) {
-		
+	public void saveBook(BookFormData bookFormData,int userProfileid) 
+	{
+		// Incomplete function, ena book prepei na mpei alla exoume thema me ta author ids
 		List<BookAuthor> bookAuthors = bookAuthorMapper.findAll();
-		List<BookAuthor> newAuthors = new ArrayList<>();
 		
-		for (BookAuthor bookAuth : bookAuthors) { // an den exw ksanadei auton ton sugrafea tote prosuese ton 
-			if(! bookAuthors.contains(bookAuth)) {
-				newAuthors.add(bookAuth);
-				bookAuth.setBooks(bookMapper.findByauthorid(bookAuth.getIdauthor()));
-				bookAuthorMapper.save(bookAuth); // kane save to neo author
-
-			}
-			Book book = new Book(bookFormData.getTitle(),bookFormData.getBookCategory(),newAuthors,bookAuth.getIdauthor(),bookFormData.getDescription(),userProfileid);
+		for (BookAuthor bookAuth : bookAuthors) 
+		{
+			Book book = new Book(
+					bookFormData.getTitle(),
+					bookFormData.getBookCategory(),
+					bookFormData.getBookAuthors(),
+					bookAuth.getIdauthor(),
+					bookFormData.getDescription(),
+					userProfileid);
 			bookMapper.save(book);
 		}
 
 	}
 	
-
-	
-
 }

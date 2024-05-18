@@ -1,11 +1,12 @@
 package myy803.SocialBookStore.formsData;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import myy803.SocialBookStore.entity.BookAuthor;
 import myy803.SocialBookStore.entity.BookCategory;
 import myy803.SocialBookStore.entity.UserProfile;
+
 public class BookFormData {
     
     private int idbook;
@@ -14,7 +15,6 @@ public class BookFormData {
     private String nameOfCategory;
     private String description;
 	private List<BookAuthor> bookAuthors;
-	private String nameOfTheAuthors; 
     private List<UserProfile> requestingUsers;
     
     public BookFormData() {}
@@ -41,8 +41,6 @@ public class BookFormData {
     
     public String getNameOfCategory() {return nameOfCategory;}
 	public void setNameOfCategory(String nameOfCategory) {this.nameOfCategory = nameOfCategory;}
-	public String getNameOfTheAuthors() {return nameOfTheAuthors;}
-	public void setNameOfTheAuthors(String nameOfTheAuthors) {this.nameOfTheAuthors = nameOfTheAuthors;}
 	
 	public String getDescription() {return description;}
 	public void setDescription(String description) {this.description = description;}
