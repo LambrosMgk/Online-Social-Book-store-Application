@@ -1,10 +1,4 @@
-isws prosthikh pediwn sto profileFormData gia na exei kai ola ta categories kai tou user ta selected gia to EditProfile ?? 
-
-isws search bar gia anazhthsh me onoma sto search book
-
-isws na allaxoume to "userProfileService.retreiveBookOffers" wste na xrhsimopoiei mono userid pou einai unique
-
-check na mhn mporei o idios user na kanei request ta biblia pou kanei offer
+check na mhn mporei o idios user na kanei request ta biblia pou kanei o idios offer
 
 check sta recommendations na mhn tou bgazei ta dika tou books???
 
@@ -15,3 +9,7 @@ exact strategy kai approx otan den uparxoun genika books h genika authors, title
 //checkare oti mpainei kai sta offers to book
 
 check recommendBooksByAuthor sto userprofimplemente
+
+
+xana check ta panta gia tous guests na doume an doueluoun me oles tis allages pou kaname, eidika sto search book na baloume
+limit sto create request.
