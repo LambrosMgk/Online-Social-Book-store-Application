@@ -10,6 +10,11 @@
     <div class="container">
         <h1>Edit User Profile!</h1>
         <form id="profileForm" th:action="@{/user/save-profile(userprofile_id=${userProfileForm.userprofile_id})}" th:object="${userProfileForm}" method="post">
+            
+            <!-- Add hidden form field to handle update -->
+            <input type="hidden" th:field="*{bookOffers}" />
+            <input type="hidden" th:field="*{requestedBooks}" />
+            
             <div class="form-group">
                 <label for="fullname">Full Name (30 characters max):</label>
                 <input type="text" id="fullname" th:field="*{fullname}" name="fullname" maxlength="30" required>
@@ -34,8 +39,8 @@
             <fieldset>
                 <legend>Categories of Books:</legend>
                 <div class="scroll-container">
-				    <label th:each="category : ${userProfileForm.favoriteCategories}">
-				        <input type="checkbox" name="favoriteCategories" th:value="${category.name}" th:text="${category.name}">
+				    <label th:each="category : ${categories}">
+				        <input type="checkbox" name="favoriteCategories" th:value="${category.categoryid}" th:text="${category.name}" th:checked="${#lists.contains(userProfileForm.favoriteCategories, category)}" />
 				    </label>
 				</div>
             </fieldset>
@@ -44,8 +49,8 @@
             <fieldset>
                 <legend>Favorite Authors:</legend>
                 <div class="scroll-container">
-			        <label th:each="author : ${userProfileForm.favoriteAuthors}">
-			            <input type="checkbox" name="favoriteAuthors" th:value="${author.name}" th:text="${author.name}">
+			        <label th:each="author : ${authors}">
+			            <input type="checkbox" name="favoriteAuthors" th:value="${author.idauthor}" th:text="${author.name}" th:checked="${#lists.contains(userProfileForm.favoriteAuthors, author)}" />
 			        </label>
 			    </div>
             </fieldset>

@@ -4,4 +4,14 @@ isws search bar gia anazhthsh me onoma sto search book
 
 isws na allaxoume to "userProfileService.retreiveBookOffers" wste na xrhsimopoiei mono userid pou einai unique
 
-thumisou na teleiwseis to edit profile
+check na mhn mporei o idios user na kanei request ta biblia pou kanei offer
+
+check sta recommendations na mhn tou bgazei ta dika tou books???
+
+add new author html
+
+exact strategy kai approx otan den uparxoun genika books h genika authors, titles na mhn crasharei
+
+//checkare oti mpainei kai sta offers to book
+
+check recommendBooksByAuthor sto userprofimplemente

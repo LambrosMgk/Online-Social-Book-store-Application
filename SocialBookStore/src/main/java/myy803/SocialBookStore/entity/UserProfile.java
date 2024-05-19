@@ -27,6 +27,7 @@ public class UserProfile {
 	@Column(name = "phonenumber")
 	private String phonenumber;
 	
+	
 	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "user_authors",
@@ -34,6 +35,7 @@ public class UserProfile {
         inverseJoinColumns = @JoinColumn(name = "authorid")
     )
 	private List<BookAuthor> favouriteBookAuthors;
+	
 	
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -52,28 +54,21 @@ public class UserProfile {
     )
     private List<Book> bookOffers;
 	
+    
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "user_requested_books",
         joinColumns = @JoinColumn(name = "userprofile_id"),
         inverseJoinColumns = @JoinColumn(name = "bookid")
     )
-    private List<Book> booksRequested;
+    private List<Book> requestedBooks;
     
 	
 	public UserProfile() {};
-		
-	public UserProfile( String username, String fullname, String address, int age, String phonenumber) 
-	{
-		
-		this.username = username;
-		this.fullname = fullname;
-		this.address = address;
-		this.age = age;
-		this.phonenumber = phonenumber;
-	}
 	
-	public UserProfile(int userprofileid, String username, String fullname, String address, int age, String phonenumber) 
+	public UserProfile(int userprofileid, String username, String fullname, String address, int age, String phonenumber,
+			List<BookCategory> favouriteBookCategories, List<BookAuthor> favouriteBookAuthors, List<Book> bookOffers,
+			List<Book> requestedBooks) 
 	{
 		this.userprofileid = userprofileid;
 		this.username = username;
@@ -81,6 +76,10 @@ public class UserProfile {
 		this.address = address;
 		this.age = age;
 		this.phonenumber = phonenumber;
+		this.favouriteBookCategories = favouriteBookCategories;
+		this.favouriteBookAuthors = favouriteBookAuthors;
+		this.bookOffers = bookOffers;
+		this.requestedBooks = requestedBooks;
 	}
 	
 	
@@ -125,7 +124,7 @@ public class UserProfile {
 	public List<Book> getBookOffers() {return bookOffers;}
 
 	
-	public void setBooksRequested(List<Book> booksRequested) {this.booksRequested = booksRequested;}
-	public List<Book> getBooksRequested() {return booksRequested;}
+	public void setRequestedBooks(List<Book> requestedBooks) {this.requestedBooks = requestedBooks;}
+	public List<Book> getRequestedBooks() {return requestedBooks;}
 
 }

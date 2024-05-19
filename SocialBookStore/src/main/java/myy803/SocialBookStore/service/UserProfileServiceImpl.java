@@ -15,7 +15,6 @@ import myy803.SocialBookStore.entity.Role;
 import myy803.SocialBookStore.entity.User;
 import myy803.SocialBookStore.entity.UserProfile;
 import myy803.SocialBookStore.formsData.BookFormData;
-import myy803.SocialBookStore.formsData.RecommendationsFormData;
 import myy803.SocialBookStore.formsData.SearchFormData;
 import myy803.SocialBookStore.formsData.UserProfileFormData;
 import myy803.SocialBookStore.mapper.BookMapper;
@@ -31,19 +30,15 @@ public class UserProfileServiceImpl implements UserProfileService {
 	@Autowired 
 	private BookMapper bookMapper;
 	
-	//Autowired
-	private SearchStrategy searchStrategy;
-	@Autowired
-	private RecommendationsStrategy recommendationsStrategy;
 	@Autowired
 	private ExactSearchStrategy exactSearch;
 	@Autowired
 	private ApproximateSearchStrategy approxSearch;
 	
 	
-	
 	@Override
-	public UserProfileFormData retreiveProfile(String username) {
+	public UserProfileFormData retreiveProfile(String username) 
+	{
 		UserProfile userProfile = userProfileMapper.findByUsername(username);
 
 		UserProfileFormData userProfileFormData = new UserProfileFormData(userProfile);
@@ -53,46 +48,109 @@ public class UserProfileServiceImpl implements UserProfileService {
 	}
 	
 	@Override 
-	public UserProfileFormData retreiveProfile(int userid) {
+	public UserProfileFormData retreiveProfile(int userid) 
+	{
 		UserProfile userProfile = userProfileMapper.findByUserprofileid(userid);		
 		UserProfileFormData userProfileFormData = new UserProfileFormData(userProfile);
 		return userProfileFormData;
 	}
 
 	@Override
-	public void save(UserProfileFormData userProfileFormData) {
+	public void createUserProfile(UserProfileFormData userProfileFormData) 
+	{
 		UserProfile userProfile = new UserProfile(
 				userProfileFormData.getUserprofile_id(),
 				userProfileFormData.getUsername(),
 				userProfileFormData.getFullname(),
 				userProfileFormData.getAddress(),
 				userProfileFormData.getAge(),
-				userProfileFormData.getPhonenum());
+				userProfileFormData.getPhonenum(),
+				userProfileFormData.getFavoriteCategories(),
+				userProfileFormData.getFavoriteAuthors(),
+				userProfileFormData.getBookOffers(),
+				userProfileFormData.getRequestedBooks()
+        		);
 		
-		userProfile.setFavouriteBookCategories(userProfileFormData.getFavoriteCategories());
-		userProfile.setFavouriteBookAuthors(userProfileFormData.getFavoriteAuthors());
 		
 		User user = userService.findByUsername(userProfileFormData.getUsername());
 		user.setRole(Role.USER);
 		
+		
 		userService.saveUser2(user);
 		userProfileMapper.save(userProfile);
 	}
+	
 	@Override
     @Transactional
-    public void UpdateUserProfile(UserProfile userProfile) {      
-        // Update existing user profile
-        UserProfile existingProfile = userProfileMapper.findByUserprofileid(userProfile.getUserprofile_id());
-        System.out.println(existingProfile.getUserprofile_id()+"to brika");
-        existingProfile.setAddress(userProfile.getAddress());
-        existingProfile.setAge(userProfile.getAge());
-        existingProfile.setFull_name(userProfile.getFullname());
-        existingProfile.setPhonenumber(userProfile.getPhonenumber());
-        existingProfile.setUsername(userProfile.getUsername());
+    // Update existing user profile
+    public void UpdateUserProfile(UserProfileFormData userProfiledata) 
+	{      
+		// Checking if profile exists
+        UserProfile existingProfile = userProfileMapper.findByUserprofileid(userProfiledata.getUserprofile_id());
+        if(existingProfile == null)
+        {
+        	System.err.println("UserProfileServiceImpl : User profile not found!!");
+        	return;
+        }
+        
+        UserProfile userProfile = new UserProfile(
+        		userProfiledata.getUserprofile_id(),
+        		userProfiledata.getUsername(),
+        		userProfiledata.getFullname(),
+        		userProfiledata.getAddress(),
+        		userProfiledata.getAge(),
+        		userProfiledata.getPhonenum(),
+        		userProfiledata.getFavoriteCategories(),
+        		userProfiledata.getFavoriteAuthors(),
+        		userProfiledata.getBookOffers(),
+        		userProfiledata.getRequestedBooks()
+        		);
+        
+        
         userProfileMapper.save(userProfile);
-
     }
 
+	@Override
+	public List<BookFormData> retrieveBookRequests(int userprofileid) 
+	{
+		List<BookFormData> bookRequests = new ArrayList<>();
+		UserProfile userProfile = userProfileMapper.findByUserprofileid(userprofileid);
+		
+		if(userProfile == null)	// This "if" should never execute unless we entered wrong data straight to the database
+		{
+			System.err.println("UserProfileServiceImpl.retrieveBookRequests(): User profile not found for userid: " + userprofileid);
+		}
+		
+		
+		List<Book> books = bookMapper.findByUserprofileid(userprofileid);	
+		
+		
+		for (Book book: books) 
+		{
+			if(!book.getRequestingUsers().isEmpty())	// Add only the books that have requests on them
+			{
+				System.err.println("For book " + book.getIdbook());
+				for(UserProfile x : book.getRequestingUsers())
+				{
+					System.err.println("Requesting user : " + x.getUserprofile_id());
+				}
+				
+				BookFormData bookFormdata = new BookFormData(
+						book.getIdbook(),
+						book.getTitle(),
+						book.getDescription(),
+						book.getBookCategories(),
+						book.getBookAuthors(),
+						book.getOfferingUsers(),
+						book.getRequestingUsers()
+						);
+				
+				bookRequests.add(bookFormdata);
+			}
+		}
+		
+		return bookRequests;
+	}
 	
 	@Override
 	public List<BookFormData> retreiveBookOffers(int userprofile_id) 
@@ -108,9 +166,10 @@ public class UserProfileServiceImpl implements UserProfileService {
             BookFormData bookFormData = new BookFormData(
             		book.getIdbook(), 
             		book.getTitle(), 
+            		book.getDescription(), 
             		book.getBookCategories(),
             		book.getBookAuthors(), 
-            		book.getDescription(), 
+            		book.getOfferingUsers(),
             		book.getRequestingUsers()
             		);
             bookFormDataList.add(bookFormData);
@@ -135,135 +194,8 @@ public class UserProfileServiceImpl implements UserProfileService {
 		{
 			System.out.println("user profile not Found dor username: "+ username);
 		}
-		
-		
 	}
 	
-	// to return a list of books after searching
-	@Override
-	public List<BookFormData> searchBooks(SearchFormData searchFormData) {
-		if("exact".equals(searchFormData.getTypeOfSearch()))
-		{
-			return exactSearch.search(searchFormData, bookMapper);
-		}
-		else if("approximate".equals(searchFormData.getTypeOfSearch())) {
-			return approxSearch.search(searchFormData, bookMapper);
-		}else {
-			throw new IllegalArgumentException("Unknown search");
-		}
-	}
-
-	@Override
-	public List<BookFormData> recommendBooksByCategory(UserProfileFormData userProfileFormData) {
-		List<BookCategory> favouriteCategories = userProfileFormData.getFavoriteCategories();
-		List<BookFormData> booksFormData = new ArrayList<>();
-		for (BookCategory bookCategory : favouriteCategories) 
-		{
-			for(Book book : bookCategory.getBooks()) 
-			{
-				BookFormData bookFormData = new BookFormData(book.getIdbook(),book.getTitle(),bookCategory,book.getBookAuthors(),book.getDescription(),book.getRequestingUsers());
-				booksFormData.add(bookFormData);
-			}
-		}
-		
-		return booksFormData;
-	}
-	
-	@Override
-	public List<BookFormData> recommendBooksByAuthor(UserProfileFormData userProfileFormData) {
-		List<BookAuthor> favouriteAuthors = userProfileFormData.getFavoriteAuthors();
-		List<BookFormData> booksFormData = new ArrayList<>();
-		
-		for (BookAuthor bookAuthor : favouriteAuthors) 
-		{
-			for(Book book : bookAuthor.getBooks()) 
-			{
-				
-				BookFormData bookFormData = new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategory(),bookAuthor,book.getDescription(),book.getRequestingUsers());
-				booksFormData.add(bookFormData);
-			}
-		}
-		
-		return booksFormData;
-	}
-
-	@Override
-	public void requestBook(int bookid, String username) 
-	{
-		UserProfile userProfile = userProfileMapper.findByUsername(username);
-		
-		if(userProfile != null) 
-		{
-			Book requestedBook = bookMapper.findByIdbook(bookid);
-			if(requestedBook != null) {
-				if(!userProfile.getBooksRequested().contains(requestedBook)) {
-					userProfile.getBooksRequested().add(requestedBook);
-					userProfileMapper.save(userProfile);
-					
-					System.out.println("Book with ID "+ requestedBook.getIdbook()+ "requested successfull");
-				}else {
-					System.out.println("Book with ID "+ requestedBook.getIdbook()+ "is allready requested");
-				}
-			}else {
-				System.out.println("Book not found");
-			}
-		}else {
-			System.out.println("User profile not found for username: " + username);
-		}
-	}
-
-	@Override
-	public List<BookFormData> retrieveBookRequests(int userprofileid) 
-	{
-		List<BookFormData> bookRequests = new ArrayList<>();
-		UserProfile userProfile = userProfileMapper.findByUserprofileid(userprofileid);
-		
-		if(userProfile == null)	// This "if" should never execute unless we entered wrong data straight to the database
-		{
-			System.err.println("UserProfileServiceImpl.retrieveBookRequests(): User profile not found for userid: " + userprofileid);
-		}
-		
-		// When a user offers a book it gets added to the "book" table as well as the "user_book_offers" table
-		// So we look for all the books offered by this user in the "book" table
-		List<Book> books = bookMapper.findByUserprofileid(userprofileid);	
-		
-		
-		for (Book book: books) 
-		{
-			if(!book.getRequestingUsers().isEmpty())	// Add only the books that have requests on them
-			{
-				//System.err.println("Testing : bookid=" + book.getIdbook());
-				BookFormData bookFormdata = new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategories(),book.getBookAuthors(),
-						book.getDescription(), book.getRequestingUsers());
-				
-				bookRequests.add(bookFormdata);
-			}
-		}
-		
-		return bookRequests;
-	}
-
-	@Override
-	public List<UserProfileFormData> retrieveRequestingUsers(int bookid) {
-		
-		List<UserProfileFormData> requestingUsers = new ArrayList<>();
-		
-		Book book = bookMapper.findByIdbook(bookid);
-		if(book!=null) 
-		{
-			List<UserProfile> userProfiles = book.getRequestingUsers();
-			
-			for(UserProfile userProfile : userProfiles) {
-				UserProfileFormData userProfileFormdata = new UserProfileFormData(userProfile);
-				requestingUsers.add(userProfileFormdata);
-			}
-		}else {
-			System.out.println(" Book not found ");
-		}
-				
-		return requestingUsers;
-	}
-
 	@Override
 	public void deleteBookOffer(String username, int bookid) {
 		UserProfile userProfile = userProfileMapper.findByUsername(username);
@@ -282,6 +214,103 @@ public class UserProfileServiceImpl implements UserProfileService {
 			userProfileMapper.save(userProfile);
 		}else {
 			System.out.println("User profile not found");
+		}
+	}
+	
+	// to return a list of books after searching
+	@Override
+	public List<BookFormData> searchBooks(SearchFormData searchFormData) {
+		if("exact".equals(searchFormData.getTypeOfSearch()))
+		{
+			return exactSearch.search(searchFormData, bookMapper);
+		}
+		else if("approximate".equals(searchFormData.getTypeOfSearch())) {
+			return approxSearch.search(searchFormData, bookMapper);
+		}else {
+			throw new IllegalArgumentException("Unknown search");
+		}
+	}
+
+	@Override
+	public List<BookFormData> recommendBooksByCategory(UserProfileFormData userProfileFormData) 
+	{
+		List<BookCategory> favouriteCategories = userProfileFormData.getFavoriteCategories();
+		List<BookFormData> booksFormData = new ArrayList<>();
+		
+		for (BookCategory bookCategory : favouriteCategories) 
+		{
+			//System.err.println("Fav categories id : " + bookCategory.getCategoryid());
+			for(Book book : bookCategory.getBooks())
+			{
+				//System.err.println("Fav categories books are :" + book.getIdbook());
+				BookFormData bookFormData = new BookFormData(
+						book.getIdbook(),
+						book.getTitle(),
+						book.getDescription(),
+						book.getBookCategories(),
+						book.getBookAuthors(),
+						book.getOfferingUsers(),
+						book.getRequestingUsers()
+						);
+				booksFormData.add(bookFormData);
+			}
+		}
+		
+		return booksFormData;
+	}
+	
+	@Override
+	public List<BookFormData> recommendBooksByAuthor(UserProfileFormData userProfileFormData) 
+	{
+		List<BookAuthor> favouriteAuthors = userProfileFormData.getFavoriteAuthors();
+		List<BookFormData> booksFormData = new ArrayList<>();
+		
+		for (BookAuthor bookAuthor : favouriteAuthors) 
+		{
+			for(Book book : bookAuthor.getBooks())
+			{
+				for(BookAuthor x : book.getBookAuthors())
+				{
+					System.err.println("Book id" + book.getIdbook() + " with author " + x.getName());
+				}
+				BookFormData bookFormData = new BookFormData(
+						book.getIdbook(),
+						book.getTitle(),
+						book.getDescription(),
+						book.getBookCategories(),
+						book.getBookAuthors(),
+						book.getOfferingUsers(),
+						book.getRequestingUsers()
+						);
+				booksFormData.add(bookFormData);
+			}
+		}
+		
+		return booksFormData;
+	}
+
+	@Override
+	public void requestBook(int bookid, String username) 
+	{
+		UserProfile userProfile = userProfileMapper.findByUsername(username);
+		
+		if(userProfile != null) 
+		{
+			Book requestedBook = bookMapper.findByIdbook(bookid);
+			if(requestedBook != null) {
+				if(!userProfile.getRequestedBooks().contains(requestedBook)) {
+					userProfile.getRequestedBooks().add(requestedBook);
+					userProfileMapper.save(userProfile);
+					
+					System.out.println("Book with ID "+ requestedBook.getIdbook()+ "requested successfull");
+				}else {
+					System.out.println("Book with ID "+ requestedBook.getIdbook()+ "is allready requested");
+				}
+			}else {
+				System.out.println("Book not found");
+			}
+		}else {
+			System.out.println("User profile not found for username: " + username);
 		}
 	}
 

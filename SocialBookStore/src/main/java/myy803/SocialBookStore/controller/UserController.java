@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import myy803.SocialBookStore.entity.Book;
 import myy803.SocialBookStore.entity.BookAuthor;
 import myy803.SocialBookStore.entity.BookCategory;
-import myy803.SocialBookStore.entity.UserProfile;
 import myy803.SocialBookStore.formsData.BookFormData;
-import myy803.SocialBookStore.formsData.RecommendationsFormData;
 import myy803.SocialBookStore.formsData.SearchFormData;
 import myy803.SocialBookStore.formsData.UserProfileFormData;
 import myy803.SocialBookStore.service.BookAuthorService;
@@ -51,47 +49,29 @@ public class UserController {
 		return "user/dashboard";
     }
     
-
+    
+    // Get profile from base and autofill the fields in editProfile.html
     @RequestMapping("/user/edit-profile")
-    public String editProfile(@RequestParam("userprofile_id") int userprofileid,Model model)	// Get profile from base and autofill the fields in editProfile.html
+    public String editProfile(@RequestParam("userprofile_id") int userprofile_id,Model model)
     {
-    	// User is already signed in so we can get the username
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		UserProfileFormData userProfileForm = userProfileService.retreiveProfile(authentication.getName());
-			
-		userProfileForm.setFavoriteCategories(bookCategoryService.ReturnCategories());
-		userProfileForm.setFavoriteAuthors(bookAuthorService.ReturnAuthors());
-    	
-		model.addAttribute("userProfileForm", userProfileForm);
+		UserProfileFormData userProfileForm = userProfileService.retreiveProfile(userprofile_id);
 		
+		
+		model.addAttribute("userProfileForm", userProfileForm);
+		model.addAttribute("categories", bookCategoryService.ReturnCategories());
+		model.addAttribute("authors", bookAuthorService.ReturnAuthors());
 
 		return "user/editProfile";
     }
     @RequestMapping("/user/save-profile")
-    public String saveProfile(@RequestParam("userprofile_id") int userprofileid,@RequestParam(value = "favoriteCategories", required = false) List<String> favoriteCategories,
-            @RequestParam(value = "favoriteAuthors", required = false) List<String> favoriteAuthors,Model model)
+    public String saveProfile(@RequestParam("userprofile_id") int userprofileid, @ModelAttribute("userProfileForm") UserProfileFormData userProfileForm, Model model)
     {
-    	UserProfileFormData userProfileFormData = userProfileService.retreiveProfile(userprofileid);
-    	List<BookCategory> bookCategories = new ArrayList<>();
-    	List<BookAuthor> bookAuthors = new ArrayList<>();
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    	String username = authentication.getName();
     	
-       	
-    	for(String category : favoriteCategories) 
-    		bookCategories.add(bookCategoryService.findByName(category));
     	
-    
-    	for(String Author : favoriteAuthors) 	
-    		bookAuthors.add(bookAuthorService.findBookAuthorByName(Author));
-    	
-
-    	if(favoriteAuthors.isEmpty()) {
-    		bookAuthors.clear();
-    	}
-    	
-    	userProfileFormData.setFavoriteCategories(bookCategories);
-    	userProfileFormData.setFavoriteAuthors(bookAuthors);
-
-    	userProfileService.save(userProfileFormData);
+    	userProfileForm.setUsername(username);
+    	userProfileService.UpdateUserProfile(userProfileForm);
     	
       	model.addAttribute("successMessage", "Update successfull!");
     	
@@ -133,18 +113,18 @@ public class UserController {
     
 
     @RequestMapping("/user/show-recommendations")
-    public String showRecommendations(@RequestParam("userprofile_id") int userid,Model theModel)
+    public String showRecommendations(@RequestParam("userprofile_id") int userprofile_id,Model theModel)
     {
-    	UserProfileFormData userProfileForm = userProfileService.retreiveProfile(userid);
+    	UserProfileFormData userProfileForm = userProfileService.retreiveProfile(userprofile_id);    	
         List<BookFormData> recommendedBooksCategories = userProfileService.recommendBooksByCategory(userProfileForm);
-        theModel.addAttribute("booksFromCategories", recommendedBooksCategories);
         List<BookFormData> recommendedBooksAuthors = userProfileService.recommendBooksByAuthor(userProfileForm);
+        
+        theModel.addAttribute("booksFormCategories", recommendedBooksCategories);
         theModel.addAttribute("booksAuthors", recommendedBooksAuthors);
         
         return "user/showRecommendations";
     }
     
-
     
     @RequestMapping("/user/my-offers-list")
     public String myBookOfferList(@RequestParam("userprofile_id") int userprofile_id, Model theModel)
@@ -161,15 +141,22 @@ public class UserController {
     {
     	
     	Book book = bookService.findBookByid(theBookId);
-    	BookFormData theBook= new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategories(),book.getBookAuthors(),book.getDescription(),book.getRequestingUsers()); 
+    	BookFormData theBook= new BookFormData(
+    			book.getIdbook(),
+    			book.getTitle(),
+    			book.getDescription(),
+    			book.getBookCategories(),
+    			book.getBookAuthors(),
+    			book.getOfferingUsers(),
+    			book.getRequestingUsers()
+    			); 
+    	
     	theModel.addAttribute("userprofile_id", userprofile_id);
     	theModel.addAttribute("book", theBook);
     	theModel.addAttribute("bookAuthors", theBook.getBookAuthors());
     	
     	return "user/myOffersBookDetails";
-    }
-    
-    
+    }    
     @RequestMapping("/user/addBookOffer")
     public String addBookOffer(@RequestParam("userprofile_id") int userprofile_id, Model theModel)
     {
@@ -179,10 +166,9 @@ public class UserController {
     	
     	book.setBookAuthors(authors);
     	book.setBookCategories(categories);
+    	
     	theModel.addAttribute("newBook",book);
-        theModel.addAttribute("userprofile_id", userprofile_id); 
-        //theModel.addAttribute("bookCategories",categories);
-        //theModel.addAttribute("bookAuthors",authors);
+        theModel.addAttribute("userprofile_id", userprofile_id);
         
 		return "/user/addBookOffer";
     }
@@ -190,6 +176,7 @@ public class UserController {
     public String saveBookOffer(@RequestParam("userprofile_id") int userprofile_id,@ModelAttribute("newBook") BookFormData newBook,
     		Model theModel)
     {
+    	// a book must have atleast 1 category and 1 author
     	if(newBook.getBookCategories() == null)
     	{
     		System.err.println("UserController: saveBookOffer(): categories are null");
@@ -201,8 +188,8 @@ public class UserController {
     		return"redirect:/user/dashboard";
     	}
     	
-    	//checkare oti mpainei kai sta offers to book
-    	bookService.saveBook(newBook,userprofile_id);
+    	
+    	bookService.saveBook(newBook, userprofile_id);
     	
     	return"redirect:/user/dashboard";
     }
@@ -231,21 +218,29 @@ public class UserController {
     {
     	
     	Book book = bookService.findBookByid(theBookId);
-    	BookFormData theBook= new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategories(),book.getBookAuthors(),book.getDescription(),book.getRequestingUsers()); 
+    	BookFormData theBook= new BookFormData(
+    			book.getIdbook(),
+    			book.getTitle(),
+    			book.getDescription(),
+    			book.getBookCategories(),
+    			book.getBookAuthors(),
+    			book.getOfferingUsers(),
+    			book.getRequestingUsers()
+    			);
+    	
     	theModel.addAttribute("book", theBook);
-    	theModel.addAttribute("bookAuthors", theBook.getBookAuthors());
     	
     	return "user/searchBookDescription";
     }
     
     @RequestMapping("/user/seachBookWithStrategy")
-    public String SearchStrategies(Model theModel) {
+    public String SearchStrategies(Model theModel) 
+    {
     	
     	SearchFormData searchFormData = new SearchFormData();
     	theModel.addAttribute("searchObject",searchFormData);
     	return "/user/searchBookWithFilters";
     }
-    
     @RequestMapping("/user/searchBooksfilters")
     public String searchBooksFilted(@RequestParam String title,@RequestParam String author,@RequestParam String typeOfSearch,Model theModel) 
     {
@@ -255,12 +250,11 @@ public class UserController {
         searchFormData.setAuthor(bookAuthorService.findBookAuthorByName(author,searchFormData));
         searchFormData.setTypeOfSearch(typeOfSearch);
         List<BookFormData> books = userProfileService.searchBooks(searchFormData);
-        System.out.println(books);
+        
         theModel.addAttribute("books", books);
     	
     	
     	return "/user/searchBook";
     }
-    
     
 }

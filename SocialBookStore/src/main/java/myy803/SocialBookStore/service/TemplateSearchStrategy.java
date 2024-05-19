@@ -18,14 +18,24 @@ public abstract class TemplateSearchStrategy implements SearchStrategy {
 	protected BookMapper bookMapper;
 
 	@Override
-	public List<BookFormData> search(SearchFormData searchFormData, BookMapper bookMapper) {
-		
+	public List<BookFormData> search(SearchFormData searchFormData, BookMapper bookMapper) 
+	{
 		List<Book> initialBooks = makeinitialListOfBooks(searchFormData); //Retrieve initial list of books
 		List<BookFormData> filteredBooks = new ArrayList<>(); //new list to return the books
-        for (Book book : initialBooks) {
-            if (checkIfAuthorsMatch(searchFormData, book)) {
-            	System.out.println("eeeee");
-            	BookFormData bookFormData= new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategory(),book.getBookAuthors(),book.getDescription(),book.getRequestingUsers());
+        
+		for (Book book : initialBooks) 
+        {
+            if (checkIfAuthorsMatch(searchFormData, book))
+            {
+            	BookFormData bookFormData= new BookFormData(
+            			book.getIdbook(),
+            			book.getTitle(),
+            			book.getDescription(),
+            			book.getBookCategories(),
+            			book.getBookAuthors(),
+            			book.getOfferingUsers(),
+            			book.getRequestingUsers()
+            			);
             	filteredBooks.add(bookFormData);
             }
         }

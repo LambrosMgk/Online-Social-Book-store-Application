@@ -1,7 +1,7 @@
 package myy803.SocialBookStore.formsData;
 
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import myy803.SocialBookStore.entity.BookAuthor;
@@ -12,35 +12,23 @@ public class BookFormData {
     
     private int idbook;
     private String title;
-    private String nameOfCategory;
     private String description;
     private List<BookCategory> bookCategories;
 	private List<BookAuthor> bookAuthors;
+	private List<UserProfile> offeringUsers;
     private List<UserProfile> requestingUsers;
     
     public BookFormData() {}
     
-    public BookFormData(int idbook, String title, List<BookCategory> bookCategories, List<BookAuthor> bookAuthors,String description,
-    		List<UserProfile> requestingUsers) 
+    public BookFormData(int idbook, String title, String description, List<BookCategory> bookCategories, List<BookAuthor> bookAuthors,
+    		List<UserProfile> offeringUsers, List<UserProfile> requestingUsers) 
     {
         this.idbook = idbook;
         this.title = title;
+        this.description = description;
         this.bookCategories = bookCategories;
         this.bookAuthors = bookAuthors;
-        this.description = description;
-        this.requestingUsers = requestingUsers;
-    }
-    
-    public BookFormData(int idbook, String title, BookCategory bookCategory, BookAuthor bookAuthor,String description,
-    		List<UserProfile> requestingUsers) {
-    	List<BookAuthor> bookAuthorList =new ArrayList<>();
-    	bookAuthorList.add(bookAuthor);
-        this.idbook = idbook;
-        this.title = title;
-        this.bookCategory = bookCategory;
-        this.bookAuthors = bookAuthorList;
-        this.SetNameofCategory();
-        this.description = description;
+        this.offeringUsers = offeringUsers;
         this.requestingUsers = requestingUsers;
     }
     
@@ -50,25 +38,31 @@ public class BookFormData {
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
     
+    
+    public String getDescription() {return description;}
+	public void setDescription(String description) {this.description = description;}
+	
+	
     public List<BookCategory> getBookCategories() { return bookCategories; }
     public void setBookCategories(List<BookCategory> bookCategories) { this.bookCategories = bookCategories; }
+    
     
     public List<BookAuthor> getBookAuthors() { return bookAuthors; }
     public void setBookAuthors(List<BookAuthor> bookAuthors) { this.bookAuthors = bookAuthors; }
     
-    public String getNameOfCategory() {return nameOfCategory;}
-	public void setNameOfCategory(String nameOfCategory) {this.nameOfCategory = nameOfCategory;}
 	
-	public String getDescription() {return description;}
-	public void setDescription(String description) {this.description = description;}
-    
+	public List<UserProfile> getOfferingUsers() {return offeringUsers;}
+	public void setOfferingUsers(List<UserProfile> offeringUsers) {this.offeringUsers = offeringUsers;}
+	
+	public void addToOfferingUsers(UserProfile userProfile) {this.offeringUsers.add(userProfile);}
 	
 	public void setRequestingUsers(List<UserProfile> requestingUsers) {this.requestingUsers = requestingUsers;}
 	public List<UserProfile> getRequestingUsers() {return requestingUsers;}
     
     
     @Override
-    public String toString() {
+    public String toString()
+    {
     	String str = "BookFormData [idbook=" + idbook + ", title=" + title
     			+ ", bookCategories=";
     	

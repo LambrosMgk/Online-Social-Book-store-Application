@@ -70,8 +70,7 @@ public class GuestController {
     	
     	//save profile to base
     	userProfileForm.setUsername(username);
-    	///--- esbhsa to set set.userid
-    	userProfileService.save(userProfileForm);
+    	userProfileService.createUserProfile(userProfileForm);
     	
     	
     	model.addAttribute("successMessage", "Profile created, you are now a user!");
@@ -91,9 +90,16 @@ public class GuestController {
     @RequestMapping("/guest/seeBook")
     public String seeBook(@RequestParam("idbook") int theBookId, Model theModel) 
     {
-    	
     	Book book = bookService.findBookByid(theBookId);
-    	BookFormData theBook= new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategories(),book.getBookAuthors(),book.getDescription(),book.getRequestingUsers()); 
+    	BookFormData theBook = new BookFormData(
+    			book.getIdbook(),
+    			book.getTitle(),
+    			book.getDescription(),
+    			book.getBookCategories(),
+    			book.getBookAuthors(),
+    			book.getOfferingUsers(),
+    			book.getRequestingUsers()
+    			); 
     	theModel.addAttribute("book", theBook);
     	
     	return "guest/BookDescription";

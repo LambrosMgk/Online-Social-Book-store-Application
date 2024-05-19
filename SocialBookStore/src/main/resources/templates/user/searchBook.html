@@ -32,7 +32,12 @@
                     <span th:each="author, iterStat : ${book.bookAuthors}"
                           th:text="${author.name} + (iterStat.hasNext ? ' ' : '')"></span>
                 </td>
-                <td th:text="${book.nameOfCategory}"></td>
+                
+                <td>
+                	<span th:each="category, iterStat : ${book.bookCategories}"
+                          th:text="${category.name} + (iterStat.hasNext ? ' ' : '')"></span>
+                </td>
+                
                 <td>
                     <a th:href="@{/user/seeBook(idbook=${book.idbook})}" class="btn btn-info btn-sm">See Book</a>
                 </td>

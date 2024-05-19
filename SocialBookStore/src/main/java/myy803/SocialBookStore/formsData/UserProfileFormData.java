@@ -32,7 +32,7 @@ public class UserProfileFormData {
 		this.favoriteAuthors = userProfile.getFavouriteBookAuthors();
 		this.favoriteCategories = userProfile.getFavouriteBookCategories();
 		this.bookOffers = userProfile.getBookOffers();
-		this.requestedBooks = userProfile.getBooksRequested(); 
+		this.requestedBooks = userProfile.getRequestedBooks(); 
 	}
 	
 	/* This constructor should be used to help create a profile for a guest without needing to import the entity userProfile*/
@@ -85,12 +85,14 @@ public class UserProfileFormData {
     public void setBookOffers(List<Book> bookOffers) {this.bookOffers = bookOffers;}
     public List<Book> getBookOffers() {return bookOffers;}
     
+    public void addToBookOffers(Book book) {this.bookOffers.add(book);}
     
     public void setRequestedBooks(List<Book> requestedBooks) {this.requestedBooks = requestedBooks;}
 	public List<Book> getRequestedBooks() {return requestedBooks;}
 	
 	@Override
-	public String toString() {
+	public String toString() 
+	{
 		return "UserProfileFormData [userprofile_id=" + this.userprofile_id +  ", username=" + this.username + ", fullname=" + this.fullname
 				+ ", address=" + this.address + ", age=" + this.age + ", phonenum=" + this.phonenum + "]";
 	}

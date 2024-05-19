@@ -18,10 +18,10 @@ public class Book {
 	
 	@Column(name="description")
 	private String description;
-
+		
 	@Column(name="userprofile_id")
 	private int userprofileid;
-		
+	
 	@ManyToMany
     @JoinTable
     (
@@ -40,27 +40,25 @@ public class Book {
     )
     private List<BookAuthor> bookAuthors;
 	
-	@OneToMany(mappedBy = "userprofileid", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "bookOffers")
+    private List<UserProfile> offeringUsers;
+    
+    @ManyToMany(mappedBy = "requestedBooks")
 	private List<UserProfile> requestingUsers;
 
 	
 	public Book() {}
 	
-	public Book( String title, List<BookCategory> bookCategories,List<BookAuthor> bookAuthors, String description,int userprofileid) 
+	public Book(String title, String description, int userprofileid, List<BookCategory> bookCategories,List<BookAuthor> bookAuthors,
+			List<UserProfile> offeringUsers, List<UserProfile> requestingUsers) 
 	{
 		this.title = title;
-		this.bookCategories = bookCategories;
-		this.bookAuthors = bookAuthors;
 		this.description = description;
 		this.userprofileid = userprofileid;
-	}
-	
-	public Book(int idbook, String title, List<BookCategory> bookCategories,String description) 
-	{
-		this.idbook = idbook;
-		this.title = title;
 		this.bookCategories = bookCategories;
-		this.description = description;
+		this.bookAuthors = bookAuthors;
+		this.offeringUsers = offeringUsers;
+		this.requestingUsers = requestingUsers;
 	}
 
 	
@@ -72,32 +70,44 @@ public class Book {
 	public String getTitle() {return title;}
 
 	
-	public void setBookAuthors(List<BookAuthor> bookAuthors) {this.bookAuthors = bookAuthors;}
-	public List<BookAuthor> getBookAuthors() {return bookAuthors;}
-
+	public String getDescription() {return description;}
+	public void setDescription(String description) {this.description = description;}
+	
+	
+	public int getUserprofileid() {return this.userprofileid;}
+	public void setUserprofileid(int userprofileid) {this.userprofileid = userprofileid;}
 	
 	public void setBookCategories(List<BookCategory> bookCategory) {this.bookCategories = bookCategory;}
 	public List<BookCategory> getBookCategories() {return bookCategories;}
 
 	
+	public void setBookAuthors(List<BookAuthor> bookAuthors) {this.bookAuthors = bookAuthors;}
+	public List<BookAuthor> getBookAuthors() {return bookAuthors;}
+	
+	
+	public void setOfferingUsers(List<UserProfile> offeringUsers) {this.offeringUsers = offeringUsers;}
+	public List<UserProfile> getOfferingUsers() {return this.offeringUsers;}
+	
+	
 	public void setRequestingUsers(List<UserProfile> requestingUsers) {this.requestingUsers = requestingUsers;}
 	public List<UserProfile> getRequestingUsers() {return requestingUsers;}
 	
 	
-	public String getDescription() {return description;}
-	public void setDescription(String description) {this.description = description;}
-	
 	public List<String> getBookAuthorsNames()
 	{
 		List<String> bookauthorsnames = new ArrayList<>();
-		for (BookAuthor bookAuthor : this.bookAuthors) {
+		for (BookAuthor bookAuthor : this.bookAuthors) 
+		{
 			bookauthorsnames.add(bookAuthor.getName());
 		}
 		return bookauthorsnames;
 	}
 	
-	public String toString() {
-		return "Book with title : " + this.title + " from the user with id " + this.userprofileid;
+	public String toString() 
+	{
+		String str = "Book id : " + this.idbook;
+		// fill later
+		return str;
 	}
 
 }
