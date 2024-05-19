@@ -1,14 +1,7 @@
-oi users tha mporoun na kanoun aplh perihghsh sto site kai na blepoun ti paizei, enw an kanoun kai profile mporoun na kanoun kai offers
-
 isws prosthikh pediwn sto profileFormData gia na exei kai ola ta categories kai tou user ta selected gia to EditProfile ?? 
 
 isws search bar gia anazhthsh me onoma sto search book
 
-Otan pas na kaneis save ena book 8eloume category id enw exoume to category object, mporei na allaksoume auto dld ekei pou to book exei BookCategory na exei bookcategoryid ena biblio apoti 
-diabasa mesa exei ena category ara eimaste ok apo auth thn apopsi 
-
 isws na allaxoume to "userProfileService.retreiveBookOffers" wste na xrhsimopoiei mono userid pou einai unique
 
-ena book isws na exei parapanw apo mia categoria, opote isws theloume list kai ekei opws oi authors
-
-to author id isws kai na mhn to theloume to table alla prepei na to doume polu kala prin to afairesoume
+thumisou na teleiwseis to edit profile

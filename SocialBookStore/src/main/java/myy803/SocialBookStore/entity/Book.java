@@ -16,18 +16,20 @@ public class Book {
 	@Column(name="title")
 	private String title;
 	
-	@Column(name="authorid")
-	private int authorid;
-	
 	@Column(name="description")
 	private String description;
 
 	@Column(name="userprofile_id")
 	private int userprofileid;
 		
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoryid")  // This should match the column in the database that holds the foreign key.
-    private BookCategory bookCategory;
+	@ManyToMany
+    @JoinTable
+    (
+        name = "book_category_book",
+        joinColumns = @JoinColumn(name = "bookid"),
+        inverseJoinColumns = @JoinColumn(name = "categoryid")
+    )
+    private List<BookCategory> bookCategories;
 	
     @ManyToMany
     @JoinTable
@@ -44,19 +46,20 @@ public class Book {
 	
 	public Book() {}
 	
-	public Book( String title, BookCategory bookCategory,List<BookAuthor> bookAuthors, int authorid, String description,int userprofileid) {
+	public Book( String title, List<BookCategory> bookCategories,List<BookAuthor> bookAuthors, String description,int userprofileid) 
+	{
 		this.title = title;
-		this.bookCategory = bookCategory;
+		this.bookCategories = bookCategories;
 		this.bookAuthors = bookAuthors;
-		this.authorid = authorid;
 		this.description = description;
 		this.userprofileid = userprofileid;
 	}
 	
-	public Book(int idbook, String title, BookCategory bookCategory,String description) {
+	public Book(int idbook, String title, List<BookCategory> bookCategories,String description) 
+	{
 		this.idbook = idbook;
 		this.title = title;
-		this.bookCategory = bookCategory;
+		this.bookCategories = bookCategories;
 		this.description = description;
 	}
 
@@ -73,20 +76,19 @@ public class Book {
 	public List<BookAuthor> getBookAuthors() {return bookAuthors;}
 
 	
-	public void setBookCategory(BookCategory bookCategory) {this.bookCategory = bookCategory;}
-	public BookCategory getBookCategory() {return bookCategory;}
+	public void setBookCategories(List<BookCategory> bookCategory) {this.bookCategories = bookCategory;}
+	public List<BookCategory> getBookCategories() {return bookCategories;}
 
 	
 	public void setRequestingUsers(List<UserProfile> requestingUsers) {this.requestingUsers = requestingUsers;}
 	public List<UserProfile> getRequestingUsers() {return requestingUsers;}
-
-	public int getAuthorid() {return authorid;}
-	public void setAuthorid(int authorid) {this.authorid = authorid;}
+	
 	
 	public String getDescription() {return description;}
 	public void setDescription(String description) {this.description = description;}
 	
-	public List<String> getBookAuthorsNames(){
+	public List<String> getBookAuthorsNames()
+	{
 		List<String> bookauthorsnames = new ArrayList<>();
 		for (BookAuthor bookAuthor : this.bookAuthors) {
 			bookauthorsnames.add(bookAuthor.getName());

@@ -16,7 +16,13 @@ public class BookCategory {
 	@Column(name = "name")
 	private String name; 
 	
-    @OneToMany(mappedBy = "bookCategory", cascade = CascadeType.ALL)
+	@ManyToMany
+    @JoinTable
+    (
+        name = "book_category_book",
+        joinColumns = @JoinColumn(name = "bookid"),
+        inverseJoinColumns = @JoinColumn(name = "categoryid")
+    )
     private List<Book> books;
 	
     

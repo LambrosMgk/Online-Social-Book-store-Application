@@ -12,21 +12,21 @@ public class BookFormData {
     
     private int idbook;
     private String title;
-    private BookCategory bookCategory;
     private String nameOfCategory;
     private String description;
+    private List<BookCategory> bookCategories;
 	private List<BookAuthor> bookAuthors;
     private List<UserProfile> requestingUsers;
     
     public BookFormData() {}
     
-    public BookFormData(int idbook, String title, BookCategory bookCategory, List<BookAuthor> bookAuthors,String description,
-    		List<UserProfile> requestingUsers) {
+    public BookFormData(int idbook, String title, List<BookCategory> bookCategories, List<BookAuthor> bookAuthors,String description,
+    		List<UserProfile> requestingUsers) 
+    {
         this.idbook = idbook;
         this.title = title;
-        this.bookCategory = bookCategory;
+        this.bookCategories = bookCategories;
         this.bookAuthors = bookAuthors;
-        this.SetNameofCategory();
         this.description = description;
         this.requestingUsers = requestingUsers;
     }
@@ -46,10 +46,13 @@ public class BookFormData {
     
     public int getIdbook() { return idbook; }
     public void setIdbook(int idbook) { this.idbook = idbook; }
+    
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
-    public BookCategory getBookCategory() { return bookCategory; }
-    public void setBookCategory(BookCategory bookCategory) { this.bookCategory = bookCategory; }
+    
+    public List<BookCategory> getBookCategories() { return bookCategories; }
+    public void setBookCategories(List<BookCategory> bookCategories) { this.bookCategories = bookCategories; }
+    
     public List<BookAuthor> getBookAuthors() { return bookAuthors; }
     public void setBookAuthors(List<BookAuthor> bookAuthors) { this.bookAuthors = bookAuthors; }
     
@@ -62,15 +65,22 @@ public class BookFormData {
 	
 	public void setRequestingUsers(List<UserProfile> requestingUsers) {this.requestingUsers = requestingUsers;}
 	public List<UserProfile> getRequestingUsers() {return requestingUsers;}
-	
-	
-    private  void SetNameofCategory() {this.nameOfCategory = this.bookCategory.getName();}
     
     
     @Override
     public String toString() {
-        return "BookFormData [idbook=" + idbook + ", title=" + title + ", bookCategory=" + bookCategory
-                + ", bookAuthors=" + bookAuthors + "]";
+    	String str = "BookFormData [idbook=" + idbook + ", title=" + title
+    			+ ", bookCategories=";
+    	
+    	for(BookCategory x : this.bookCategories)
+    		str = str + "," + x.getName();
+    	
+        str = str + ", bookAuthors=";
+        for(BookAuthor x : this.bookAuthors)
+        	str = str + "," + x.getName();
+        
+        str = str + "]";
+    	return str;
     }
     
 }

@@ -108,7 +108,7 @@ public class UserProfileServiceImpl implements UserProfileService {
             BookFormData bookFormData = new BookFormData(
             		book.getIdbook(), 
             		book.getTitle(), 
-            		book.getBookCategory(),
+            		book.getBookCategories(),
             		book.getBookAuthors(), 
             		book.getDescription(), 
             		book.getRequestingUsers()
@@ -233,7 +233,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 			if(!book.getRequestingUsers().isEmpty())	// Add only the books that have requests on them
 			{
 				//System.err.println("Testing : bookid=" + book.getIdbook());
-				BookFormData bookFormdata = new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategory(),book.getBookAuthors(),
+				BookFormData bookFormdata = new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategories(),book.getBookAuthors(),
 						book.getDescription(), book.getRequestingUsers());
 				
 				bookRequests.add(bookFormdata);

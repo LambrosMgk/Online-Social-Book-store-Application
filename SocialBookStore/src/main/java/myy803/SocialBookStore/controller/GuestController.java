@@ -93,7 +93,7 @@ public class GuestController {
     {
     	
     	Book book = bookService.findBookByid(theBookId);
-    	BookFormData theBook= new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategory(),book.getBookAuthors(),book.getDescription(),book.getRequestingUsers()); 
+    	BookFormData theBook= new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategories(),book.getBookAuthors(),book.getDescription(),book.getRequestingUsers()); 
     	theModel.addAttribute("book", theBook);
     	
     	return "guest/BookDescription";

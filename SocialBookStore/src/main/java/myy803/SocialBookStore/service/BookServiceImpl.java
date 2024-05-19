@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import myy803.SocialBookStore.entity.Book;
 import myy803.SocialBookStore.entity.BookAuthor;
+import myy803.SocialBookStore.entity.BookCategory;
 import myy803.SocialBookStore.formsData.BookFormData;
 import myy803.SocialBookStore.mapper.BookAuthorMapper;
 import myy803.SocialBookStore.mapper.BookMapper;
@@ -30,7 +31,7 @@ public class BookServiceImpl implements BookService{
 			for (Book book : books ) 
 			{
 				System.out.println("authors" + book.getBookAuthors().toString());
-				BookFormData formBook = new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategory(),book.getBookAuthors(),
+				BookFormData formBook = new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategories(),book.getBookAuthors(),
 						book.getDescription(),book.getRequestingUsers());
 				booksFormData.add(formBook); // list of all books
 			}
@@ -54,7 +55,7 @@ public class BookServiceImpl implements BookService{
 	public BookFormData findBookFormDataByid(int idbook)
 	{
 		Book book = bookMapper.findByIdbook(idbook);
-		BookFormData bookForm = new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategory(),book.getBookAuthors(),
+		BookFormData bookForm = new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategories(),book.getBookAuthors(),
 				book.getDescription(),book.getRequestingUsers());
 		
 		return bookForm;
@@ -63,21 +64,15 @@ public class BookServiceImpl implements BookService{
 	@Override
 	public void saveBook(BookFormData bookFormData,int userProfileid) 
 	{
-		// Incomplete function, ena book prepei na mpei alla exoume thema me ta author ids
-		List<BookAuthor> bookAuthors = bookAuthorMapper.findAll();
 		
-		for (BookAuthor bookAuth : bookAuthors) 
-		{
-			Book book = new Book(
-					bookFormData.getTitle(),
-					bookFormData.getBookCategory(),
-					bookFormData.getBookAuthors(),
-					bookAuth.getIdauthor(),
-					bookFormData.getDescription(),
-					userProfileid);
-			bookMapper.save(book);
-		}
-
+		Book book = new Book(
+				bookFormData.getTitle(),
+				bookFormData.getBookCategories(),
+				bookFormData.getBookAuthors(),
+				bookFormData.getDescription(),
+				userProfileid);
+		
+		bookMapper.save(book);
 	}
 	
 }

@@ -161,7 +161,7 @@ public class UserController {
     {
     	
     	Book book = bookService.findBookByid(theBookId);
-    	BookFormData theBook= new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategory(),book.getBookAuthors(),book.getDescription(),book.getRequestingUsers()); 
+    	BookFormData theBook= new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategories(),book.getBookAuthors(),book.getDescription(),book.getRequestingUsers()); 
     	theModel.addAttribute("userprofile_id", userprofile_id);
     	theModel.addAttribute("book", theBook);
     	theModel.addAttribute("bookAuthors", theBook.getBookAuthors());
@@ -178,18 +178,31 @@ public class UserController {
     	BookFormData book = new BookFormData();
     	
     	book.setBookAuthors(authors);
+    	book.setBookCategories(categories);
     	theModel.addAttribute("newBook",book);
         theModel.addAttribute("userprofile_id", userprofile_id); 
-        theModel.addAttribute("bookCategories",categories);
+        //theModel.addAttribute("bookCategories",categories);
         //theModel.addAttribute("bookAuthors",authors);
         
 		return "/user/addBookOffer";
     }
     @RequestMapping("/user/BookSave")
-    public String saveBookOffer(@RequestParam("userprofile_id") int userid,@ModelAttribute("newBook") BookFormData newBook,Model theModel)
+    public String saveBookOffer(@RequestParam("userprofile_id") int userprofile_id,@ModelAttribute("newBook") BookFormData newBook,
+    		Model theModel)
     {
+    	if(newBook.getBookCategories() == null)
+    	{
+    		System.err.println("UserController: saveBookOffer(): categories are null");
+    		return"redirect:/user/dashboard";
+    	}
+    	if(newBook.getBookAuthors() == null)
+    	{
+    		System.err.println("UserController: saveBookOffer(): authors are null");
+    		return"redirect:/user/dashboard";
+    	}
     	
-    	bookService.saveBook(newBook,userid);
+    	//checkare oti mpainei kai sta offers to book
+    	bookService.saveBook(newBook,userprofile_id);
     	
     	return"redirect:/user/dashboard";
     }
@@ -218,7 +231,7 @@ public class UserController {
     {
     	
     	Book book = bookService.findBookByid(theBookId);
-    	BookFormData theBook= new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategory(),book.getBookAuthors(),book.getDescription(),book.getRequestingUsers()); 
+    	BookFormData theBook= new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategories(),book.getBookAuthors(),book.getDescription(),book.getRequestingUsers()); 
     	theModel.addAttribute("book", theBook);
     	theModel.addAttribute("bookAuthors", theBook.getBookAuthors());
     	

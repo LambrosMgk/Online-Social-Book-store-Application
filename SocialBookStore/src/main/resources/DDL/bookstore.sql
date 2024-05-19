@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS `bookauthor`;
 DROP TABLE IF EXISTS `user_authors`;
 DROP TABLE IF EXISTS `user_categories`;
 DROP TABLE IF EXISTS `book_author_book`;
+DROP TABLE IF EXISTS `book_category_book`;
 DROP TABLE IF EXISTS `user_book_offers` ;
 DROP TABLE IF EXISTS `user_requested_books`;
 SET FOREIGN_KEY_CHECKS = 1;
@@ -48,12 +49,9 @@ CREATE TABLE `book` (
     bookid int NOT NULL AUTO_INCREMENT,
     title varchar(255) DEFAULT NULL,
     userprofile_id int NOT NULL,
-    authorid int not NULL,
-    categoryid int not NULL,
     description text,
     PRIMARY KEY (bookid),
-    FOREIGN KEY (userprofile_id) REFERENCES `userprofile`(userprofile_id),
-    FOREIGN KEY (authorid) REFERENCES `bookauthor`(authorid)
+    FOREIGN KEY (userprofile_id) REFERENCES `userprofile`(userprofile_id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `user_categories` (
@@ -96,6 +94,13 @@ CREATE TABLE `book_author_book` (
   FOREIGN KEY (`authorid`) REFERENCES `bookauthor` (`authorid`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE `book_category_book` (
+	`bookid` INT NOT NULL,
+    `categoryid` INT NOT NULL,
+    PRIMARY KEY (`bookid`, `categoryid`),
+    FOREIGN KEY (`bookid`) REFERENCES `book` (`bookid`) ON DELETE CASCADE,
+    FOREIGN KEY (`categoryid`) REFERENCES `bookcategory` (`categoryid`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 INSERT INTO `users` (username, password, role) VALUES
@@ -114,9 +119,9 @@ INSERT INTO `userprofile` (fullname, username, age, address, phonenumber) VALUES
 ('Jane Smith', 'user2', 25, '456 Elm St', 2345678901),
 ('Alice Johnson', 'user3', 28, '789 Oak St', 3456789012);
 
-INSERT INTO `book` (title, userprofile_id, authorid, categoryid, description) VALUES
-('The Great Gatsby', 1, 1, 5, 'The story of the fabulously wealthy Jay Gatsby and his love for the beautiful Daisy Buchanan.'),
-('1984', 1, 2, 6, 'A dystopian social science fiction novel and cautionary tale of a totalitarian society.');
+INSERT INTO `book` (title, userprofile_id, description) VALUES
+('The Great Gatsby', 1, 'The story of the fabulously wealthy Jay Gatsby and his love for the beautiful Daisy Buchanan.'),
+('1984', 1, 'A dystopian social science fiction novel and cautionary tale of a totalitarian society.');
 
 INSERT INTO `user_book_offers` (userprofile_id, bookid) VALUES
 ('1','1'), ('1','2');
@@ -125,6 +130,9 @@ INSERT INTO `user_requested_books` (userprofile_id, bookid) VALUES
 ('2','1'), ('2','2');
 
 INSERT INTO `book_author_book` (bookid, authorid) VALUES
+(1, 1), (2, 2);
+
+INSERT INTO `book_category_book` (bookid, categoryid) VALUES
 (1, 1), (2, 2);
 
 

@@ -39,9 +39,8 @@
             <fieldset class="form-group">
                 <legend>Categories of the Book:</legend>
                 <div class="scroll-container">
-                    <div th:each="category : ${bookCategories}">
-                        <input type="checkbox" id="category-[[${category.categoryid}]]" name="categories" th:value="${category.categoryid}">
-                        <label th:for="'category-' + ${category.categoryid}" th:text="${category.name}"></label>
+                    <div th:each="category : ${newBook.bookCategories}">
+                        <input type="checkbox" id="category-[[${category.categoryid}]]" name="bookCategories" th:value="${category.categoryid}" th:text="${category.name}">
                     </div>
                 </div>
             </fieldset>
