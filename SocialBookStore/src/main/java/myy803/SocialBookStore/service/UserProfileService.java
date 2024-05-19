@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import myy803.SocialBookStore.entity.UserProfile;
 import myy803.SocialBookStore.formsData.BookFormData;
 import myy803.SocialBookStore.formsData.RecommendationsFormData;
 import myy803.SocialBookStore.formsData.SearchFormData;
@@ -16,14 +17,16 @@ public interface UserProfileService {
 	public UserProfileFormData retreiveProfile(int userid);
 	
 	public void save(UserProfileFormData userProfileFormData);
-	
+		
 	public List<BookFormData> retreiveBookOffers(int userprofile_id);
 	
 	public void addBookOffer(String username, BookFormData bookFormData);
 	
 	public List<BookFormData> searchBooks(SearchFormData searchFormData);
 	
-	public List<BookFormData> recommendBooks(String username, RecommendationsFormData recommendationsFormData);
+	public List<BookFormData> recommendBooksByCategory(UserProfileFormData userProfileFormData);
+	
+	public List<BookFormData> recommendBooksByAuthor(UserProfileFormData userProfileFormData);
 	
 	public void requestBook(int bookid, String username);
 	
@@ -34,4 +37,6 @@ public interface UserProfileService {
 	public void deleteBookOffer(String username, int bookid);
 	
 	public void deleteBookRequest(String username, int bookid);
+
+	void UpdateUserProfile(UserProfile userProfile);
 }

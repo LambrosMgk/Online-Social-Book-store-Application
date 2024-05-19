@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <h1>Edit User Profile!</h1>
-        <form id="profileForm" th:action="@{/user/save-profile}" th:object="${userProfileForm}" method="post">
+        <form id="profileForm" th:action="@{/user/save-profile(userprofile_id=${userProfileForm.userprofile_id})}" th:object="${userProfileForm}" method="post">
             <div class="form-group">
                 <label for="fullname">Full Name (30 characters max):</label>
                 <input type="text" id="fullname" th:field="*{fullname}" name="fullname" maxlength="30" required>
@@ -35,7 +35,7 @@
                 <legend>Categories of Books:</legend>
                 <div class="scroll-container">
 				    <label th:each="category : ${userProfileForm.favoriteCategories}">
-				        <input type="checkbox" name="favoriteCategories" th:value="${category.categoryid}" th:text="${category.name}">
+				        <input type="checkbox" name="favoriteCategories" th:value="${category.name}" th:text="${category.name}">
 				    </label>
 				</div>
             </fieldset>
@@ -45,7 +45,7 @@
                 <legend>Favorite Authors:</legend>
                 <div class="scroll-container">
 			        <label th:each="author : ${userProfileForm.favoriteAuthors}">
-			            <input type="checkbox" name="favoriteAuthors" th:value="${author.idauthor}" th:text="${author.name}">
+			            <input type="checkbox" name="favoriteAuthors" th:value="${author.name}" th:text="${author.name}">
 			        </label>
 			    </div>
             </fieldset>

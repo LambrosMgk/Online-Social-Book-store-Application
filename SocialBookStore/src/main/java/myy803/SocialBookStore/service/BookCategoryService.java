@@ -10,4 +10,6 @@ import myy803.SocialBookStore.entity.BookCategory;
 @Service
 public interface BookCategoryService {
 	public List<BookCategory>  ReturnCategories();
+
+	public BookCategory findByName(String categoryName);
 }

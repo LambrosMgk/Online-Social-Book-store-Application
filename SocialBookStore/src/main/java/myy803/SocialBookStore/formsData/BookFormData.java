@@ -1,6 +1,7 @@
 package myy803.SocialBookStore.formsData;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import myy803.SocialBookStore.entity.BookAuthor;
@@ -25,6 +26,19 @@ public class BookFormData {
         this.title = title;
         this.bookCategory = bookCategory;
         this.bookAuthors = bookAuthors;
+        this.SetNameofCategory();
+        this.description = description;
+        this.requestingUsers = requestingUsers;
+    }
+    
+    public BookFormData(int idbook, String title, BookCategory bookCategory, BookAuthor bookAuthor,String description,
+    		List<UserProfile> requestingUsers) {
+    	List<BookAuthor> bookAuthorList =new ArrayList<>();
+    	bookAuthorList.add(bookAuthor);
+        this.idbook = idbook;
+        this.title = title;
+        this.bookCategory = bookCategory;
+        this.bookAuthors = bookAuthorList;
         this.SetNameofCategory();
         this.description = description;
         this.requestingUsers = requestingUsers;

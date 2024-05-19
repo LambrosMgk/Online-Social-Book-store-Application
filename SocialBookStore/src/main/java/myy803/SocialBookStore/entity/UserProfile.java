@@ -11,10 +11,7 @@ public class UserProfile {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "userprofile_id")
 	private int userprofileid;
-	
-	@Column(name = "userid")
-	private int userid;
-	
+		
 	@Column(name = "username")
 	private String username;
 	
@@ -65,16 +62,20 @@ public class UserProfile {
     
 	
 	public UserProfile() {};
-	
-	public UserProfile(int userid, String username) 
+		
+	public UserProfile( String username, String fullname, String address, int age, String phonenumber) 
 	{
-		this.userid = userid;
-		this.username = username;	
+		
+		this.username = username;
+		this.fullname = fullname;
+		this.address = address;
+		this.age = age;
+		this.phonenumber = phonenumber;
 	}
 	
-	public UserProfile(int userid, String username, String fullname, String address, int age, String phonenumber) 
+	public UserProfile(int userprofileid, String username, String fullname, String address, int age, String phonenumber) 
 	{
-		this.userid = userid;
+		this.userprofileid = userprofileid;
 		this.username = username;
 		this.fullname = fullname;
 		this.address = address;
@@ -85,12 +86,7 @@ public class UserProfile {
 	
 	public void setUserprofile_id(int Userprofile_id) {this.userprofileid = Userprofile_id;}
 	public int getUserprofile_id() {return userprofileid;}
-	
-	
-	public void setUserid(int userid) {this.userid = userid;}
-	public int getUserid() {return userid;}
-
-	
+		
 	public void setUsername(String username) {this.username = username;}
 	public String getUsername() {return username;}
 	

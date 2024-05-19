@@ -7,5 +7,5 @@ import myy803.SocialBookStore.entity.UserProfile;
 public interface UserProfileMapper extends JpaRepository<UserProfile, Integer> {
 	public UserProfile findByUsername(String username);
 	public UserProfile findByUserprofileid(int userprofileid);
-	public UserProfile findByUserid(int userid);
+	
 }

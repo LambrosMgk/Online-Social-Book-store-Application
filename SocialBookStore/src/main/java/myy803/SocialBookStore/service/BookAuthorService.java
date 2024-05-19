@@ -14,5 +14,7 @@ public interface BookAuthorService {
 	
 	public BookAuthor findBookAuthorByName(String name,SearchFormData searchFormData);
 	
+	public BookAuthor findBookAuthorByName(String name);
+	
 	public void BookAuthorSave(BookAuthor bookauthor);
 }

@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import jakarta.transaction.Transactional;
 import myy803.SocialBookStore.entity.Book;
 import myy803.SocialBookStore.entity.BookAuthor;
 import myy803.SocialBookStore.entity.BookCategory;
@@ -60,7 +62,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 	@Override
 	public void save(UserProfileFormData userProfileFormData) {
 		UserProfile userProfile = new UserProfile(
-				userProfileFormData.getUser_id(),
+				userProfileFormData.getUserprofile_id(),
 				userProfileFormData.getUsername(),
 				userProfileFormData.getFullname(),
 				userProfileFormData.getAddress(),
@@ -76,6 +78,20 @@ public class UserProfileServiceImpl implements UserProfileService {
 		userService.saveUser2(user);
 		userProfileMapper.save(userProfile);
 	}
+	@Override
+    @Transactional
+    public void UpdateUserProfile(UserProfile userProfile) {      
+        // Update existing user profile
+        UserProfile existingProfile = userProfileMapper.findByUserprofileid(userProfile.getUserprofile_id());
+        System.out.println(existingProfile.getUserprofile_id()+"to brika");
+        existingProfile.setAddress(userProfile.getAddress());
+        existingProfile.setAge(userProfile.getAge());
+        existingProfile.setFull_name(userProfile.getFullname());
+        existingProfile.setPhonenumber(userProfile.getPhonenumber());
+        existingProfile.setUsername(userProfile.getUsername());
+        userProfileMapper.save(userProfile);
+
+    }
 
 	
 	@Override
@@ -138,9 +154,37 @@ public class UserProfileServiceImpl implements UserProfileService {
 	}
 
 	@Override
-	public List<BookFormData> recommendBooks(String username, RecommendationsFormData recommendationsFormData) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<BookFormData> recommendBooksByCategory(UserProfileFormData userProfileFormData) {
+		List<BookCategory> favouriteCategories = userProfileFormData.getFavoriteCategories();
+		List<BookFormData> booksFormData = new ArrayList<>();
+		for (BookCategory bookCategory : favouriteCategories) 
+		{
+			for(Book book : bookCategory.getBooks()) 
+			{
+				BookFormData bookFormData = new BookFormData(book.getIdbook(),book.getTitle(),bookCategory,book.getBookAuthors(),book.getDescription(),book.getRequestingUsers());
+				booksFormData.add(bookFormData);
+			}
+		}
+		
+		return booksFormData;
+	}
+	
+	@Override
+	public List<BookFormData> recommendBooksByAuthor(UserProfileFormData userProfileFormData) {
+		List<BookAuthor> favouriteAuthors = userProfileFormData.getFavoriteAuthors();
+		List<BookFormData> booksFormData = new ArrayList<>();
+		
+		for (BookAuthor bookAuthor : favouriteAuthors) 
+		{
+			for(Book book : bookAuthor.getBooks()) 
+			{
+				
+				BookFormData bookFormData = new BookFormData(book.getIdbook(),book.getTitle(),book.getBookCategory(),bookAuthor,book.getDescription(),book.getRequestingUsers());
+				booksFormData.add(bookFormData);
+			}
+		}
+		
+		return booksFormData;
 	}
 
 	@Override

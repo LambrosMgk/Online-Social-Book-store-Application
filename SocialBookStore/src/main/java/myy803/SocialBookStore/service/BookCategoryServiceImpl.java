@@ -19,5 +19,10 @@ public class BookCategoryServiceImpl implements BookCategoryService {
 		List<BookCategory> categories =  bookcategoryMapper.findAll();
 		return  categories;
 	}
+	
+	@Override
+	public BookCategory findByName(String categoryName) {
+		return bookcategoryMapper.findByName(categoryName);
+	}
 
 }

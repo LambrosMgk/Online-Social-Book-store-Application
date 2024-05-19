@@ -37,4 +37,10 @@ public class BookAuthorServiceImpl implements BookAuthorService {
 		return bookAuthor.findByname(name);
 	}
 
+	@Override
+	public BookAuthor findBookAuthorByName(String name) {
+		
+		return bookAuthor.findByname(name);
+	}
+
 }

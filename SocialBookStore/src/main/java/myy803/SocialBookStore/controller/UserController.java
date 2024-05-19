@@ -1,7 +1,6 @@
 package myy803.SocialBookStore.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import myy803.SocialBookStore.entity.Book;
 import myy803.SocialBookStore.entity.BookAuthor;
 import myy803.SocialBookStore.entity.BookCategory;
+import myy803.SocialBookStore.entity.UserProfile;
 import myy803.SocialBookStore.formsData.BookFormData;
+import myy803.SocialBookStore.formsData.RecommendationsFormData;
 import myy803.SocialBookStore.formsData.SearchFormData;
 import myy803.SocialBookStore.formsData.UserProfileFormData;
 import myy803.SocialBookStore.service.BookAuthorService;
@@ -52,30 +53,51 @@ public class UserController {
     
 
     @RequestMapping("/user/edit-profile")
-    public String editProfile(Model model)	// Get profile from base and autofill the fields in editProfile.html
+    public String editProfile(@RequestParam("userprofile_id") int userprofileid,Model model)	// Get profile from base and autofill the fields in editProfile.html
     {
     	// User is already signed in so we can get the username
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserProfileFormData userProfileForm = userProfileService.retreiveProfile(authentication.getName());
-		
+			
 		userProfileForm.setFavoriteCategories(bookCategoryService.ReturnCategories());
 		userProfileForm.setFavoriteAuthors(bookAuthorService.ReturnAuthors());
     	
 		model.addAttribute("userProfileForm", userProfileForm);
+		
 
 		return "user/editProfile";
     }
     @RequestMapping("/user/save-profile")
-    public String saveProfile(Model model)
+    public String saveProfile(@RequestParam("userprofile_id") int userprofileid,@RequestParam(value = "favoriteCategories", required = false) List<String> favoriteCategories,
+            @RequestParam(value = "favoriteAuthors", required = false) List<String> favoriteAuthors,Model model)
     {
+    	UserProfileFormData userProfileFormData = userProfileService.retreiveProfile(userprofileid);
+    	List<BookCategory> bookCategories = new ArrayList<>();
+    	List<BookAuthor> bookAuthors = new ArrayList<>();
     	
-    	//fill this later
+       	
+    	for(String category : favoriteCategories) 
+    		bookCategories.add(bookCategoryService.findByName(category));
     	
-    	System.out.println("User profile updated successfully!");
-    	model.addAttribute("successMessage", "Update successfull!");
+    
+    	for(String Author : favoriteAuthors) 	
+    		bookAuthors.add(bookAuthorService.findBookAuthorByName(Author));
     	
-		return "user/dashboard";
+
+    	if(favoriteAuthors.isEmpty()) {
+    		bookAuthors.clear();
+    	}
+    	
+    	userProfileFormData.setFavoriteCategories(bookCategories);
+    	userProfileFormData.setFavoriteAuthors(bookAuthors);
+
+    	userProfileService.save(userProfileFormData);
+    	
+      	model.addAttribute("successMessage", "Update successfull!");
+    	
+		return "redirect:/user/dashboard";
     }
+    
     
 
     @RequestMapping("/user/show-requests")
@@ -111,10 +133,14 @@ public class UserController {
     
 
     @RequestMapping("/user/show-recommendations")
-    public String showRecommendations(@RequestParam("userprofile_id") int userid)
+    public String showRecommendations(@RequestParam("userprofile_id") int userid,Model theModel)
     {
-		// Get profile from base and check what categories the user likes
-    	// then sort the books by these categories
+    	UserProfileFormData userProfileForm = userProfileService.retreiveProfile(userid);
+        List<BookFormData> recommendedBooksCategories = userProfileService.recommendBooksByCategory(userProfileForm);
+        theModel.addAttribute("booksFromCategories", recommendedBooksCategories);
+        List<BookFormData> recommendedBooksAuthors = userProfileService.recommendBooksByAuthor(userProfileForm);
+        theModel.addAttribute("booksAuthors", recommendedBooksAuthors);
+        
         return "user/showRecommendations";
     }
     

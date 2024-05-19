@@ -70,7 +70,7 @@ public class GuestController {
     	
     	//save profile to base
     	userProfileForm.setUsername(username);
-    	userProfileForm.setUser_id(userService.findByUsername(username).getUserid());	// This should not throw an error since the user is logged in
+    	///--- esbhsa to set set.userid
     	userProfileService.save(userProfileForm);
     	
     	
