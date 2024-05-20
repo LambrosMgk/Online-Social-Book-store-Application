@@ -115,10 +115,10 @@ public class UserController {
     @RequestMapping("/user/show-recommendations")
     public String showRecommendations(@RequestParam("userprofile_id") int userprofile_id,Model theModel)
     {
-    	UserProfileFormData userProfileForm = userProfileService.retreiveProfile(userprofile_id);    	
+    	UserProfileFormData userProfileForm = userProfileService.retreiveProfile(userprofile_id);    
         List<BookFormData> recommendedBooksCategories = userProfileService.recommendBooksByCategory(userProfileForm);
         List<BookFormData> recommendedBooksAuthors = userProfileService.recommendBooksByAuthor(userProfileForm);
-        
+
         theModel.addAttribute("booksFormCategories", recommendedBooksCategories);
         theModel.addAttribute("booksAuthors", recommendedBooksAuthors);
         

@@ -1,8 +1,10 @@
 package myy803.SocialBookStore.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import myy803.SocialBookStore.entity.UserProfile;
 import myy803.SocialBookStore.formsData.BookFormData;
 import myy803.SocialBookStore.formsData.SearchFormData;
 import myy803.SocialBookStore.formsData.UserProfileFormData;
+import myy803.SocialBookStore.mapper.BookCategoryMapper;
 import myy803.SocialBookStore.mapper.BookMapper;
 import myy803.SocialBookStore.mapper.UserProfileMapper;
 
@@ -29,7 +32,8 @@ public class UserProfileServiceImpl implements UserProfileService {
 	private UserService userService;
 	@Autowired 
 	private BookMapper bookMapper;
-	
+	@Autowired 
+	private BookCategoryMapper categoryMapper;
 	@Autowired
 	private ExactSearchStrategy exactSearch;
 	@Autowired
@@ -238,11 +242,13 @@ public class UserProfileServiceImpl implements UserProfileService {
 		List<BookFormData> booksFormData = new ArrayList<>();
 		
 		for (BookCategory bookCategory : favouriteCategories) 
-		{
-			//System.err.println("Fav categories id : " + bookCategory.getCategoryid());
-			for(Book book : bookCategory.getBooks())
+		{	
+			
+//			System.err.println("Fav categories id : " + bookCategory.getCategoryid());
+			for(Book book : categoryMapper.findBycategoryid(bookCategory.getCategoryid()).getBooks())
 			{
-				//System.err.println("Fav categories books are :" + book.getIdbook());
+				if(book.getBookCategories().contains(bookCategory)) {
+//				System.err.println("Fav categories books are :" + book.getIdbook());
 				BookFormData bookFormData = new BookFormData(
 						book.getIdbook(),
 						book.getTitle(),
@@ -253,8 +259,12 @@ public class UserProfileServiceImpl implements UserProfileService {
 						book.getRequestingUsers()
 						);
 				booksFormData.add(bookFormData);
+				}
 			}
 		}
+//		for(BookFormData book: booksFormData) {
+//			System.out.println(book.toString());
+//		}
 		
 		return booksFormData;
 	}
@@ -264,6 +274,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 	{
 		List<BookAuthor> favouriteAuthors = userProfileFormData.getFavoriteAuthors();
 		List<BookFormData> booksFormData = new ArrayList<>();
+		Set<Integer> addedBookIds = new HashSet<>();
 		
 		for (BookAuthor bookAuthor : favouriteAuthors) 
 		{
@@ -273,16 +284,20 @@ public class UserProfileServiceImpl implements UserProfileService {
 				{
 					System.err.println("Book id" + book.getIdbook() + " with author " + x.getName());
 				}
-				BookFormData bookFormData = new BookFormData(
-						book.getIdbook(),
-						book.getTitle(),
-						book.getDescription(),
-						book.getBookCategories(),
-						book.getBookAuthors(),
-						book.getOfferingUsers(),
-						book.getRequestingUsers()
-						);
-				booksFormData.add(bookFormData);
+				if (!addedBookIds.contains(book.getIdbook())) {
+					BookFormData bookFormData = new BookFormData(
+							book.getIdbook(),
+							book.getTitle(),
+							book.getDescription(),
+							book.getBookCategories(),
+							book.getBookAuthors(),
+							book.getOfferingUsers(),
+							book.getRequestingUsers()
+							);
+					booksFormData.add(bookFormData);
+	                addedBookIds.add(book.getIdbook());  // Add the book ID to the set
+	           	}
+				
 			}
 		}
 		

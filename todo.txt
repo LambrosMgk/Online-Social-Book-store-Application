@@ -13,3 +13,8 @@ check recommendBooksByAuthor sto userprofimplemente
 
 xana check ta panta gia tous guests na doume an doueluoun me oles tis allages pou kaname, eidika sto search book na baloume
 limit sto create request.
+
+ekana ena check kai eida oti ta recommendations ebgenan polles fores dld an eixa agaphmeno author ton 1 ton 2 kai ton 3 to biblio efanizotan 3 fores 
+to eftiaxa 
+kati antistoixo me ta categories 
+to eftiaxa

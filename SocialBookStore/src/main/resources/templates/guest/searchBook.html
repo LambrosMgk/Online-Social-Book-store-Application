@@ -33,8 +33,15 @@
 			<tr th:each="book : ${books}">
 			
 				<td th:text="${book.title}" />	
-				<td th:text="${book.authorsOfTheBook}" />	
-				<td th:text="${book.nameOfCategory}" />	
+                <td>
+                    <span th:each="author, iterStat : ${book.bookAuthors}"
+                          th:text="${author.name} + (iterStat.hasNext ? ' ' : '')"></span>
+                </td>
+                
+                <td>
+                	<span th:each="category, iterStat : ${book.bookCategories}"
+                          th:text="${category.name} + (iterStat.hasNext ? ' ' : '')"></span>
+                </td>	
 				
 				<td>					
 					<!-- Add "See Book Description" button/link -->					

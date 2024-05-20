@@ -11,5 +11,6 @@ public interface BookCategoryMapper extends JpaRepository<BookCategory, Integer>
 	public BookCategory findBycategoryid(int categoryid);
 	
 	public BookCategory findByName (String name);
-}
+	
+	}
 
