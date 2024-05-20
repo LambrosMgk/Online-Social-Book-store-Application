@@ -2,8 +2,6 @@ package myy803.SocialBookStore.formsData;
 
 import java.util.List;
 
-import myy803.SocialBookStore.entity.BookAuthor;
-import myy803.SocialBookStore.entity.BookCategory;
 
 public class RecommendationsFormData {
 	private List<String> favoriteCategories;

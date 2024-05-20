@@ -59,6 +59,7 @@ public class BookFormData {
 	public void setRequestingUsers(List<UserProfile> requestingUsers) {this.requestingUsers = requestingUsers;}
 	public List<UserProfile> getRequestingUsers() {return requestingUsers;}
     
+	public void addToRequestingUsers(UserProfile userProfile) {this.requestingUsers.add(userProfile);}
     
     @Override
     public String toString()

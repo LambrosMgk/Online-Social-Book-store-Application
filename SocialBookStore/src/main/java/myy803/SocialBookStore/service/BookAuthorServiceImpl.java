@@ -16,7 +16,6 @@ public class BookAuthorServiceImpl implements BookAuthorService {
 
 	@Autowired 
 	private BookAuthorMapper bookAuthor;
-	private SearchFormData searchFormData;
 	
 	@Override
 	public List<BookAuthor> ReturnAuthors() {

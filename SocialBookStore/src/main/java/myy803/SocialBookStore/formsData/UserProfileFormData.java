@@ -90,6 +90,8 @@ public class UserProfileFormData {
     public void setRequestedBooks(List<Book> requestedBooks) {this.requestedBooks = requestedBooks;}
 	public List<Book> getRequestedBooks() {return requestedBooks;}
 	
+	public void addToRequestedBooks(Book book) {this.requestedBooks.add(book);}
+	
 	@Override
 	public String toString() 
 	{
