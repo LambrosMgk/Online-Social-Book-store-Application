@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import myy803.SocialBookStore.entity.UserProfile;
 import myy803.SocialBookStore.formsData.BookFormData;
 import myy803.SocialBookStore.formsData.SearchFormData;
 import myy803.SocialBookStore.formsData.UserProfileFormData;

@@ -1,6 +1,5 @@
 package myy803.SocialBookStore.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,7 +175,7 @@ public class UserController {
     public String saveBookOffer(@RequestParam("userprofile_id") int userprofile_id,@ModelAttribute("newBook") BookFormData newBook,
     		Model theModel)
     {
-    	// a book must have atleast 1 category and 1 author
+    	// a book must have at least 1 category and 1 author
     	if(newBook.getBookCategories() == null)
     	{
     		System.err.println("UserController: saveBookOffer(): categories are null");
@@ -194,7 +193,7 @@ public class UserController {
     	return"redirect:/user/dashboard";
     }
     @RequestMapping("/user/authorCreate")
-    public String newAuthorCreate(@RequestParam("userprofile_id") int userid, Model theModel)
+    public String newAuthorCreate(@RequestParam("userprofile_id") int userprofile_id, Model theModel)
     {
     	BookAuthor bookauthor = new BookAuthor();
     	
@@ -211,12 +210,12 @@ public class UserController {
     	// Search for the requested book or see all available books? redirect to a page for this or dynamically show this to user dashboard
         List<BookFormData> allTheBooks = bookService.findAllBooks();   	
     	theModel.addAttribute("books",allTheBooks);
+    	
         return "/user/searchBook";
     }
     @RequestMapping("/user/seeBook")
     public String seeBook(@RequestParam("idbook") int theBookId, Model theModel) 
     {
-    	
     	Book book = bookService.findBookByid(theBookId);
     	BookFormData theBook= new BookFormData(
     			book.getIdbook(),
@@ -232,13 +231,38 @@ public class UserController {
     	
     	return "user/searchBookDescription";
     }
-    
+    @RequestMapping("/user/createRequest")
+    public String createRequest(@RequestParam("idbook") int bookid, Model model)
+    {
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    	String username = authentication.getName();
+    	
+    	BookFormData bookForm = bookService.findBookFormDataByid(bookid);	// This should not be null, because there was a button for this book
+    	UserProfileFormData userProfileForm = userProfileService.retreiveProfile(username);
+    	
+    	model.addAttribute("book", bookForm);
+    	model.addAttribute("userProfile", userProfileForm);
+    	
+    	
+    	return "user/createBookRequest";
+    }
+    @RequestMapping("/user/save-book-request")
+    public String saveBookRequest(@RequestParam("userprofile_id") int userprofile_id,
+            @RequestParam("bookid") int bookid,
+            @RequestParam("requestMessage") String requestMessage, Model model)
+    {
+    	
+    	// Add logic to insert a request to "user_requested_books" table
+    	
+    	return "user/searchBook";
+    }
     @RequestMapping("/user/seachBookWithStrategy")
     public String SearchStrategies(Model theModel) 
     {
     	
     	SearchFormData searchFormData = new SearchFormData();
     	theModel.addAttribute("searchObject",searchFormData);
+    	
     	return "/user/searchBookWithFilters";
     }
     @RequestMapping("/user/searchBooksfilters")
