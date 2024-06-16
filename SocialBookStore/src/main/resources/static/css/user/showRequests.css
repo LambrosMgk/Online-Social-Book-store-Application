@@ -36,7 +36,7 @@ body {
 
 /* Request content styling */
 .request-content {
-    max-width: 80%;
+    max-width: 70%; /* Adjusted to make space for the button */
 }
 
 /* General paragraph styling inside request blocks */
@@ -89,4 +89,18 @@ button:first-of-type:hover {
 
 .btn.btn-info.btn-sm:hover {
     background-color: #117a8b;
+}
+
+/* Styling for the Remove button */
+.btn-danger {
+    background-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.btn-sm {
+    font-size: 14px;
+    padding: 5px 10px;
 }

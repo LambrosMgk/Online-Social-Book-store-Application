@@ -18,15 +18,19 @@
                     <p><strong>Book Title:</strong> <span th:text="${request.title}"></span></p>
                     <p><strong>Book Description:</strong> <span th:text="${request.description}"></span></p>
                 </div>
-                <!-- See Request Button -->
-                <a th:href="@{/user/see-requests(bookid=${request.idbook}, userprofile_id=${userprofile_id})}"
-                   th:text="'See Request (' + ${request.getRequestingUsers().size()} + ')'" class="btn btn-info btn-sm"></a>
+                
+                <!-- Remove button -->
+                <form th:action="@{/user/remove-book-request}" method="post">
+                    <input type="hidden" name="requestIdbook" th:value="${request.idbook}" />
+                    <input type="hidden" name="userprofile_id" th:value="${userProfileForm.userprofile_id}" />
+                    <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                </form>
             </div>
         </div>
         
         <!-- Message if no requests are available -->
         <div th:if="${requests == null or requests.empty}">
-            <p>No requests available at the moment.</p>
+            <p>You do not have any book requests at the moment.</p>
         </div>
     </div>
 </body>

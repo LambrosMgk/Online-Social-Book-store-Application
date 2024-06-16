@@ -29,7 +29,6 @@ public class BookServiceImpl implements BookService{
 		{
 			for (Book book : books ) 
 			{
-				System.out.println("authors" + book.getBookAuthors().toString());
 				BookFormData formBook = new BookFormData(
 						book.getIdbook(),
 						book.getTitle(),
@@ -43,7 +42,7 @@ public class BookServiceImpl implements BookService{
 		}
 		else 
 		{
-			System.out.println("I did not find any book");
+			System.err.println("BookServiceImpl : I did not find any books");
 		}
 		return booksFormData;
 	}

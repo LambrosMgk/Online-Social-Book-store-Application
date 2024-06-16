@@ -12,8 +12,9 @@
         
         <form th:action="@{/user/save-book-request}" method="post">
             
-            <input type="hidden" name="userprofile_id" th:value="${userProfile.userprofile_id}" />
-            <input type="hidden" name="bookid" th:value="${book.idbook}" />
+           	<input type="hidden" name="bookid" th:value="${book.idbook}" />
+    		<input type="hidden" name="userprofile_id" th:value="${userProfileForm.userprofile_id}" />
+    
             
             <div class="form-group">
                 <label for="bookTitle">Book Title:</label>

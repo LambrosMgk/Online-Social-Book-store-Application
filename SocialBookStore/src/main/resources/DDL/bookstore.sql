@@ -116,8 +116,7 @@ INSERT INTO `bookauthor` (name) VALUES ('Author1'), ('Author2'), ('Author3'), ('
 
 INSERT INTO `userprofile` (fullname, username, age, address, phonenumber) VALUES
 ('John Doe', 'user1', 30, '123 Main St', 1234567890),
-('Jane Smith', 'user2', 25, '456 Elm St', 2345678901),
-('Alice Johnson', 'user3', 28, '789 Oak St', 3456789012);
+('Jane Smith', 'user2', 25, '456 Elm St', 2345678901);
 
 INSERT INTO `user_categories` (userprofile_id, categoryid) VALUES
 (1,1),

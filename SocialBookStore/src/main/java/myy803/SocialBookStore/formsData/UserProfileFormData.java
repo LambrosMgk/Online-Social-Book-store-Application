@@ -91,6 +91,13 @@ public class UserProfileFormData {
 	public List<Book> getRequestedBooks() {return requestedBooks;}
 	
 	public void addToRequestedBooks(Book book) {this.requestedBooks.add(book);}
+	public void removeFromRequestedBooks (int idbook) {
+		for(int i = 0; i < this.requestedBooks.size(); i++)
+		{
+			if(this.requestedBooks.get(i).getIdbook() == idbook)
+				this.requestedBooks.remove(i);
+		}
+	}
 	
 	@Override
 	public String toString() 

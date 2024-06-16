@@ -82,33 +82,29 @@ public class UserController {
     @RequestMapping("/user/show-requests")
     public String showRequests(@RequestParam("userprofile_id") int userprofileid,Model model)
     {
-    	// Get the requests for this user's books from base
-    	List<BookFormData> requests = userProfileService.retrieveBookRequests(userprofileid);	
+    	// Get this user's book requests from base
+    	UserProfileFormData userProfileForm = userProfileService.retreiveProfile(userprofileid);	
     	
-    	model.addAttribute("requests", requests);
-    	model.addAttribute("userprofile_id", userprofileid);
+    	model.addAttribute("requests", userProfileForm.getRequestedBooks());
+    	model.addAttribute("userProfileForm", userProfileForm);
     	
         return "user/showRequests";
     }
-    @RequestMapping("/user/see-requests")
-    public String seeRequests(@RequestParam("bookid") int bookid,@RequestParam("userprofile_id") int userprofileid,Model model)
+    @RequestMapping("/user/remove-book-request")
+    public String removeRequest(@RequestParam("userprofile_id") int userprofileid,
+    		@RequestParam("requestIdbook") int requestIdbook, Model model)
     {
-    	BookFormData requestedBook = bookService.findBookFormDataByid(bookid);
+    	UserProfileFormData userProfileForm = userProfileService.retreiveProfile(userprofileid);
     	
+    	userProfileForm.removeFromRequestedBooks(requestIdbook);
+    	userProfileService.UpdateUserProfile(userProfileForm);
     	
-    	model.addAttribute("userprofile_id", userprofileid);	// To help redirect the user to "user/ShowRequests?userprofile_id=X"
-    	if(requestedBook == null)
-    	{
-    		model.addAttribute("successMessage", "?");
-    		System.err.println("UserController : seeRequests failed");
-    		return "user/seeRequests";
-    	}
+    	model.addAttribute("user", userProfileForm);
+    	model.addAttribute("successMessage", "Removed request for book \"" + requestIdbook + "\"");
     	
-    	model.addAttribute("bookTitle", requestedBook.getTitle());
-    	model.addAttribute("users", requestedBook.getRequestingUsers());
-    	
-        return "user/seeRequests";
+    	return "/user/dashboard";
     }
+    
     
 
     @RequestMapping("/user/show-recommendations")
@@ -155,7 +151,66 @@ public class UserController {
     	theModel.addAttribute("bookAuthors", theBook.getBookAuthors());
     	
     	return "user/myOffersBookDetails";
-    }    
+    }
+    @RequestMapping("/user/see-requests")
+    public String seeRequests(@RequestParam("bookid") int bookid,@RequestParam("userprofile_id") int userprofileid,Model model)
+    {
+    	BookFormData requestedBook = bookService.findBookFormDataByid(bookid);
+    	
+    	
+    	model.addAttribute("userprofile_id", userprofileid);	// To help redirect the user to "user/ShowRequests?userprofile_id=X"
+    	if(requestedBook == null)
+    	{
+    		model.addAttribute("successMessage", "?");
+    		System.err.println("UserController : seeRequests failed");
+    		return "user/seeRequests";
+    	}
+    	
+    	model.addAttribute("bookTitle", requestedBook.getTitle());
+    	model.addAttribute("bookid", requestedBook.getIdbook());
+    	model.addAttribute("users", requestedBook.getRequestingUsers());
+    	
+        return "user/seeRequests";
+    }
+    @RequestMapping("/user/approve-request")
+    public String approve_book_request(@RequestParam("bookid") int bookid,
+    		@RequestParam("userprofile_id") int userprofile_id,
+    		@RequestParam("requestingUserid") int requestingUserid, Model model)
+    {
+    	BookFormData requestedBook = bookService.findBookFormDataByid(bookid);
+    	UserProfileFormData userProfileForm = userProfileService.retreiveProfile(userprofile_id);
+    	UserProfileFormData requestingUserProfileForm = userProfileService.retreiveProfile(requestingUserid);
+    	
+    	// Remove the requested book from requesting user's list
+    	requestingUserProfileForm.removeFromRequestedBooks(requestedBook.getIdbook());
+    	userProfileService.UpdateUserProfile(requestingUserProfileForm);
+    	
+    	// Also remove the book from the database
+    	// implement...
+    	
+    	model.addAttribute("successMessage", "Request from user id " + requestingUserid + " accepted");
+    	model.addAttribute("user", userProfileForm);
+    	
+        return "user/dashboard";
+    }
+    @RequestMapping("/user/reject-request")
+    public String reject_book_request(@RequestParam("bookid") int bookid,
+    		@RequestParam("userprofile_id") int userprofile_id,
+    		@RequestParam("requestingUserid") int requestingUserid, Model model)
+    {
+    	BookFormData requestedBook = bookService.findBookFormDataByid(bookid);
+    	UserProfileFormData userProfileForm = userProfileService.retreiveProfile(userprofile_id);
+    	UserProfileFormData requestingUserProfileForm = userProfileService.retreiveProfile(requestingUserid);
+    	
+    	// Remove the requested book from requesting user's list
+    	requestingUserProfileForm.removeFromRequestedBooks(requestedBook.getIdbook());
+    	userProfileService.UpdateUserProfile(requestingUserProfileForm);
+    	
+    	model.addAttribute("successMessage", "Request from user id " + requestingUserid + " rejected");
+    	model.addAttribute("user", userProfileForm);
+    	
+    	return "user/dashboard";
+    }
     @RequestMapping("/user/addBookOffer")
     public String addBookOffer(@RequestParam("userprofile_id") int userprofile_id, Model theModel)
     {
@@ -240,9 +295,13 @@ public class UserController {
     	BookFormData bookForm = bookService.findBookFormDataByid(bookid);	// This should not be null, because there was a button for this book
     	UserProfileFormData userProfileForm = userProfileService.retreiveProfile(username);
     	
-    	model.addAttribute("book", bookForm);
-    	model.addAttribute("userProfile", userProfileForm);
+    	if(bookForm == null || userProfileForm == null)
+    	{
+    		System.err.println("UserController.java : createRequest() : Neither should be null");
+    	}
     	
+    	model.addAttribute("book", bookForm);
+    	model.addAttribute("userProfileForm", userProfileForm);
     	
     	return "user/createBookRequest";
     }
@@ -252,9 +311,47 @@ public class UserController {
             @RequestParam("requestMessage") String requestMessage, Model model)
     {
     	
-    	// Add logic to insert a request to "user_requested_books" table
+    	UserProfileFormData userProfileForm = userProfileService.retreiveProfile(userprofile_id);
+    	Book requestedBook = bookService.findBookByid(bookid);
     	
-    	return "user/searchBook";
+    	model.addAttribute("user", userProfileForm);	// user/dashboard requires a userProfileFormData object
+    	
+    	if(requestedBook == null)
+    	{
+    		System.err.println("UserController: saveBookRequest(): Something went wrong, book should exist");	// because there was a button to get you here attached to a book entry
+    		return "user/dashboard";
+    	}
+    	
+    	// Check so that a user cannot request a book he's offering 
+    	for(Book x : userProfileForm.getBookOffers())
+    	{
+    		if(x.getIdbook() == bookid)
+    		{
+    			System.err.println("Cannot create a request for a book that you are offering...");
+    			// Maybe add an ErrorMessage to dashboard for this kind of messages
+    			model.addAttribute("successMessage", "Cannot create a request for a book that you are offering.");
+    			return "user/dashboard";
+    		}
+    	}
+    	
+    	// Check that the user doesn't already have requested this book
+    	for(Book x : userProfileForm.getRequestedBooks())
+    	{
+    		if(x.getIdbook() == bookid)
+    		{
+    			System.err.println("There is already a request for this book (book id =" + bookid + ")");
+    			model.addAttribute("successMessage", "You already have a request for this book.");
+    			return "user/dashboard";
+    		}
+    	}
+    	
+    	// logic to insert a request to "user_requested_books" table
+    	userProfileForm.addToRequestedBooks(requestedBook);
+    	userProfileService.UpdateUserProfile(userProfileForm);
+    	
+    	model.addAttribute("successMessage", "Book request creation successfull!");
+    	
+    	return "user/dashboard";
     }
     @RequestMapping("/user/seachBookWithStrategy")
     public String SearchStrategies(Model theModel) 

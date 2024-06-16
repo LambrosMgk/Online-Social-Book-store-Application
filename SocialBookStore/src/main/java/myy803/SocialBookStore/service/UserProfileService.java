@@ -17,7 +17,7 @@ public interface UserProfileService {
 	
 	public UserProfileFormData retreiveProfile(String username);
 		
-	public UserProfileFormData retreiveProfile(int userid);
+	public UserProfileFormData retreiveProfile(int userprofile_id);
 
 	public List<BookFormData> retrieveBookRequests(int userprofileid);
 	

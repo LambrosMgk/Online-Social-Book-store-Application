@@ -1,20 +1,10 @@
-check na mhn mporei o idios user na kanei request ta biblia pou kanei o idios offer
-
-check sta recommendations na mhn tou bgazei ta dika tou books???
-
 add new author html
+
+add request messages to database
 
 exact strategy kai approx otan den uparxoun genika books h genika authors, titles na mhn crasharei
 
-//checkare oti mpainei kai sta offers to book
-
 check recommendBooksByAuthor sto userprofimplemente
-
 
 xana check ta panta gia tous guests na doume an doueluoun me oles tis allages pou kaname, eidika sto search book na baloume
 limit sto create request.
-
-ekana ena check kai eida oti ta recommendations ebgenan polles fores dld an eixa agaphmeno author ton 1 ton 2 kai ton 3 to biblio efanizotan 3 fores 
-to eftiaxa 
-kati antistoixo me ta categories 
-to eftiaxa

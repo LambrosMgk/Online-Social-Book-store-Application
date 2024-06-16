@@ -52,9 +52,9 @@ public class UserProfileServiceImpl implements UserProfileService {
 	}
 	
 	@Override 
-	public UserProfileFormData retreiveProfile(int userid) 
+	public UserProfileFormData retreiveProfile(int userprofile_id)
 	{
-		UserProfile userProfile = userProfileMapper.findByUserprofileid(userid);		
+		UserProfile userProfile = userProfileMapper.findByUserprofileid(userprofile_id);		
 		UserProfileFormData userProfileFormData = new UserProfileFormData(userProfile);
 		return userProfileFormData;
 	}
@@ -133,10 +133,10 @@ public class UserProfileServiceImpl implements UserProfileService {
 		{
 			if(!book.getRequestingUsers().isEmpty())	// Add only the books that have requests on them
 			{
-				System.err.println("For book " + book.getIdbook());
+				//System.err.println("UserProfileServiceImpl.retrieveBookRequests(): For book " + book.getIdbook());
 				for(UserProfile x : book.getRequestingUsers())
 				{
-					System.err.println("Requesting user : " + x.getUserprofile_id());
+					//System.err.println("UserProfileServiceImpl.retrieveBookRequests(): Requesting user : " + x.getUserprofile_id());
 				}
 				
 				BookFormData bookFormdata = new BookFormData(

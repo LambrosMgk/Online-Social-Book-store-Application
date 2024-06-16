@@ -10,7 +10,7 @@
     
         <!-- Go Back Button and Title -->
         <div class="header">
-            <a th:href="@{/user/show-requests(userprofile_id=${userprofile_id})}" class="btn">Go Back</a>
+            <a th:href="@{/user/my-offers-list(userprofile_id=${userprofile_id})}" class="btn">Go Back</a>
             <h2 th:text="'Users that want the book : ' + ${bookTitle}"></h2>
         </div>
         
@@ -28,8 +28,8 @@
                 
                 <!-- Action Buttons -->
                 <div class="action-buttons">
-                    <a th:href="@{/user/approve-request(userprofile_id=${userprofile_id})}" class="approve-button">&#10004;</a>
-                    <a th:href="@{/user/reject-request(userprofile_id=${userprofile_id})}" class="reject-button">&#10006;</a>
+                    <a th:href="@{/user/approve-request(bookid=${bookid}, requestingUserid=${user.userprofile_id}, userprofile_id=${userprofile_id})}" class="approve-button">&#10004;</a>
+                    <a th:href="@{/user/reject-request(bookid=${bookid}, requestingUserid=${user.userprofile_id}, userprofile_id=${userprofile_id})}" class="reject-button">&#10006;</a>
                 </div>
             </div>
         </div>
